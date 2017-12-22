@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
-import { temporaryAddVendor } from '../../actions/invoiceActions';
+import { onChangeVendorName, temporaryAddVendor } from '../../actions/invoiceActions';
 import TwoButtons from '../../components/TwoButtons';
 
 class SelectVendorScreen extends Component <{}> {
@@ -73,6 +73,14 @@ class SelectVendorScreen extends Component <{}> {
     );
   }
 
+  confirmVendor = () => {
+    this.props.onChangeVendorName(this.state.selectedVendor);
+    this.props.navigator.push({
+      screen: 'postinvoice.InvoiceNumberScreen',
+      title: 'Add Invoice Number',
+    });
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -90,12 +98,7 @@ class SelectVendorScreen extends Component <{}> {
           leftText='New'
           onLeftPress={this.addVendorModal}
           rightText='Confirm'
-          onRightPress={() => {
-            this.props.navigator.push({
-              screen: 'postinvoice.InvoiceNumberScreen',
-              title: 'Add Invoice Number',
-            });
-          }}
+          onRightPress={this.confirmVendor}
         />
 
       </View>
@@ -134,4 +137,7 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { invoices };
 };
 
-export default connect(mapStateToProps, { temporaryAddVendor })(SelectVendorScreen);
+export default connect(mapStateToProps, {
+  onChangeVendorName,
+  temporaryAddVendor
+})(SelectVendorScreen);

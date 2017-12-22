@@ -5,6 +5,7 @@ const initialState = {
   invoices: [],
   newInvoice: {
     date: '',
+    invoiceNumber: '',
     vendor: '',
   }
 };
@@ -12,6 +13,14 @@ const initialState = {
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    case types.ON_CHANGE_INVOICE_NUMBER:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          invoiceNumber: action.invoiceNumber,
+        },
+      };
     case types.ON_CHANGE_VENDOR_NAME:
       return {
         ...state,
