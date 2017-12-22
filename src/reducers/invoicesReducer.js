@@ -7,12 +7,24 @@ const initialState = {
     date: '',
     invoiceNumber: '',
     vendor: '',
+    items: [],
   }
 };
 
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    case types.ADD_LINE_ITEM:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: [
+            ...state.newInvoice.items,
+            action.item
+          ],
+        },
+      };
     case types.ON_CHANGE_INVOICE_NUMBER:
       return {
         ...state,

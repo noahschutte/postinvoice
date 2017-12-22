@@ -1,3 +1,4 @@
+export const ADD_LINE_ITEM = 'add_line_item';
 
 export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
 
