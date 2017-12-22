@@ -7,7 +7,12 @@ const initialState = {
     date: '',
     invoiceNumber: '',
     vendor: '',
-    items: [],
+    items: [
+      {
+        code: 'testItem',
+        amount: '324.00',
+      }
+    ],
   }
 };
 

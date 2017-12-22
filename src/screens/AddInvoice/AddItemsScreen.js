@@ -3,25 +3,20 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
-  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 
+import LineItems from './LineItems';
+
 class AddItemsScreen extends Component <{}> {
   render() {
+    console.log('this.props', this.props);
     return (
       <View style={{ flex: 1 }}>
 
-        <View style={styles.itemsContainer}>
-          <TextInput
-            style={styles.itemCodeInputStyle}
-          />
-          <TextInput
-            style={styles.itemTotalInputStyle}
-            keyboardType='numeric'
-          />
-        </View>
+        <LineItems
+          item={this.props.items[0]}
+        />
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
           <TouchableOpacity
@@ -46,23 +41,11 @@ const styles = {
     elevation: 1,
     borderRadius: 2,
   },
-  itemsContainer: {
-    flex: 2,
-    alignItems: 'center',
-    marginLeft: 50,
-    // width: Dimensions.get('window').width,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  itemCodeInputStyle: {
-    flex: 5,
-    fontSize: 26,
-  },
-  itemTotalInputStyle: {
-    flex: 2,
-    textAlign: 'right',
-    fontSize: 24
-  }
 };
 
-export default connect()(AddItemsScreen);
+const mapStateToProps = ({ invoicesReducer }) => {
+  const items = invoicesReducer.newInvoice.items;
+  return { items };
+};
+
+export default connect(mapStateToProps)(AddItemsScreen);
