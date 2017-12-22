@@ -1,0 +1,25 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
+    "plugins": [
+        "react",
+        "react-native",
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "rules": {
+        // overrides
+        "max-len": ["error", 100],
+        "keyword-spacing": ["error", { "before": true, "after": true }],
+        "quotes": ["error", "single"],
+        "react/prop-types": ["off"],
+        "no-console": ["warn"],
+        "semi": ["error", "always"],
+        "comma-style": ["error", "last"],
+        "object-curly-spacing": ["error", "always"]
+    }
+}
