@@ -3,6 +3,14 @@ import { DB_URL } from 'react-native-dotenv';
 /*
 * synchronous action creators
 */
+
+export function onChangeInvoiceNumber(invoiceNumber) {
+  return {
+    type: types.ON_CHANGE_INVOICE_NUMBER,
+    invoiceNumber,
+  };
+}
+
 export function onChangeVendorName(vendorName) {
   return {
     type: types.ON_CHANGE_VENDOR_NAME,

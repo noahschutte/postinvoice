@@ -1,4 +1,6 @@
 
+export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
+
 export const ON_CHANGE_VENDOR_NAME = 'on_change_vendor_name';
 
 export const RETRIEVE_INVOICES_BEGIN = 'retrieve_invoices_begin';
