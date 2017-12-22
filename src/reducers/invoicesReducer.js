@@ -11,6 +11,10 @@ const initialState = {
       {
         code: 'testItem',
         amount: '324.00',
+      },
+      {
+        code: 'secondTestItem',
+        amount: '69.00'
       }
     ],
   }

@@ -6,17 +6,21 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import LineItems from './LineItems';
+import LineItem from './LineItem';
 
 class AddItemsScreen extends Component <{}> {
   render() {
     console.log('this.props', this.props);
+    const lineItems = this.props.items.map(item => {
+      return (
+        <LineItem key={item.code} item={item} />
+      );
+    });
+
     return (
       <View style={{ flex: 1 }}>
 
-        <LineItems
-          item={this.props.items[0]}
-        />
+        {lineItems}
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
           <TouchableOpacity

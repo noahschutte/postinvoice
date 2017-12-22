@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
 
-const LineItems = props => {
+const LineItem = props => {
   return (
     <View style={styles.itemsContainer}>
       <TextInput
@@ -38,4 +38,4 @@ const styles = {
   },
 };
 
-export default LineItems;
+export default LineItem;
