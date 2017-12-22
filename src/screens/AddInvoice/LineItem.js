@@ -19,7 +19,7 @@ const LineItem = props => {
 
 const styles = {
   itemsContainer: {
-    flex: 2,
+    // flex: 2,
     alignItems: 'center',
     margin: 10,
     flexDirection: 'row',

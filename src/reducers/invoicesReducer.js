@@ -15,7 +15,7 @@ const initialState = {
       {
         code: 'secondTestItem',
         amount: '69.00'
-      }
+      },
     ],
   }
 };
@@ -33,6 +33,20 @@ function invoices(state = initialState, action) {
             action.item
           ],
         },
+      };
+    case types.ADD_NEW_LINE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: [
+            ...state.newInvoice.items,
+            {
+              code: '',
+              amount: '',
+            },
+          ]
+        }
       };
     case types.ON_CHANGE_INVOICE_NUMBER:
       return {

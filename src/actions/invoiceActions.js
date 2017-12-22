@@ -11,6 +11,12 @@ export function addLineItem(item) {
   };
 }
 
+export function addNewLine() {
+  return {
+    type: types.ADD_NEW_LINE,
+  };
+}
+
 export function onChangeInvoiceNumber(invoiceNumber) {
   return {
     type: types.ON_CHANGE_INVOICE_NUMBER,
