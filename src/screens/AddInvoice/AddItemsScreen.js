@@ -16,7 +16,11 @@ class AddItemsScreen extends Component <{}> {
   render() {
     const lineItems = this.props.items.map(item => {
       return (
-        <LineItem key={item.code} item={item} />
+        <LineItem
+          key={item.code}
+          index={this.props.items.indexOf(item)}
+          item={item}
+        />
       );
     });
 
