@@ -27,7 +27,10 @@ class InvoiceNumberScreen extends Component <{}> {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
           <TouchableOpacity
             style={styles.confirmButtonStyle}
-            onPress={() => alert('confirmed!')}
+            onPress={() => this.props.navigator.push({
+              screen: 'postinvoice.AddItemsScreen',
+              title: 'Add Items',
+            })}
             >
               <Text>Confirm</Text>
             </TouchableOpacity>

@@ -144,7 +144,6 @@ class HomeScreen extends Component <{}> {
 
 
   render() {
-    console.log('this.props', this.props);
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-between', }}>
         <TouchableOpacity onPress={this.onPress} style={styles.button} >

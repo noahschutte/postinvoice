@@ -7,12 +7,43 @@ const initialState = {
     date: '',
     invoiceNumber: '',
     vendor: '',
+    items: [
+      {
+        amount: '',
+        code: '',
+      },
+    ],
   }
 };
 
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    // case types.ADD_LINE_ITEM:
+    //   return {
+    //     ...state,
+    //     newInvoice: {
+    //       ...state.newInvoice,
+    //       items: [
+    //         ...state.newInvoice.items,
+    //         action.item
+    //       ],
+    //     },
+    //   };
+    case types.ADD_NEW_LINE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: [
+            ...state.newInvoice.items,
+            {
+              code: '',
+              amount: '',
+            },
+          ]
+        }
+      };
     case types.ON_CHANGE_INVOICE_NUMBER:
       return {
         ...state,
@@ -21,6 +52,42 @@ function invoices(state = initialState, action) {
           invoiceNumber: action.invoiceNumber,
         },
       };
+    case types.ON_CHANGE_ITEM_AMOUNT: {
+      let items = state.newInvoice.items.filter(item => {
+        return item.code != action.item.code;
+      });
+      const index = state.newInvoice.items.indexOf(action.item);
+      const item = {
+        code: action.item.code,
+        amount: action.amount,
+      };
+      items.splice(index, 0, item);
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items,
+        }
+      };
+    }
+    case types.ON_CHANGE_ITEM_CODE: {
+      let items = state.newInvoice.items.filter(item => {
+        return item.amount != action.item.amount;
+      });
+      const index = state.newInvoice.items.indexOf(action.item);
+      const item = {
+        amount: action.item.amount,
+        code: action.code,
+      };
+      items.splice(index, 0, item);
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items,
+        }
+      };
+    }
     case types.ON_CHANGE_VENDOR_NAME:
       return {
         ...state,

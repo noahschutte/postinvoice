@@ -4,10 +4,33 @@ import { DB_URL } from 'react-native-dotenv';
 * synchronous action creators
 */
 
+export function addNewLine() {
+  return {
+    type: types.ADD_NEW_LINE,
+  };
+}
+
 export function onChangeInvoiceNumber(invoiceNumber) {
   return {
     type: types.ON_CHANGE_INVOICE_NUMBER,
     invoiceNumber,
+  };
+}
+
+export function onChangeItemAmount(item, amount) {
+  amount = amount.slice(1);
+  return {
+    type: types.ON_CHANGE_ITEM_AMOUNT,
+    item,
+    amount,
+  };
+}
+
+export function onChangeItemCode(item, code) {
+  return {
+    type: types.ON_CHANGE_ITEM_CODE,
+    item,
+    code,
   };
 }
 

@@ -6,6 +6,8 @@ import SelectVendorScreen from './AddInvoice/SelectVendorScreen';
 import InvoiceNumberScreen from './AddInvoice/InvoiceNumberScreen';
 import CategoryBreakdownScreen from './AddInvoice/CategoryBreakdownScreen';
 import AddVendorModal from './AddInvoice/AddVendorModal';
+import AddItemsScreen from './AddInvoice/AddItemsScreen';
+import InvoiceReviewScreen from './AddInvoice/InvoiceReviewScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -15,4 +17,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.InvoiceNumberScreen', () => InvoiceNumberScreen, store, Provider); //eslint-disable-line
   Navigation.registerComponent('postinvoice.CategoryBreakdownScreen', () => CategoryBreakdownScreen, store, Provider); //eslint-disable-line
   Navigation.registerComponent('postinvoice.AddVendorModal', () => AddVendorModal, store, Provider);
+  Navigation.registerComponent('postinvoice.AddItemsScreen', () => AddItemsScreen, store, Provider);
+  Navigation.registerComponent('postinvoice.InvoiceReviewScreen', () => InvoiceReviewScreen, store, Provider); //eslint-disable-line
 }
