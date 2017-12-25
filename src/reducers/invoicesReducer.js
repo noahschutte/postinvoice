@@ -9,8 +9,8 @@ const initialState = {
     vendor: '',
     items: [
       {
-        code: '',
         amount: '',
+        code: '',
       },
     ],
   }
@@ -52,9 +52,21 @@ function invoices(state = initialState, action) {
           invoiceNumber: action.invoiceNumber,
         },
       };
-    case types.ON_CHANGE_ITEM_AMOUNT:{
+    case types.ON_CHANGE_ITEM_AMOUNT: {
       let item = state.newInvoice.items[action.index];
       item.amount = action.amount;
+      const updatedItems = state.newInvoice.items.splice(action.index, 1, item);
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: updatedItems,
+        },
+      };
+    }
+    case types.ON_CHANGE_ITEM_CODE: {
+      let item = state.newInvoice.items[action.index];
+      item.code = action.code;
       const updatedItems = state.newInvoice.items.splice(action.index, 1, item);
       return {
         ...state,
