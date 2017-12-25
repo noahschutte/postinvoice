@@ -44,6 +44,14 @@ function invoices(state = initialState, action) {
           ]
         }
       };
+    case types.ON_CHANGE_INVOICE_DATE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          date: action.date,
+        },
+      };
     case types.ON_CHANGE_INVOICE_NUMBER:
       return {
         ...state,

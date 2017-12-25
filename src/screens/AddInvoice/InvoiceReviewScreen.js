@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 class InvoiceReviewScreen extends Component <{}> {
   render() {
+    console.log('newInvoice', this.props.newInvoice);
     return (
       <View>
         <Text>Invoice review screen</Text>
@@ -12,4 +13,9 @@ class InvoiceReviewScreen extends Component <{}> {
   }
 }
 
-export default connect()(InvoiceReviewScreen);
+const mapStateToProps = ({ invoicesReducer }) => {
+  const { newInvoice } = invoicesReducer;
+  return { newInvoice };
+};
+
+export default connect(mapStateToProps)(InvoiceReviewScreen);
