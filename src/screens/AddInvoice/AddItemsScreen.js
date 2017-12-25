@@ -8,21 +8,51 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { addNewLine } from '../../actions/invoiceActions';
+import {
+  addNewLine,
+  onChangeItemAmount,
+  onChangeItemCode,
+} from '../../actions/invoiceActions';
 
 import LineItem from './LineItem';
 
 class AddItemsScreen extends Component <{}> {
+
+  onChangeItemAmount = (index, amount) => {
+    const updatedLineItem = {
+      code: this.props.items[index].code,
+      amount,
+    };
+    const items = this.props.items.splice(index, 1, updatedLineItem);
+    console.log('items', items);
+    this.setState({ items });
+  }
+
+  onChangeItemCode = (index, code) => {
+    let item = this.props.items[index];
+    item.code = code;
+    const updatedItems = this.props.items.splice(index,1, item);
+    console.log('updatedItems', updatedItems);
+    this.setState({ items: updatedItems });
+  }
+
   render() {
     const lineItems = this.props.items.map(item => {
+      const amount = item.amount;
+      const code = item.code;
       return (
         <LineItem
           key={item.code}
           index={this.props.items.indexOf(item)}
-          item={item}
+          amount={amount}
+          code={code}
+          onChangeItemAmount={this.props.onChangeItemAmount}
+          onChangeItemCode={this.props.onChangeItemCode}
         />
       );
     });
+
+    console.log('this.props', this.props);
 
     return (
 
@@ -78,4 +108,8 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { items };
 };
 
-export default connect(mapStateToProps, { addNewLine })(AddItemsScreen);
+export default connect(mapStateToProps, {
+  addNewLine,
+  onChangeItemAmount,
+  onChangeItemCode,
+})(AddItemsScreen);

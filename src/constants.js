@@ -3,6 +3,9 @@ export const ADD_NEW_LINE = 'add_new_line';
 
 export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
 
+export const ON_CHANGE_ITEM_AMOUNT = 'on_change_item_amount';
+export const ON_CHANGE_ITEM_CODE = 'on_change_item_code';
+
 export const ON_CHANGE_VENDOR_NAME = 'on_change_vendor_name';
 
 export const RETRIEVE_INVOICES_BEGIN = 'retrieve_invoices_begin';

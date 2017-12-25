@@ -24,6 +24,23 @@ export function onChangeInvoiceNumber(invoiceNumber) {
   };
 }
 
+export function onChangeItemAmount(index, amount) {
+  amount = amount.slice(1);
+  return {
+    type: types.ON_CHANGE_ITEM_AMOUNT,
+    index,
+    amount,
+  };
+}
+
+export function onChangeItemCode(index, code) {
+  return {
+    type: types.ON_CHANGE_ITEM_CODE,
+    index,
+    code,
+  };
+}
+
 export function onChangeVendorName(vendorName) {
   return {
     type: types.ON_CHANGE_VENDOR_NAME,
