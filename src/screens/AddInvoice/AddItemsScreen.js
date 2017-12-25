@@ -20,23 +20,17 @@ class AddItemsScreen extends Component <{}> {
 
   render() {
     const lineItems = this.props.items.map(item => {
-      const amount = item.amount;
-      const code = item.code;
       const index = this.props.items.indexOf(item);
       return (
         <LineItem
           key={index}
-          index={index}
-          amount={amount}
-          code={code}
+          item={item}
           onChangeItemAmount={this.props.onChangeItemAmount}
           onChangeItemCode={this.props.onChangeItemCode}
         />
       );
     });
-
-    console.log('this.props', this.props);
-
+    
     return (
 
       <View style={{ flex: 1 }}>

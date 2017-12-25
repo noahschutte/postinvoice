@@ -2,24 +2,22 @@ import React from 'react';
 import { View, TextInput } from 'react-native';
 
 const LineItem = ({
-  index,
   onChangeItemCode,
   onChangeItemAmount,
-  code,
-  amount,
+  item,
 }) => {
   return (
     <View style={styles.itemsContainer}>
       <TextInput
         style={styles.itemCodeInputStyle}
-        value={code}
-        onChangeText={text => onChangeItemCode(index, text)}
+        value={item.code}
+        onChangeText={text => onChangeItemCode(item, text)}
       />
       <TextInput
         style={styles.itemTotalInputStyle}
         keyboardType='numeric'
-        value={'$'+amount}
-        onChangeText={text => onChangeItemAmount(index, text)}
+        value={'$'+item.amount}
+        onChangeText={text => onChangeItemAmount(item, text)}
       />
     </View>
   );
