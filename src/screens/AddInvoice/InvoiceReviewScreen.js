@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 
+import { postNewInvoice } from '../../actions/invoiceActions';
 import InvoiceItem from './InvoiceItem';
 
 class InvoiceReviewScreen extends Component <{}> {
@@ -20,7 +21,7 @@ class InvoiceReviewScreen extends Component <{}> {
               elevation: 1,
               borderRadius: 2,
             }}
-            onPress={() => alert('invoice confirmed!')}
+            onPress={() => this.props.postNewInvoice(this.props.newInvoice)}
           >
             <Text>Confirm</Text>
           </TouchableOpacity>
@@ -35,4 +36,4 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { newInvoice };
 };
 
-export default connect(mapStateToProps)(InvoiceReviewScreen);
+export default connect(mapStateToProps, { postNewInvoice })(InvoiceReviewScreen);
