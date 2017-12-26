@@ -10,6 +10,13 @@ export function addNewLine() {
   };
 }
 
+export function onChangeInvoiceDate(date) {
+  return {
+    type: types.ON_CHANGE_INVOICE_DATE,
+    date,
+  };
+}
+
 export function onChangeInvoiceNumber(invoiceNumber) {
   return {
     type: types.ON_CHANGE_INVOICE_NUMBER,

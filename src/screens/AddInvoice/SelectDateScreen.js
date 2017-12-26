@@ -5,8 +5,10 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-
 import DatePicker from 'react-native-datepicker';
+import { connect } from 'react-redux';
+
+import { onChangeInvoiceDate } from '../../actions/invoiceActions';
 
 class SelectDateScreen extends Component <{}> {
   constructor(props) {
@@ -28,7 +30,7 @@ class SelectDateScreen extends Component <{}> {
   }
 
   confirmDate = (date) => {
-    this.setState({ date });
+    this.props.onChangeInvoiceDate(date);
     this.props.navigator.push({
       screen: 'postinvoice.SelectVendorScreen',
       title: 'Select Vendor',
@@ -88,4 +90,9 @@ const styles = {
   },
 };
 
-export default SelectDateScreen;
+const mapStateToProps = ({ invoicesReducer }) => {
+  const date = invoicesReducer.newInvoice.date;
+  return { date };
+};
+
+export default connect(mapStateToProps, { onChangeInvoiceDate })(SelectDateScreen);
