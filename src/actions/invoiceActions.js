@@ -121,22 +121,24 @@ export function postNewInvoice(newInvoice) {
     } = newInvoice;
     let total = 0;
     items.forEach(item => {
-      total += item.amount;
+      total += parseFloat(item.amount);
     });
     console.log('date, invoiceNumber, vendor, items, total', date, invoiceNumber, vendor, items, total);
+    const body = JSON.stringify({
+      date,
+      supplierName: vendor,
+      invoiceNumber,
+      total,
+      items,
+    });
+    console.log('body', body);
     fetch(`${DB_URL}/invoices`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({
-        date,
-        supplierName: vendor,
-        invoiceNumber,
-        total,
-        items,
-      })
+      body,
     })
     .then(response => response.json())
     .then(responseJSON => {
