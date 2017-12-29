@@ -1,6 +1,10 @@
 export const ADD_LINE_ITEM = 'add_line_item';
 export const ADD_NEW_LINE = 'add_new_line';
 
+export const CLEAR_NEW_INVOICE_DATA = 'clear_new_invoice_data';
+
+export const HANDLE_ERROR = 'handle_error';
+
 export const ON_CHANGE_INVOICE_DATE = 'on_change_invoice_date';
 
 export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';

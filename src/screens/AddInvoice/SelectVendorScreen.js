@@ -30,7 +30,7 @@ class SelectVendorScreen extends Component <{}> {
       id: 'temporary_id',
       supplierName: this.state.newVendorName,
     });
-    this.setState({ selectedVendor: 'temporary_id' });
+    this.setState({ selectedVendor: this.state.newVendorName });
     this.props.navigator.dismissAllModals();
   }
 
