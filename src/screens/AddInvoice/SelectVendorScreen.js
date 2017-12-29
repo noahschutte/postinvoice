@@ -50,12 +50,12 @@ class SelectVendorScreen extends Component <{}> {
   _keyExtractor = item => item.id;
 
   rendorVendor = ({ item }) => {
-    if (this.state.selectedVendor !== item.id){
+    if (this.state.selectedVendor !== item.supplierName){
       return (
         <TouchableOpacity
           key={item.id}
           style={styles.vendorContainer}
-          onPress={() => this.onPress(item.id)}
+          onPress={() => this.onPress(item.supplierName)}
         >
           <Text style={styles.vendorTextStyle}>{item.supplierName}</Text>
         </TouchableOpacity>
@@ -65,7 +65,7 @@ class SelectVendorScreen extends Component <{}> {
       <TouchableOpacity
         key={item.id}
         style={styles.selectedVendorContainer}
-        onPress={() => this.onPress(item.id)}
+        onPress={() => this.onPress(item.supplierName)}
       >
         <Text style={styles.vendorTextStyle}>{item.supplierName}</Text>
         <Icon name='check' size={30} color='green' style={styles.iconStyle} />

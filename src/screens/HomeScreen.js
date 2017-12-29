@@ -113,19 +113,21 @@ class HomeScreen extends Component <{}> {
             amount: 20.00
           }
         ];
+        const body = JSON.stringify({
+          date,
+          supplierName,
+          invoiceNumber,
+          total,
+          items,
+        });
+        console.log('body', body);
         fetch(`${DB_URL}/invoices`, {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify({
-            date,
-            supplierName,
-            invoiceNumber,
-            total,
-            items,
-          })
+          body
         })
         .then(response => response.json())
         .then(responseJSON => {

@@ -48,6 +48,12 @@ export function onChangeVendorName(vendorName) {
   };
 }
 
+export function postNewInvoiceBegin() {
+  return {
+    type: types.POST_NEW_INVOICE_BEGIN,
+  };
+}
+
 export function retrieveInvoicesBegin() {
   return {
     type: types.RETRIEVE_INVOICES_BEGIN,
@@ -101,5 +107,48 @@ export function fetchInvoices() {
     })
     .then(() => dispatch(retrieveInvoicesComplete()))
     .catch(err => alert(err));
+  };
+}
+
+export function postNewInvoice(newInvoice) {
+  return function(dispatch) {
+    dispatch(postNewInvoiceBegin());
+    const {
+      date,
+      invoiceNumber,
+      vendor,
+      items,
+    } = newInvoice;
+    let total = 0;
+    items.forEach(item => {
+      total += parseFloat(item.amount);
+    });
+    console.log('date, invoiceNumber, vendor, items, total', date, invoiceNumber, vendor, items, total);
+    const body = JSON.stringify({
+      date,
+      supplierName: vendor,
+      invoiceNumber,
+      total,
+      items,
+    });
+    console.log('body', body);
+    fetch(`${DB_URL}/invoices`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body,
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      if (responseJSON.errorMessage) {
+        alert(responseJSON.errorMessage);
+      } else {
+        console.log('responseJSON: ', responseJSON);
+      }
+    })
+    .catch(error => console.error(error));
+
   };
 }

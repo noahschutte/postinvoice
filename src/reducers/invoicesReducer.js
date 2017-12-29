@@ -19,17 +19,6 @@ const initialState = {
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
-    // case types.ADD_LINE_ITEM:
-    //   return {
-    //     ...state,
-    //     newInvoice: {
-    //       ...state.newInvoice,
-    //       items: [
-    //         ...state.newInvoice.items,
-    //         action.item
-    //       ],
-    //     },
-    //   };
     case types.ADD_NEW_LINE:
       return {
         ...state,
@@ -103,6 +92,11 @@ function invoices(state = initialState, action) {
           ...state.newInvoice,
           vendor: action.vendorName,
         },
+      };
+    case types.POST_NEW_INVOICE_BEGIN:
+      return {
+        ...state,
+        isFetching: true,
       };
     case types.RETRIEVE_INVOICES_BEGIN:
       return {

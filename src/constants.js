@@ -10,6 +10,8 @@ export const ON_CHANGE_ITEM_CODE = 'on_change_item_code';
 
 export const ON_CHANGE_VENDOR_NAME = 'on_change_vendor_name';
 
+export const POST_NEW_INVOICE_BEGIN = 'post_new_invoice_begin';
+
 export const RETRIEVE_INVOICES_BEGIN = 'retrieve_invoices_begin';
 export const RETRIEVE_INVOICES_COMPLETE = 'retrieve_invoices_complete';
 
