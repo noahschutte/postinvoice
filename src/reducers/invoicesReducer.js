@@ -3,6 +3,7 @@ import * as types from '../constants';
 const initialState = {
   isFetching: false,
   invoices: [],
+  error: '',
   newInvoice: {
     date: '',
     invoiceNumber: '',
@@ -32,6 +33,11 @@ function invoices(state = initialState, action) {
             },
           ]
         }
+      };
+    case types.CLEAR_NEW_INVOICE_DATA:
+      return {
+        ...state,
+        newInvoice: initialState.newInvoice,
       };
     case types.HANDLE_ERROR:
       return {

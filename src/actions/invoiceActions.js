@@ -10,6 +10,12 @@ export function addNewLine() {
   };
 }
 
+export function clearNewInvoiceData() {
+  return {
+    type: types.CLEAR_NEW_INVOICE_DATA,
+  };
+}
+
 export function handleError(error) {
   return {
     type: types.HANDLE_ERROR,
@@ -117,7 +123,7 @@ export function fetchInvoices() {
   };
 }
 
-export function postNewInvoice(newInvoice) {
+export function postNewInvoice(newInvoice, callback) {
   return function(dispatch) {
     dispatch(postNewInvoiceBegin());
     let {
@@ -146,12 +152,12 @@ export function postNewInvoice(newInvoice) {
       method: 'POST',
       body,
     })
-    .then(response => response.json())
+    .then(response => response.ok ? callback() : response.json())
     .then(responseJSON => {
-      if (responseJSON.status !== 200) {
+      if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }
     })
-    .catch(error => dispatch(handleError(error)));
+    .catch(error => dispatch(handleError(error.errorMessage)));
   };
 }

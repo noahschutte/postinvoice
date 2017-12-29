@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import { postNewInvoice } from '../../actions/invoiceActions';
+import { clearNewInvoiceData, postNewInvoice } from '../../actions/invoiceActions';
 import InvoiceItem from './InvoiceItem';
 
 class InvoiceReviewScreen extends Component <{}> {
+  postNewInvoiceCallback = () => {
+    this.props.clearNewInvoiceData();
+    this.props.navigator.popToRoot({
+      animated: true,
+      animationType: 'fade',
+    });
+  }
   render() {
-    const { date, vendor, invoiceNumber, items } = this.props.newInvoice;
+    const { postNewInvoice, newInvoice } = this.props;
+    const { date, vendor, invoiceNumber, items } = newInvoice;
     return (
       <View style={{ flex: 1 }}>
         <InvoiceItem itemType='Date' item={date} />
@@ -21,7 +29,7 @@ class InvoiceReviewScreen extends Component <{}> {
               elevation: 1,
               borderRadius: 2,
             }}
-            onPress={() => this.props.postNewInvoice(this.props.newInvoice)}
+            onPress={() => postNewInvoice(newInvoice, this.postNewInvoiceCallback)}
           >
             <Text>Confirm</Text>
           </TouchableOpacity>
@@ -32,8 +40,11 @@ class InvoiceReviewScreen extends Component <{}> {
 }
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  const { newInvoice } = invoicesReducer;
-  return { newInvoice };
+  const { newInvoice, error } = invoicesReducer;
+  return { newInvoice, error };
 };
 
-export default connect(mapStateToProps, { postNewInvoice })(InvoiceReviewScreen);
+export default connect(mapStateToProps, {
+  clearNewInvoiceData,
+  postNewInvoice
+})(InvoiceReviewScreen);
