@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { DB_URL } from 'react-native-dotenv';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import { fetchInvoices } from '../actions/invoiceActions';
+
+import InvoiceItem from '../components/InvoiceItem';
 
 class HomeScreen extends Component <{}> {
 
@@ -45,125 +46,31 @@ class HomeScreen extends Component <{}> {
     }
   }
 
-  onPress() {
-    console.log('DB_URL: ', DB_URL);
-    const route = this.children.props.children;
-    console.log('route: ', route);
-    switch (route) {
-      case 'index': {
-        const url = `${DB_URL}/invoices`;
-        fetch(url, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'GET',
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(err => alert(err));
-      }
-        break;
-      case 'show':
-        fetch(`${DB_URL}/invoices/${1}`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'GET'
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(error => console.error(error));
-        break;
-      case 'delete':
-        fetch(`${DB_URL}/invoices/${1}`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'DELETE',
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(err => alert(err));
-        break;
-      case 'create': {
-        const date = new Date();
-        const supplierName = 'Company Z';
-        const invoiceNumber = '5555';
-        const total = 40.00;
-        const items = [
-          {
-            code: 'Cheese',
-            amount: 20.00
-          },
-          {
-            code: 'Glasses',
-            amount: 20.00
-          }
-        ];
-        const body = JSON.stringify({
-          date,
-          supplierName,
-          invoiceNumber,
-          total,
-          items,
-        });
-        console.log('body', body);
-        fetch(`${DB_URL}/invoices`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'POST',
-          body
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(error => console.error(error));
-        break;
-      }
-    }
+  _keyExtractor = item => {
+    return item.id;
   }
 
-
+  renderInvoiceItem = ({ item }) => {
+    return <InvoiceItem key={item.id} item={item} />;
+  }
 
   render() {
     return (
-      <View>
-        <Text>Home Screen</Text>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          style={{ flex: 1 }}
+          data={this.props.invoices}
+          keyExtractor={this._keyExtractor}
+          renderItem={this.renderInvoiceItem}
+        />
       </View>
     );
   }
 }
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  return { invoicesReducer };
+  const { invoices } = invoicesReducer;
+  return { invoices };
 };
 
 export default connect(mapStateToProps, { fetchInvoices })(HomeScreen);
