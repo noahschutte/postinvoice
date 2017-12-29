@@ -10,6 +10,13 @@ export function addNewLine() {
   };
 }
 
+export function handleError(error) {
+  return {
+    type: types.HANDLE_ERROR,
+    error,
+  };
+}
+
 export function onChangeInvoiceDate(date) {
   return {
     type: types.ON_CHANGE_INVOICE_DATE,
@@ -113,17 +120,17 @@ export function fetchInvoices() {
 export function postNewInvoice(newInvoice) {
   return function(dispatch) {
     dispatch(postNewInvoiceBegin());
-    const {
+    let {
       date,
       invoiceNumber,
       vendor,
       items,
     } = newInvoice;
+    date = new Date(date);
     let total = 0;
     items.forEach(item => {
       total += parseFloat(item.amount);
     });
-    console.log('date, invoiceNumber, vendor, items, total', date, invoiceNumber, vendor, items, total);
     const body = JSON.stringify({
       date,
       supplierName: vendor,
@@ -131,7 +138,6 @@ export function postNewInvoice(newInvoice) {
       total,
       items,
     });
-    console.log('body', body);
     fetch(`${DB_URL}/invoices`, {
       headers: {
         Accept: 'application/json',
@@ -142,13 +148,10 @@ export function postNewInvoice(newInvoice) {
     })
     .then(response => response.json())
     .then(responseJSON => {
-      if (responseJSON.errorMessage) {
-        alert(responseJSON.errorMessage);
-      } else {
-        console.log('responseJSON: ', responseJSON);
+      if (responseJSON.status !== 200) {
+        dispatch(handleError(responseJSON.error));
       }
     })
-    .catch(error => console.error(error));
-
+    .catch(error => dispatch(handleError(error)));
   };
 }

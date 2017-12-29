@@ -33,12 +33,17 @@ function invoices(state = initialState, action) {
           ]
         }
       };
+    case types.HANDLE_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
     case types.ON_CHANGE_INVOICE_DATE:
       return {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          date: action.date,
+          date: action.date
         },
       };
     case types.ON_CHANGE_INVOICE_NUMBER:
