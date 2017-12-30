@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const InvoiceItem = ({ item }) => {
+const InvoiceItem = ({ invoice }) => {
+  console.log('invoice: ', invoice);
   return (
     <View style={{ flex: 1, flexDirection: 'row', }}>
       <View style={{ flex: 1 }}>
-        <Text>{item.date}</Text>
+        <Text>{invoice.vendor.name}</Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text>{item.invoiceNumber}</Text>
+        <Text>{invoice.number}</Text>
       </View>
     </View>
   );

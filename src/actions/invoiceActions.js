@@ -23,6 +23,12 @@ export function handleError(error) {
   };
 }
 
+export function isFetching() {
+  return {
+    type: types.IS_FETCHING,
+  };
+}
+
 export function onChangeInvoiceDate(date) {
   return {
     type: types.ON_CHANGE_INVOICE_DATE,
@@ -67,6 +73,12 @@ export function postNewInvoiceBegin() {
   };
 }
 
+export function postNewInvoiceComplete() {
+  return {
+    type: types.POST_NEW_INVOICE_COMPLETE,
+  };
+}
+
 export function retrieveInvoicesBegin() {
   return {
     type: types.RETRIEVE_INVOICES_BEGIN,
@@ -90,6 +102,13 @@ export function updateInvoices(invoices) {
   return {
     type: types.UPDATE_INVOICES,
     invoices,
+  };
+}
+
+export function updateVendorList(vendors) {
+  return {
+    type: types.UPDATE_VENDOR_LIST,
+    vendors,
   };
 }
 
@@ -120,6 +139,30 @@ export function fetchInvoices() {
     })
     .then(() => dispatch(retrieveInvoicesComplete()))
     .catch(err => alert(err));
+  };
+}
+
+export function createNewInvoiceBegin() {
+  const alphabetize = (array) => {
+    return array;
+  };
+  return function (dispatch) {
+    dispatch(isFetching());
+    let url = `${DB_URL}/vendors`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      const { vendors } = responseJSON;
+      alphabetize(vendors);
+      dispatch(updateVendorList(vendors));
+    })
+    .catch(error => alert(error));
   };
 }
 
@@ -154,6 +197,7 @@ export function postNewInvoice(newInvoice, callback) {
     })
     .then(response => response.ok ? callback() : response.json())
     .then(responseJSON => {
+      dispatch(postNewInvoiceComplete());
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }

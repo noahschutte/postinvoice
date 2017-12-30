@@ -50,14 +50,14 @@ class SelectVendorScreen extends Component <{}> {
   _keyExtractor = item => item.id;
 
   rendorVendor = ({ item }) => {
-    if (this.state.selectedVendor !== item.supplierName){
+    if (this.state.selectedVendor !== item.name){
       return (
         <TouchableOpacity
           key={item.id}
           style={styles.vendorContainer}
-          onPress={() => this.onPress(item.supplierName)}
+          onPress={() => this.onPress(item.name)}
         >
-          <Text style={styles.vendorTextStyle}>{item.supplierName}</Text>
+          <Text style={styles.vendorTextStyle}>{item.name}</Text>
         </TouchableOpacity>
       );
     }
@@ -65,9 +65,9 @@ class SelectVendorScreen extends Component <{}> {
       <TouchableOpacity
         key={item.id}
         style={styles.selectedVendorContainer}
-        onPress={() => this.onPress(item.supplierName)}
+        onPress={() => this.onPress(item.name)}
       >
-        <Text style={styles.vendorTextStyle}>{item.supplierName}</Text>
+        <Text style={styles.vendorTextStyle}>{item.name}</Text>
         <Icon name='check' size={30} color='green' style={styles.iconStyle} />
       </TouchableOpacity>
     );
@@ -87,7 +87,7 @@ class SelectVendorScreen extends Component <{}> {
         <View style={{ flex: 7 }}>
           <FlatList
             style={styles.vendorListContainer}
-            data={this.props.invoices}
+            data={this.props.vendors}
             keyExtractor={this._keyExtractor}
             renderItem={this.rendorVendor}
             extraData={this.state}
@@ -133,8 +133,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  const { invoices } = invoicesReducer;
-  return { invoices };
+  const { vendors } = invoicesReducer;
+  return { vendors };
 };
 
 export default connect(mapStateToProps, {

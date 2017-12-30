@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
-import { fetchInvoices } from '../actions/invoiceActions';
+import { createNewInvoiceBegin, fetchInvoices } from '../actions/invoiceActions';
 
 import InvoiceItem from '../components/InvoiceItem';
 
@@ -42,6 +42,7 @@ class HomeScreen extends Component <{}> {
             ]
           }
         });
+        this.props.createNewInvoiceBegin();
       }
     }
   }
@@ -51,7 +52,7 @@ class HomeScreen extends Component <{}> {
   }
 
   renderInvoiceItem = ({ item }) => {
-    return <InvoiceItem key={item.id} item={item} />;
+    return <InvoiceItem key={item.id} invoice={item} />;
   }
 
   render() {
@@ -73,4 +74,7 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { invoices };
 };
 
-export default connect(mapStateToProps, { fetchInvoices })(HomeScreen);
+export default connect(mapStateToProps, {
+  createNewInvoiceBegin,
+  fetchInvoices
+})(HomeScreen);
