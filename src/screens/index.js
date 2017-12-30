@@ -2,7 +2,7 @@ import { Navigation } from 'react-native-navigation';
 
 import HomeScreen from './HomeScreen';
 import SelectDateScreen from './AddInvoice/SelectDateScreen';
-import SelectVendorScreen from './AddInvoice/SelectVendorScreen';
+import SelectVendorScreen from './AddInvoice/SelectVendorScreen2';
 import InvoiceNumberScreen from './AddInvoice/InvoiceNumberScreen';
 import CategoryBreakdownScreen from './AddInvoice/CategoryBreakdownScreen';
 import AddVendorModal from './AddInvoice/AddVendorModal';
