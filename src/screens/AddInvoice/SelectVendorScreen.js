@@ -27,8 +27,9 @@ class SelectVendorScreen extends Component <{}> {
 
   addVendor = () => {
     this.props.temporaryAddVendor({
+      isNew: true,
       id: 'temporary_id',
-      supplierName: this.state.newVendorName,
+      name: this.state.newVendorName,
     });
     this.setState({ selectedVendor: this.state.newVendorName });
     this.props.navigator.dismissAllModals();

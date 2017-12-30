@@ -9,7 +9,7 @@ const initialState = {
   newInvoice: {
     date: '',
     invoiceNumber: '',
-    vendor: '',
+    vendor: {},
     items: [
       {
         amount: '',
@@ -114,7 +114,10 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          vendor: action.vendorName,
+          vendor: {
+            ...state.newInvoice.vendor,
+            name: action.vendorName,
+          }
         },
       };
     case types.POST_NEW_INVOICE_BEGIN:
@@ -140,7 +143,7 @@ function invoices(state = initialState, action) {
     case types.TEMPORARY_ADD_VENDOR:
       return {
         ...state,
-        invoices: [action.mockInvoice, ...state.invoices],
+        vendors: [action.newVendor, ...state.vendors],
       };
     case types.UPDATE_CODES:
       return {

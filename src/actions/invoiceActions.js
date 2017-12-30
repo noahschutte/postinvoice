@@ -97,10 +97,10 @@ export function retrieveInvoicesComplete() {
   };
 }
 
-export function temporaryAddVendor(mockInvoice) {
+export function temporaryAddVendor(newVendor) {
   return {
     type: types.TEMPORARY_ADD_VENDOR,
-    mockInvoice,
+    newVendor,
   };
 }
 
@@ -232,11 +232,14 @@ export function postNewInvoice(newInvoice, callback) {
       vendor,
       items,
     } = newInvoice;
+
     date = new Date(date);
+
     let total = 0;
     items.forEach(item => {
       total += parseFloat(item.amount);
     });
+
     const body = JSON.stringify({
       date,
       supplierName: vendor,
