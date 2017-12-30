@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Autocomplete from 'react-native-autocomplete-input';
 
 import {
   addNewLine,
@@ -18,7 +19,34 @@ import LineItem from './LineItem';
 
 class AddItemsScreen extends Component <{}> {
 
+  state = {
+    query: '',
+    codes: [],
+  };
+
+  componentDidMount() {
+    let codes = [];
+    Object.entries(this.props.codes).forEach(entry => {
+      codes = [...codes, entry[1].name];
+    });
+    this.setState({ codes });
+  }
+
+  findCode(query) {
+    const { codes } = this.state;
+
+    if (query === '') {
+      return codes;
+    }
+
+    const regex = new RegExp(`${query.trim()}`, 'i');
+
+    return codes.filter(code => code.search(regex) >= 0);
+  }
+
   render() {
+    const { query } = this.state;
+    const codes = this.findCode(query);
     const lineItems = this.props.items.map(item => {
       const index = this.props.items.indexOf(item);
       return (
@@ -30,10 +58,25 @@ class AddItemsScreen extends Component <{}> {
         />
       );
     });
-    
+
     return (
 
       <View style={{ flex: 1 }}>
+
+        <Autocomplete
+          data={codes}
+          containerStyle={{ flex: 1 }}
+          onChangeText={text => this.setState({ query: text })}
+          placeholder='Search Codes'
+          renderItem={item => {
+            console.log('item: ', item);
+            return (
+              <View>
+                <Text>{item}</Text>
+              </View>
+            );
+          }}
+        />
 
         <ScrollView style={{ flex: 2, paddingTop: 40 }}>
           {lineItems}
@@ -81,8 +124,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  const items = invoicesReducer.newInvoice.items;
-  return { items };
+  const { newInvoice, codes } = invoicesReducer;
+  const items = newInvoice.items;
+  return { items, codes };
 };
 
 export default connect(mapStateToProps, {

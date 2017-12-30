@@ -106,7 +106,7 @@ export function temporaryAddVendor(newVendor) {
 
 export function updateCodes(codes) {
   return {
-    type: types.updateCodes,
+    type: types.UPDATE_CODES,
     codes,
   };
 }
