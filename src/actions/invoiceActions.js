@@ -105,6 +105,13 @@ export function temporaryAddVendor(mockInvoice) {
   };
 }
 
+export function updateCodes(codes) {
+  return {
+    type: types.updateCodes,
+    codes,
+  };
+}
+
 export function updateInvoices(invoices) {
   return {
     type: types.UPDATE_INVOICES,
@@ -189,6 +196,21 @@ export function createNewInvoiceBegin() {
       const { vendors } = responseJSON;
       alphabetize(vendors);
       dispatch(updateVendorList(vendors));
+    })
+    .catch(error => alert(error));
+    url = `${DB_URL}/codes`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      const { codes } = responseJSON;
+      alphabetize(codes);
+      dispatch(updateCodes(codes));
     })
     .catch(error => alert(error));
   };

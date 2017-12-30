@@ -26,6 +26,6 @@ export const RETRIEVE_INVOICES_COMPLETE = 'retrieve_invoices_complete';
 
 export const TEMPORARY_ADD_VENDOR = 'temporary_add_vendor';
 
+export const UPDATE_CODES = 'update_codes';
 export const UPDATE_INVOICES = 'update_invoices';
-
 export const UPDATE_VENDOR_LIST = 'update_vendor_list';

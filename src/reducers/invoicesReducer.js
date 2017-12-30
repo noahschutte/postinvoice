@@ -3,6 +3,7 @@ import * as types from '../constants';
 const initialState = {
   isFetching: false,
   invoices: [],
+  codes: [],
   vendors: [],
   error: '',
   newInvoice: {
@@ -139,6 +140,11 @@ function invoices(state = initialState, action) {
       return {
         ...state,
         invoices: [action.mockInvoice, ...state.invoices],
+      };
+    case types.UPDATE_CODES:
+      return {
+        ...state,
+        codes: action.codes,
       };
     case types.UPDATE_INVOICES:
     return {

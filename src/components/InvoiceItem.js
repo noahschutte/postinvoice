@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const InvoiceItem = ({ invoice, deleteInvoice }) => {
-  console.log('invoice: ', invoice);
   return (
     <TouchableOpacity
-      onPress={() => deleteInvoice(invoice.id)}
+      onLongPress={() => deleteInvoice(invoice.id)}
       style={styles.invoiceItemStyle}
     >
       <View style={{ flex: 1 }}>
