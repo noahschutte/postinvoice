@@ -40,6 +40,11 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: initialState.newInvoice,
       };
+    case types.FETCHING_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case types.HANDLE_ERROR:
       return {
         ...state,

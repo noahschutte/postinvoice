@@ -1,18 +1,35 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-const InvoiceItem = ({ invoice }) => {
+const InvoiceItem = ({ invoice, deleteInvoice }) => {
   console.log('invoice: ', invoice);
   return (
-    <View style={{ flex: 1, flexDirection: 'row', }}>
+    <TouchableOpacity
+      onPress={() => deleteInvoice(invoice.id)}
+      style={styles.invoiceItemStyle}
+    >
       <View style={{ flex: 1 }}>
-        <Text>{invoice.vendor.name}</Text>
+        <Text style={styles.vendorNameStyle}>{invoice.vendor.name}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <Text>{invoice.number}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
+
+const styles = {
+  invoiceItemStyle: {
+    flexDirection: 'row',
+    backgroundColor: '#e9e9e9',
+    borderBottomWidth: 0.5,
+    borderColor: 'rgba(0,0,0,0.2)',
+    flex: 1,
+  },
+  vendorNameStyle: {
+    fontSize: 26,
+  },
+};
+
 
 export default InvoiceItem;

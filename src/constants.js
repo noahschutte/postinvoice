@@ -3,6 +3,8 @@ export const ADD_NEW_LINE = 'add_new_line';
 
 export const CLEAR_NEW_INVOICE_DATA = 'clear_new_invoice_data';
 
+export const FETCHING_COMPLETE = 'fetching_complete';
+
 export const HANDLE_ERROR = 'handle_error';
 
 export const IS_FETCHING = 'is_fetching';

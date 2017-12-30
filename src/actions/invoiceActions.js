@@ -16,6 +16,12 @@ export function clearNewInvoiceData() {
   };
 }
 
+export function fetchingComplete() {
+  return {
+    type: types.FETCHING_COMPLETE,
+  };
+}
+
 export function handleError(error) {
   return {
     type: types.HANDLE_ERROR,
@@ -24,6 +30,7 @@ export function handleError(error) {
 }
 
 export function isFetching() {
+  console.log('reached here though');
   return {
     type: types.IS_FETCHING,
   };
@@ -115,6 +122,27 @@ export function updateVendorList(vendors) {
 /*
 * asynchronous action creators
 */
+
+export function deleteInvoice(invoiceId) {
+  return function (dispatch) {
+    console.log('reached', invoiceId);
+    dispatch(isFetching());
+    const url = `${DB_URL}/invoices/${invoiceId}`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      console.log('responseJSON', responseJSON);
+      dispatch(fetchingComplete());
+    })
+    .catch(err => alert(err));
+  };
+}
 
 export function fetchInvoices() {
 
