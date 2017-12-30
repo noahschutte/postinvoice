@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const InvoiceItem = ({ invoice, deleteInvoice }) => {
+const InvoiceItem = ({ invoice, deleteInvoice, onPress }) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
       onLongPress={() => deleteInvoice(invoice.id)}
       style={styles.invoiceItemStyle}
     >

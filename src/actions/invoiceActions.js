@@ -213,6 +213,7 @@ export function createNewInvoiceBegin() {
       dispatch(updateCodes(codes));
     })
     .catch(error => alert(error));
+    dispatch(fetchingComplete());
   };
 }
 

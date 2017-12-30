@@ -56,7 +56,22 @@ class HomeScreen extends Component <{}> {
   }
 
   renderInvoiceItem = ({ item }) => {
-    return <InvoiceItem key={item.id} invoice={item} deleteInvoice={this.props.deleteInvoice} />;
+    return (
+      <InvoiceItem
+        key={item.id}
+        invoice={item}
+        onPress={() => {
+          this.props.navigator.push({
+            screen: 'postinvoice.ViewInvoiceScreen',
+            title: `Invoice #${item.number}`,
+            passProps: {
+              invoice: item,
+            }
+          });
+        }}
+        deleteInvoice={this.props.deleteInvoice}
+      />
+    );
   }
 
   render() {
