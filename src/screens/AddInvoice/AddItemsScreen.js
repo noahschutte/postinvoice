@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -44,6 +43,10 @@ class AddItemsScreen extends Component <{}> {
     return codes.filter(code => code.search(regex) >= 0);
   }
 
+  onChangeQuery = text => {
+    this.setState({ query: text });
+  }
+
   render() {
     const { query } = this.state;
     const codes = this.findCode(query);
@@ -53,8 +56,9 @@ class AddItemsScreen extends Component <{}> {
         <LineItem
           key={index}
           item={item}
+          data={codes}
           onChangeItemAmount={this.props.onChangeItemAmount}
-          onChangeItemCode={this.props.onChangeItemCode}
+          onChangeItemCode={this.onChangeQuery}
         />
       );
     });
@@ -63,7 +67,7 @@ class AddItemsScreen extends Component <{}> {
 
       <View style={{ flex: 1 }}>
 
-        <Autocomplete
+        {/* <Autocomplete
           data={codes}
           containerStyle={{ flex: 1 }}
           onChangeText={text => this.setState({ query: text })}
@@ -76,9 +80,9 @@ class AddItemsScreen extends Component <{}> {
               </View>
             );
           }}
-        />
+        /> */}
 
-        <ScrollView style={{ flex: 2, paddingTop: 40 }}>
+        <View style={{ flex: 2, paddingTop: 40 }}>
           {lineItems}
 
           <View style={{ flex: 1 }}>
@@ -86,7 +90,7 @@ class AddItemsScreen extends Component <{}> {
               <Icon name='plus' size={30} color='#fafafa' />
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
 
 
         <View style={{ flex: 0.2, elevation: 1, alignItems: 'center' }}>

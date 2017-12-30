@@ -1,17 +1,48 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Autocomplete from 'react-native-autocomplete-input';
 
-import { onChangeVendorName } from '../../actions/invoiceActions';
+import {
+  onChangeVendorName,
+  temporaryAddVendor
+} from '../../actions/invoiceActions';
+import VendorItem from './VendorItem';
 
 class SelectVendorScreen extends Component <{}> {
   state = {
     query: '',
+    newVendorName: '',
   };
 
+  addVendorModal = () => {
+    this.props.navigator.showModal({
+      screen: 'postinvoice.AddVendorModal',
+      navigatorStyle: {
+        navBarHidden: true,
+      },
+      passProps: {
+        addVendor: this.addVendor,
+        onChangeText: this.onChangeText,
+      },
+    });
+  }
+
+  addVendor = () => {
+    this.props.navigator.dismissAllModals();
+    this.confirmVendor({
+      isNew: true,
+      id: 'temporary_id',
+      name: this.state.newVendorName,
+    });
+
+  }
+
   confirmVendor = (vendor) => {
+    if (vendor.name) {
+      vendor = vendor.name;
+    }
     this.props.onChangeVendorName(vendor);
     this.props.navigator.push({
       screen: 'postinvoice.InvoiceNumberScreen',
@@ -19,14 +50,31 @@ class SelectVendorScreen extends Component <{}> {
     });
   }
 
+  onChangeText = (text) => {
+    this.setState({ newVendorName: text });
+  };
+
+  onPress = (vendorName) => {
+    if (vendorName === 'Add new vendor?') {
+      this.addVendorModal();
+    } else {
+      this.confirmVendor(vendorName);
+    }
+  }
+
   _filterData(query) {
-    const { vendors } = this.props;
+    let { vendors } = this.props;
     if (query === '') {
       return vendors;
     }
 
     const regex = new RegExp(`${query.trim()}`, 'i');
-    return vendors.filter(vendor => vendor.name.search(regex) >= 0);
+    vendors = vendors.filter(vendor => vendor.name.search(regex) >= 0);
+    if (vendors.length > 0) {
+      return vendors;
+    } else {
+      return [{ name: 'Add new vendor?' }];
+    }
   }
 
   render() {
@@ -40,16 +88,7 @@ class SelectVendorScreen extends Component <{}> {
           containerStyle={{ flex: 1 }}
           defaultValue={query}
           onChangeText={text => this.setState({ query: text })}
-          renderItem={item => {
-            return (
-              <TouchableOpacity
-                style={{ borderBottomWidth: 1, borderColor: 'rgba(0,0,0,0.3)' }}
-                onPress={() => this.confirmVendor(item.name)}
-              >
-                <Text style={{ fontSize: 24, marginLeft: 10, marginTop: 5, }}>{item.name}</Text>
-              </TouchableOpacity>
-            );
-          }}
+          renderItem={item => <VendorItem onPress={() => this.onPress(item.name)} vendor={item} /> }
         />
       </View>
     );
@@ -61,4 +100,7 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { vendors };
 };
 
-export default connect(mapStateToProps, { onChangeVendorName })(SelectVendorScreen);
+export default connect(mapStateToProps, {
+  onChangeVendorName,
+  temporaryAddVendor
+})(SelectVendorScreen);
