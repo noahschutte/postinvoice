@@ -30,7 +30,6 @@ export function handleError(error) {
 }
 
 export function isFetching() {
-  console.log('reached here though');
   return {
     type: types.IS_FETCHING,
   };
@@ -132,7 +131,6 @@ export function updateVendorList(vendors) {
 
 export function deleteInvoice(invoiceId) {
   return function (dispatch) {
-    console.log('reached', invoiceId);
     dispatch(isFetching());
     const url = `${DB_URL}/invoices/${invoiceId}`;
     fetch(url, {
@@ -144,10 +142,10 @@ export function deleteInvoice(invoiceId) {
     })
     .then(response => response.json())
     .then(responseJSON => {
-      console.log('responseJSON', responseJSON);
       dispatch(fetchingComplete());
+      if (responseJSON.error) dispatch(handleError(responseJSON.error));
     })
-    .catch(err => alert(err));
+    .catch(err => handleError(err));
   };
 }
 
@@ -173,12 +171,20 @@ export function fetchInvoices() {
       }
     })
     .then(() => dispatch(retrieveInvoicesComplete()))
-    .catch(err => alert(err));
+    .catch(err => handleError(err));
   };
 }
 
 export function createNewInvoiceBegin() {
   const alphabetize = (array) => {
+    function compare(a,b) {
+      if (a.name < b.name)
+        return -1;
+      if (a.name > b.name)
+        return 1;
+      return 0;
+      }
+    array.sort(compare);
     return array;
   };
   return function (dispatch) {
@@ -212,8 +218,8 @@ export function createNewInvoiceBegin() {
       alphabetize(codes);
       dispatch(updateCodes(codes));
     })
-    .catch(error => alert(error));
-    dispatch(fetchingComplete());
+    .then(() => fetchingComplete())
+    .catch(error => handleError(error));
   };
 }
 

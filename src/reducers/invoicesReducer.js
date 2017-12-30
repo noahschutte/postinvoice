@@ -49,6 +49,7 @@ function invoices(state = initialState, action) {
     case types.HANDLE_ERROR:
       return {
         ...state,
+        isFetching: false,
         error: action.error
       };
     case types.IS_FETCHING:
