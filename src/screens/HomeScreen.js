@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { DB_URL } from 'react-native-dotenv';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
-import { fetchInvoices } from '../actions/invoiceActions';
+import {
+  createNewInvoiceBegin,
+  deleteInvoice,
+  fetchInvoices
+} from '../actions/invoiceActions';
+
+import InvoiceItem from '../components/InvoiceItem';
 
 class HomeScreen extends Component <{}> {
 
@@ -12,10 +17,18 @@ class HomeScreen extends Component <{}> {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  componentDidMount() {
+    this.props.fetchInvoices();
+  }
+
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'sideMenu') {
-        console.log('menu button pressed');
+        this.props.navigator.toggleDrawer({
+          side: 'left',
+          animated: true,
+          to: 'open',
+        });
       }
       if (event.id == 'add') {
         this.props.navigator.push({
@@ -33,161 +46,55 @@ class HomeScreen extends Component <{}> {
             ]
           }
         });
+        this.props.createNewInvoiceBegin();
       }
     }
   }
 
-  onPress() {
-    console.log('DB_URL: ', DB_URL);
-    const route = this.children.props.children;
-    console.log('route: ', route);
-    switch (route) {
-      case 'index': {
-        const url = `${DB_URL}/invoices`;
-        fetch(url, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'GET',
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(err => alert(err));
-      }
-        break;
-      case 'show':
-        fetch(`${DB_URL}/invoices/${1}`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'GET'
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(error => console.error(error));
-        break;
-      case 'delete':
-        fetch(`${DB_URL}/invoices/${1}`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'DELETE',
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(err => alert(err));
-        break;
-      case 'create': {
-        const date = new Date();
-        const supplierName = 'Company Z';
-        const invoiceNumber = '5555';
-        const total = 40.00;
-        const items = [
-          {
-            code: 'Cheese',
-            amount: 20.00
-          },
-          {
-            code: 'Glasses',
-            amount: 20.00
-          }
-        ];
-        const body = JSON.stringify({
-          date,
-          supplierName,
-          invoiceNumber,
-          total,
-          items,
-        });
-        console.log('body', body);
-        fetch(`${DB_URL}/invoices`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'POST',
-          body
-        })
-        .then(response => response.json())
-        .then(responseJSON => {
-          if (responseJSON.errorMessage) {
-            alert(responseJSON.errorMessage);
-          } else {
-            console.log('responseJSON: ', responseJSON);
-          }
-        })
-        .catch(error => console.error(error));
-        break;
-      }
-    }
+  _keyExtractor = item => {
+    return item.id;
   }
 
-
+  renderInvoiceItem = ({ item }) => {
+    return (
+      <InvoiceItem
+        key={item.id}
+        invoice={item}
+        onPress={() => {
+          this.props.navigator.push({
+            screen: 'postinvoice.ViewInvoiceScreen',
+            title: `Invoice #${item.number}`,
+            passProps: {
+              invoice: item,
+            }
+          });
+        }}
+        deleteInvoice={this.props.deleteInvoice}
+      />
+    );
+  }
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-between', }}>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            index
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            show
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            delete
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            create
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.fetchInvoices} style={styles.button} >
-          <Text>
-            test
-          </Text>
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          style={{ flex: 1 }}
+          data={this.props.invoices}
+          keyExtractor={this._keyExtractor}
+          renderItem={this.renderInvoiceItem}
+        />
       </View>
     );
   }
 }
 
-const styles = {
-  button: {
-    backgroundColor: '#be4',
-    margin: 25,
-    padding: 25,
-  },
-};
-
 const mapStateToProps = ({ invoicesReducer }) => {
-  return { invoicesReducer };
+  const { invoices } = invoicesReducer;
+  return { invoices };
 };
 
-export default connect(mapStateToProps, { fetchInvoices })(HomeScreen);
+export default connect(mapStateToProps, {
+  createNewInvoiceBegin,
+  deleteInvoice,
+  fetchInvoices
+})(HomeScreen);

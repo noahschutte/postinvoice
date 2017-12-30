@@ -3,6 +3,8 @@ import * as types from '../constants';
 const initialState = {
   isFetching: false,
   invoices: [],
+  codes: [],
+  vendors: [],
   error: '',
   newInvoice: {
     date: '',
@@ -39,10 +41,20 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: initialState.newInvoice,
       };
+    case types.FETCHING_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case types.HANDLE_ERROR:
       return {
         ...state,
         error: action.error
+      };
+    case types.IS_FETCHING:
+      return {
+        ...state,
+        isFetching: true,
       };
     case types.ON_CHANGE_INVOICE_DATE:
       return {
@@ -109,6 +121,11 @@ function invoices(state = initialState, action) {
         ...state,
         isFetching: true,
       };
+    case types.POST_NEW_INVOICE_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case types.RETRIEVE_INVOICES_BEGIN:
       return {
         ...state,
@@ -124,11 +141,21 @@ function invoices(state = initialState, action) {
         ...state,
         invoices: [action.mockInvoice, ...state.invoices],
       };
+    case types.UPDATE_CODES:
+      return {
+        ...state,
+        codes: action.codes,
+      };
     case types.UPDATE_INVOICES:
     return {
       ...state,
       invoices: action.invoices,
     };
+    case types.UPDATE_VENDOR_LIST:
+      return {
+        ...state,
+        vendors: action.vendors,
+      };
     default:
       return state;
   }

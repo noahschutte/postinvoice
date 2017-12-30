@@ -16,10 +16,23 @@ export function clearNewInvoiceData() {
   };
 }
 
+export function fetchingComplete() {
+  return {
+    type: types.FETCHING_COMPLETE,
+  };
+}
+
 export function handleError(error) {
   return {
     type: types.HANDLE_ERROR,
     error,
+  };
+}
+
+export function isFetching() {
+  console.log('reached here though');
+  return {
+    type: types.IS_FETCHING,
   };
 }
 
@@ -67,6 +80,12 @@ export function postNewInvoiceBegin() {
   };
 }
 
+export function postNewInvoiceComplete() {
+  return {
+    type: types.POST_NEW_INVOICE_COMPLETE,
+  };
+}
+
 export function retrieveInvoicesBegin() {
   return {
     type: types.RETRIEVE_INVOICES_BEGIN,
@@ -86,6 +105,13 @@ export function temporaryAddVendor(mockInvoice) {
   };
 }
 
+export function updateCodes(codes) {
+  return {
+    type: types.updateCodes,
+    codes,
+  };
+}
+
 export function updateInvoices(invoices) {
   return {
     type: types.UPDATE_INVOICES,
@@ -93,9 +119,37 @@ export function updateInvoices(invoices) {
   };
 }
 
+export function updateVendorList(vendors) {
+  return {
+    type: types.UPDATE_VENDOR_LIST,
+    vendors,
+  };
+}
+
 /*
 * asynchronous action creators
 */
+
+export function deleteInvoice(invoiceId) {
+  return function (dispatch) {
+    console.log('reached', invoiceId);
+    dispatch(isFetching());
+    const url = `${DB_URL}/invoices/${invoiceId}`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      console.log('responseJSON', responseJSON);
+      dispatch(fetchingComplete());
+    })
+    .catch(err => alert(err));
+  };
+}
 
 export function fetchInvoices() {
 
@@ -120,6 +174,46 @@ export function fetchInvoices() {
     })
     .then(() => dispatch(retrieveInvoicesComplete()))
     .catch(err => alert(err));
+  };
+}
+
+export function createNewInvoiceBegin() {
+  const alphabetize = (array) => {
+    return array;
+  };
+  return function (dispatch) {
+    dispatch(isFetching());
+    let url = `${DB_URL}/vendors`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      const { vendors } = responseJSON;
+      alphabetize(vendors);
+      dispatch(updateVendorList(vendors));
+    })
+    .catch(error => alert(error));
+    url = `${DB_URL}/codes`;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      const { codes } = responseJSON;
+      alphabetize(codes);
+      dispatch(updateCodes(codes));
+    })
+    .catch(error => alert(error));
+    dispatch(fetchingComplete());
   };
 }
 
@@ -154,6 +248,7 @@ export function postNewInvoice(newInvoice, callback) {
     })
     .then(response => response.ok ? callback() : response.json())
     .then(responseJSON => {
+      dispatch(postNewInvoiceComplete());
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }
