@@ -10,15 +10,7 @@ const initialState = {
     date: '',
     number: '',
     vendor: {},
-    items: [
-      {
-        id: 'temporary_id',
-        code: {
-          name: 'WINE',
-        },
-        amount: '69.00',
-      },
-    ],
+    items: [],
   }
 };
 

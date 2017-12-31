@@ -4,7 +4,7 @@ import { View, Text, } from 'react-native';
 const LineItems = ({ items }) => {
   return items.map(item => {
     return (
-      <View style={styles.container} key={item.id}>
+      <View style={styles.container} key={item.code.name}>
         <View style={styles.codeContainer}>
           <Text style={styles.codeTextStyle}>{item.code.name}</Text>
         </View>

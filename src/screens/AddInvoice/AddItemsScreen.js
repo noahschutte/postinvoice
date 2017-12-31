@@ -34,7 +34,14 @@ class AddItemsScreen extends Component <{}> {
       },
       amount: this.state.amount,
     };
+    const codes = this.props.items.map(item => item.code.name);
     if (item.code.name === '' || item.amount === '') return;
+    if (codes.indexOf(item.code.name) !== -1) {
+      alert('code already exists!');
+      return;
+    }
+    this.onChangeCode('');
+    this.onChangeAmount('');
     this.props.addItemToInvoice(item);
   }
 
