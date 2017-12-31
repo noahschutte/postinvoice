@@ -8,7 +8,7 @@ import {
   onChangeVendorName,
   temporaryAddVendor
 } from '../../actions/invoiceActions';
-import VendorItem from './VendorItem';
+import VendorItem from '../../components/VendorItem';
 
 class SelectVendorScreen extends Component <{}> {
   state = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import Autocomplete from 'react-native-autocomplete-input';
 
@@ -7,24 +7,37 @@ const NewItem = ({
   amount,
   autocompleteData,
   code,
-  codes,
   onChangeAmount,
   onChangeCode,
 }) => {
-  console.log('codes: ', codes);
+
+  const codeTextInput = (
+    <TextInput
+      onChangeText={onChangeCode}
+      value={code}
+    />
+  );
 
   return (
     <View style={{ flexDirection: 'row' }}>
       <Autocomplete
-        defaultValue={code}
         data={autocompleteData}
         containerStyle={styles.containerStyle}
-        onChangeText={onChangeCode}
+        inputContainerStyle={styles.inputContainerStyle}
+        renderTextInput={() => codeTextInput}
+        renderItem={item => {
+          return (
+            <TouchableOpacity onPress={() => onChangeCode(item)}>
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          );
+        }}
       />
       <TextInput
         value={amount}
         style={styles.amountInputStyle}
         onChangeText={onChangeAmount}
+        keyboardType='numeric'
       />
     </View>
   );
@@ -33,10 +46,12 @@ const NewItem = ({
 const styles = {
   containerStyle: {
     flex: 1,
-    borderWidth: 0,
   },
   amountInputStyle: {
     flex: 1,
+  },
+  inputContainerStyle: {
+    borderWidth: 0,
   }
 };
 

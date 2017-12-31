@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import LineItems from '../../components/LineItems';
@@ -69,6 +69,18 @@ class AddItemsScreen extends Component <{}> {
           amount={this.state.amount}
           findCode={this._findCode}
         />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity style={{
+            backgroundColor: '#efeffa',
+            padding: 15,
+            elevation: 1,
+            borderRadius: 2,
+          }}
+          onPress={() => alert('not yet')}
+          >
+            <Text>Confirm</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
