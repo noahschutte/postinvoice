@@ -10,6 +10,13 @@ export function addNewLine() {
   };
 }
 
+export function addItemToInvoice(item) {
+  return {
+    type: types.ADD_ITEM_TO_INVOICE,
+    item,
+  };
+}
+
 export function clearNewInvoiceData() {
   return {
     type: types.CLEAR_NEW_INVOICE_DATA,
@@ -97,16 +104,16 @@ export function retrieveInvoicesComplete() {
   };
 }
 
-export function temporaryAddVendor(mockInvoice) {
+export function temporaryAddVendor(newVendor) {
   return {
     type: types.TEMPORARY_ADD_VENDOR,
-    mockInvoice,
+    newVendor,
   };
 }
 
 export function updateCodes(codes) {
   return {
-    type: types.updateCodes,
+    type: types.UPDATE_CODES,
     codes,
   };
 }
@@ -232,11 +239,14 @@ export function postNewInvoice(newInvoice, callback) {
       vendor,
       items,
     } = newInvoice;
+
     date = new Date(date);
+
     let total = 0;
     items.forEach(item => {
       total += parseFloat(item.amount);
     });
+
     const body = JSON.stringify({
       date,
       supplierName: vendor,

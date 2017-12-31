@@ -6,7 +6,7 @@ import SelectVendorScreen from './AddInvoice/SelectVendorScreen';
 import InvoiceNumberScreen from './AddInvoice/InvoiceNumberScreen';
 import CategoryBreakdownScreen from './AddInvoice/CategoryBreakdownScreen';
 import AddVendorModal from './AddInvoice/AddVendorModal';
-import AddItemsScreen from './AddInvoice/AddItemsScreen';
+import AddItemsScreen from './AddInvoice/AddItemsScreen2';
 import InvoiceReviewScreen from './AddInvoice/InvoiceReviewScreen';
 import SideMenu from './SideMenu';
 import ViewInvoiceScreen from './ViewInvoiceScreen';

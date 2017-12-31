@@ -1,38 +1,20 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { onChangeVendorName, temporaryAddVendor } from '../../actions/invoiceActions';
-import TwoButtons from '../../components/TwoButtons';
+import Autocomplete from 'react-native-autocomplete-input';
+
+import {
+  onChangeVendorName,
+  temporaryAddVendor
+} from '../../actions/invoiceActions';
+import VendorItem from '../../components/VendorItem';
 
 class SelectVendorScreen extends Component <{}> {
   state = {
-    selectedVendor: '',
+    query: '',
     newVendorName: '',
-  }
-
-  onPress = (selectedVendor) => {
-    this.setState({ selectedVendor });
-  }
-
-  onChangeText = (newVendorName) => {
-    this.setState({ newVendorName });
-  }
-
-  addVendor = () => {
-    this.props.temporaryAddVendor({
-      id: 'temporary_id',
-      supplierName: this.state.newVendorName,
-    });
-    this.setState({ selectedVendor: this.state.newVendorName });
-    this.props.navigator.dismissAllModals();
-  }
+  };
 
   addVendorModal = () => {
     this.props.navigator.showModal({
@@ -47,90 +29,71 @@ class SelectVendorScreen extends Component <{}> {
     });
   }
 
-  _keyExtractor = item => item.id;
+  addVendor = () => {
+    this.props.navigator.dismissAllModals();
+    this.confirmVendor({
+      isNew: true,
+      id: 'temporary_id',
+      name: this.state.newVendorName,
+    });
 
-  rendorVendor = ({ item }) => {
-    if (this.state.selectedVendor !== item.name){
-      return (
-        <TouchableOpacity
-          key={item.id}
-          style={styles.vendorContainer}
-          onPress={() => this.onPress(item.name)}
-        >
-          <Text style={styles.vendorTextStyle}>{item.name}</Text>
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity
-        key={item.id}
-        style={styles.selectedVendorContainer}
-        onPress={() => this.onPress(item.name)}
-      >
-        <Text style={styles.vendorTextStyle}>{item.name}</Text>
-        <Icon name='check' size={30} color='green' style={styles.iconStyle} />
-      </TouchableOpacity>
-    );
   }
 
-  confirmVendor = () => {
-    this.props.onChangeVendorName(this.state.selectedVendor);
+  confirmVendor = (vendor) => {
+    if (vendor.name) {
+      vendor = vendor.name;
+    }
+    this.props.onChangeVendorName(vendor);
     this.props.navigator.push({
       screen: 'postinvoice.InvoiceNumberScreen',
       title: 'Add Invoice Number',
     });
   }
 
+  onChangeText = (text) => {
+    this.setState({ newVendorName: text });
+  };
+
+  onPress = (vendorName) => {
+    if (vendorName === 'Add new vendor?') {
+      this.addVendorModal();
+    } else {
+      this.confirmVendor(vendorName);
+    }
+  }
+
+  _filterData(query) {
+    let { vendors } = this.props;
+    if (query === '') {
+      return vendors;
+    }
+
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    vendors = vendors.filter(vendor => vendor.name.search(regex) >= 0);
+    if (vendors.length > 0) {
+      return vendors;
+    } else {
+      return [{ name: 'Add new vendor?' }];
+    }
+  }
+
   render() {
+    const { query } = this.state;
+    const data = this._filterData(query);
+
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 7 }}>
-          <FlatList
-            style={styles.vendorListContainer}
-            data={this.props.vendors}
-            keyExtractor={this._keyExtractor}
-            renderItem={this.rendorVendor}
-            extraData={this.state}
-          />
-        </View>
-
-        <TwoButtons
-          leftText='New'
-          onLeftPress={this.addVendorModal}
-          rightText='Confirm'
-          onRightPress={this.confirmVendor}
+        <Autocomplete
+          data={data}
+          containerStyle={{ flex: 1 }}
+          defaultValue={query}
+          onChangeText={text => this.setState({ query: text })}
+          renderItem={item => <VendorItem onPress={() => this.onPress(item.name)} vendor={item} /> }
         />
-
       </View>
     );
   }
 }
-
-const styles = {
-  vendorListContainer: {
-    flex: 1,
-  },
-  selectedVendorContainer: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  vendorTextStyle: {
-    fontSize: 26,
-    margin: 6,
-  },
-  vendorContainer: {
-    backgroundColor: '#e9e9e9',
-    borderBottomWidth: 0.5,
-    borderColor: 'rgba(0,0,0,0.2)',
-    flex: 1,
-  },
-  iconStyle: {
-    margin: 5,
-    alignSelf: 'center',
-    paddingRight: 25,
-  }
-};
 
 const mapStateToProps = ({ invoicesReducer }) => {
   const { vendors } = invoicesReducer;

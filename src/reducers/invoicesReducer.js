@@ -9,11 +9,14 @@ const initialState = {
   newInvoice: {
     date: '',
     invoiceNumber: '',
-    vendor: '',
+    vendor: {},
     items: [
       {
-        amount: '',
-        code: '',
+        id: 'temporary_id',
+        code: {
+          name: 'WINE',
+        },
+        amount: '69.00',
       },
     ],
   }
@@ -22,6 +25,17 @@ const initialState = {
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    case types.ADD_ITEM_TO_INVOICE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: [
+            ...state.newInvoice.items,
+            action.item
+          ],
+        },
+      };
     case types.ADD_NEW_LINE:
       return {
         ...state,
@@ -30,7 +44,8 @@ function invoices(state = initialState, action) {
           items: [
             ...state.newInvoice.items,
             {
-              code: '',
+              id: 'temporary_id',
+              code: {},
               amount: '',
             },
           ]
@@ -114,7 +129,10 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          vendor: action.vendorName,
+          vendor: {
+            ...state.newInvoice.vendor,
+            name: action.vendorName,
+          }
         },
       };
     case types.POST_NEW_INVOICE_BEGIN:
@@ -140,7 +158,7 @@ function invoices(state = initialState, action) {
     case types.TEMPORARY_ADD_VENDOR:
       return {
         ...state,
-        invoices: [action.mockInvoice, ...state.invoices],
+        vendors: [action.newVendor, ...state.vendors],
       };
     case types.UPDATE_CODES:
       return {

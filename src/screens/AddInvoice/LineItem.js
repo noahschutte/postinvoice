@@ -1,17 +1,37 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
+
+import Autocomplete from 'react-native-autocomplete-input';
 
 const LineItem = ({
+  data,
   onChangeItemCode,
   onChangeItemAmount,
   item,
 }) => {
+
+
   return (
     <View style={styles.itemsContainer}>
-      <TextInput
-        style={styles.itemCodeInputStyle}
-        value={item.code}
-        onChangeText={text => onChangeItemCode(item, text)}
+      <Autocomplete
+        data={data}
+        containerStyle={{ flex: 3 }}
+        // onChangeText={onChangeItemCode}
+        placeholder='Search Codes'
+        renderTextInput={() => {
+          return (
+            <TextInput
+              onChangeText={onChangeItemCode}
+            />
+          );
+        }}
+        renderItem={item => {
+          return (
+            <View>
+              <Text>{item}</Text>
+            </View>
+          );
+        }}
       />
       <TextInput
         style={styles.itemTotalInputStyle}
