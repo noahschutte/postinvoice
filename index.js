@@ -30,9 +30,10 @@ Navigation.startSingleScreenApp({
     },
   },
   drawer: {
+    disableOpenGesture: true,
     left: {
       screen: 'postinvoice.SideMenu',
       animated: true,
-    }
+    },
   },
 });

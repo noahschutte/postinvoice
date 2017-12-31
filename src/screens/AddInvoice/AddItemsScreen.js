@@ -21,8 +21,8 @@ class AddItemsScreen extends Component <{}> {
   static navigatorButtons = {
     rightButtons: [
       {
-        title: 'ADD',
-        id: 'ADD',
+        title: 'NEXT',
+        id: 'NEXT',
       },
     ],
   };
@@ -39,8 +39,12 @@ class AddItemsScreen extends Component <{}> {
 
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'ADD') {
-        alert('works!');
+      if (event.id == 'NEXT') {
+        this.addItemToInvoice();
+        this.props.navigator.push({
+          screen: 'postinvoice.InvoiceReviewScreen',
+          title: 'Review Invoice',
+        });
       }
     }
   }
@@ -90,7 +94,7 @@ class AddItemsScreen extends Component <{}> {
           }}
           onPress={this.addItemToInvoice}
           >
-            <Text>Confirm</Text>
+            <Text>Add</Text>
           </TouchableOpacity>
         </View>
       </View>
