@@ -21,8 +21,8 @@ class AddItemsScreen extends Component <{}> {
   static navigatorButtons = {
     rightButtons: [
       {
-        title: 'ADD',
-        id: 'ADD',
+        title: 'REVIEW',
+        id: 'REVIEW',
       },
     ],
   };
@@ -34,13 +34,25 @@ class AddItemsScreen extends Component <{}> {
       },
       amount: this.state.amount,
     };
+    const codes = this.props.items.map(item => item.code.name);
+    if (item.code.name === '' || item.amount === '') return;
+    if (codes.indexOf(item.code.name) !== -1) {
+      alert('code already exists!');
+      return;
+    }
+    this.onChangeCode('');
+    this.onChangeAmount('');
     this.props.addItemToInvoice(item);
   }
 
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'ADD') {
-        alert('works!');
+      if (event.id == 'REVIEW') {
+        this.addItemToInvoice();
+        this.props.navigator.push({
+          screen: 'postinvoice.InvoiceReviewScreen',
+          title: 'Review Invoice',
+        });
       }
     }
   }
@@ -68,7 +80,6 @@ class AddItemsScreen extends Component <{}> {
     const { codeText } = this.state;
     const codes = this._findCode(codeText);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
     return (
       <View style={{ flex: 1 }}>
         <LineItems items={this.props.items} />
@@ -90,7 +101,7 @@ class AddItemsScreen extends Component <{}> {
           }}
           onPress={this.addItemToInvoice}
           >
-            <Text>Confirm</Text>
+            <Text>Add</Text>
           </TouchableOpacity>
         </View>
       </View>

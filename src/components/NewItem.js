@@ -17,7 +17,6 @@ const NewItem = ({
       value={code}
     />
   );
-
   return (
     <View style={{ flexDirection: 'row' }}>
       <Autocomplete
