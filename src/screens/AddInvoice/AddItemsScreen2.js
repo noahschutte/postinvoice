@@ -9,6 +9,11 @@ class AddItemsScreen extends Component <{}> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
+    this.state = {
+      codeText: '',
+      amount: '',
+    };
   }
 
   static navigatorButtons = {
@@ -28,11 +33,42 @@ class AddItemsScreen extends Component <{}> {
     }
   }
 
+  onChangeAmount = (amount) => {
+    this.setState({ amount });
+  };
+
+  onChangeCode = (codeText) => {
+    this.setState({ codeText });
+  };
+
+  _findCode = (codeText) => {
+    if (codeText === '') {
+      return [];
+    }
+
+    const { codes } = this.props;
+    const regex = new RegExp(`${codeText.trim()}`, 'i');
+    return codes.filter(code => code.name.search(regex) >= 0);
+  }
+
   render() {
+
+    const { codeText } = this.state;
+    const codes = this._findCode(codeText);
+    const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+
     return (
       <View style={{ flex: 1 }}>
         <LineItems items={this.props.items} />
-        <NewItem />
+        <NewItem
+          autocompleteData={codes.length === 1 && comp(codeText, codes[0].name) ? [] : codes.map(code => code.name)} // eslint-disable-line
+          codes={this.props.codes}
+          onChangeAmount={this.onChangeAmount}
+          onChangeCode={this.onChangeCode}
+          code={this.state.codeText}
+          amount={this.state.amount}
+          findCode={this._findCode}
+        />
       </View>
     );
   }
@@ -40,7 +76,9 @@ class AddItemsScreen extends Component <{}> {
 
 const mapStateToProps = ({ invoicesReducer }) => {
   const { items } = invoicesReducer.newInvoice;
-  return { items };
+  const { codes } = invoicesReducer;
+  console.log('items', items);
+  return { items, codes };
 };
 
 export default connect(mapStateToProps, {})(AddItemsScreen);
