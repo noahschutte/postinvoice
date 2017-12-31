@@ -1,140 +1,107 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Autocomplete from 'react-native-autocomplete-input';
 
-import {
-  addNewLine,
-  onChangeItemAmount,
-  onChangeItemCode,
-} from '../../actions/invoiceActions';
+import LineItems from '../../components/LineItems';
+import NewItem from '../../components/NewItem';
 
-import LineItem from './LineItem';
+import { addItemToInvoice } from '../../actions/invoiceActions';
 
 class AddItemsScreen extends Component <{}> {
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
-  state = {
-    query: '',
-    codes: [],
+    this.state = {
+      codeText: '',
+      amount: '',
+    };
+  }
+
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        title: 'ADD',
+        id: 'ADD',
+      },
+    ],
   };
 
-  componentDidMount() {
-    let codes = [];
-    Object.entries(this.props.codes).forEach(entry => {
-      codes = [...codes, entry];
-    });
-    this.setState({ codes });
+  addItemToInvoice = () => {
+    const item = {
+      code: {
+        name: this.state.codeText,
+      },
+      amount: this.state.amount,
+    };
+    this.props.addItemToInvoice(item);
   }
 
-  findCode(query) {
-    const { codes } = this.state;
+  onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'ADD') {
+        alert('works!');
+      }
+    }
+  }
 
-    if (query === '') {
-      return codes;
+  onChangeAmount = (amount) => {
+    this.setState({ amount });
+  };
+
+  onChangeCode = (codeText) => {
+    this.setState({ codeText });
+  };
+
+  _findCode = (codeText) => {
+    if (codeText === '') {
+      return [];
     }
 
-    const regex = new RegExp(`${query.trim()}`, 'i');
-
-    return codes.filter(code => code.search(regex) >= 0);
-  }
-
-  onChangeQuery = text => {
-    this.setState({ query: text });
+    const { codes } = this.props;
+    const regex = new RegExp(`${codeText.trim()}`, 'i');
+    return codes.filter(code => code.name.search(regex) >= 0);
   }
 
   render() {
-    const { query } = this.state;
-    const codes = this.findCode(query);
-    const lineItems = this.props.items.map(item => {
-      const index = this.props.items.indexOf(item);
-      return (
-        <LineItem
-          key={index}
-          item={item}
-          data={codes}
-          onChangeItemAmount={this.props.onChangeItemAmount}
-          onChangeItemCode={this.onChangeQuery}
-        />
-      );
-    });
+
+    const { codeText } = this.state;
+    const codes = this._findCode(codeText);
+    const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
     return (
-
       <View style={{ flex: 1 }}>
-
-        {/* <Autocomplete
-          data={codes}
-          containerStyle={{ flex: 1 }}
-          onChangeText={text => this.setState({ query: text })}
-          placeholder='Search Codes'
-          renderItem={item => {
-            console.log('item: ', item);
-            return (
-              <View>
-                <Text>{item}</Text>
-              </View>
-            );
+        <LineItems items={this.props.items} />
+        <NewItem
+          autocompleteData={codes.length === 1 && comp(codeText, codes[0].name) ? [] : codes.map(code => code.name)} // eslint-disable-line
+          codes={this.props.codes}
+          onChangeAmount={this.onChangeAmount}
+          onChangeCode={this.onChangeCode}
+          code={this.state.codeText}
+          amount={this.state.amount}
+          findCode={this._findCode}
+        />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity style={{
+            backgroundColor: '#efeffa',
+            padding: 15,
+            elevation: 1,
+            borderRadius: 2,
           }}
-        /> */}
-
-        <View style={{ flex: 2, paddingTop: 40 }}>
-          {lineItems}
-
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={styles.addItemButtonStyle} onPress={this.props.addNewLine}>
-              <Icon name='plus' size={30} color='#fafafa' />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-
-        <View style={{ flex: 0.2, elevation: 1, alignItems: 'center' }}>
-          <TouchableOpacity
-            style={styles.confirmButtonStyle}
-            onPress={() => this.props.navigator.push({
-              screen: 'postinvoice.InvoiceReviewScreen',
-              title: 'Confirm Invoice',
-            })}
-            >
-              <Text>Confirm</Text>
-            </TouchableOpacity>
+          onPress={this.addItemToInvoice}
+          >
+            <Text>Confirm</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
-const styles = {
-  confirmButtonStyle: {
-    backgroundColor: '#efeffa',
-    padding: 15,
-    elevation: 1,
-    borderRadius: 2,
-  },
-  addItemButtonStyle: {
-    backgroundColor: 'green',
-    marginLeft: 15,
-    borderRadius: 10,
-    width: 45,
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-};
-
 const mapStateToProps = ({ invoicesReducer }) => {
-  const { newInvoice, codes } = invoicesReducer;
-  const items = newInvoice.items;
+  const { items } = invoicesReducer.newInvoice;
+  const { codes } = invoicesReducer;
   return { items, codes };
 };
 
-export default connect(mapStateToProps, {
-  addNewLine,
-  onChangeItemAmount,
-  onChangeItemCode,
-})(AddItemsScreen);
+export default connect(mapStateToProps, { addItemToInvoice })(AddItemsScreen);
