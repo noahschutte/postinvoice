@@ -24,7 +24,6 @@ class HomeScreen extends Component <{}> {
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'sideMenu') {
-        console.log('TOUCH');
         this.props.navigator.toggleDrawer({
           side: 'left',
           animated: true,

@@ -109,7 +109,6 @@ class SideMenu extends Component <{}> {
     }
   }
   render() {
-    console.log('RENDERING');
     return (
       <View style={styles.wrapper}>
         <TouchableOpacity onPress={this.onPress} style={styles.button} >
