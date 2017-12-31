@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import LineItems from '../../components/LineItems';
 import NewItem from '../../components/NewItem';
 
+import { addItemToInvoice } from '../../actions/invoiceActions';
+
 class AddItemsScreen extends Component <{}> {
   constructor(props) {
     super(props);
@@ -24,6 +26,16 @@ class AddItemsScreen extends Component <{}> {
       },
     ],
   };
+
+  addItemToInvoice = () => {
+    const item = {
+      code: {
+        name: this.state.codeText,
+      },
+      amount: this.state.amount,
+    };
+    this.props.addItemToInvoice(item);
+  }
 
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
@@ -76,7 +88,7 @@ class AddItemsScreen extends Component <{}> {
             elevation: 1,
             borderRadius: 2,
           }}
-          onPress={() => alert('not yet')}
+          onPress={this.addItemToInvoice}
           >
             <Text>Confirm</Text>
           </TouchableOpacity>
@@ -89,8 +101,7 @@ class AddItemsScreen extends Component <{}> {
 const mapStateToProps = ({ invoicesReducer }) => {
   const { items } = invoicesReducer.newInvoice;
   const { codes } = invoicesReducer;
-  console.log('items', items);
   return { items, codes };
 };
 
-export default connect(mapStateToProps, {})(AddItemsScreen);
+export default connect(mapStateToProps, { addItemToInvoice })(AddItemsScreen);

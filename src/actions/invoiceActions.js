@@ -10,6 +10,13 @@ export function addNewLine() {
   };
 }
 
+export function addItemToInvoice(item) {
+  return {
+    type: types.ADD_ITEM_TO_INVOICE,
+    item,
+  };
+}
+
 export function clearNewInvoiceData() {
   return {
     type: types.CLEAR_NEW_INVOICE_DATA,
@@ -216,7 +223,6 @@ export function createNewInvoiceBegin() {
     .then(responseJSON => {
       const { codes } = responseJSON;
       alphabetize(codes);
-      console.log('codes: ', codes);
       dispatch(updateCodes(codes));
     })
     .then(() => fetchingComplete())

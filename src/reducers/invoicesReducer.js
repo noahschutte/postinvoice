@@ -25,6 +25,17 @@ const initialState = {
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    case types.ADD_ITEM_TO_INVOICE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items: [
+            ...state.newInvoice.items,
+            action.item
+          ],
+        },
+      };
     case types.ADD_NEW_LINE:
       return {
         ...state,
