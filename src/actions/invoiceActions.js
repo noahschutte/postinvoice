@@ -216,6 +216,7 @@ export function createNewInvoiceBegin() {
     .then(responseJSON => {
       const { codes } = responseJSON;
       alphabetize(codes);
+      console.log('codes: ', codes);
       dispatch(updateCodes(codes));
     })
     .then(() => fetchingComplete())

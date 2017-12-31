@@ -26,7 +26,7 @@ class AddItemsScreen extends Component <{}> {
   componentDidMount() {
     let codes = [];
     Object.entries(this.props.codes).forEach(entry => {
-      codes = [...codes, entry[1].name];
+      codes = [...codes, entry];
     });
     this.setState({ codes });
   }

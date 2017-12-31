@@ -12,8 +12,11 @@ const initialState = {
     vendor: {},
     items: [
       {
-        amount: '',
-        code: '',
+        id: 'temporary_id',
+        code: {
+          name: 'WINE',
+        },
+        amount: '69.00',
       },
     ],
   }
@@ -30,7 +33,8 @@ function invoices(state = initialState, action) {
           items: [
             ...state.newInvoice.items,
             {
-              code: '',
+              id: 'temporary_id',
+              code: {},
               amount: '',
             },
           ]
