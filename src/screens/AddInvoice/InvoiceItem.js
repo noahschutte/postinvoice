@@ -5,7 +5,6 @@ const InvoiceItem = props => {
 
   const item = () => {
     if (props.itemType != 'Line Items') {
-
       return (
         <Text style={styles.itemTextStyle} >{props.item}</Text>
       );
@@ -13,9 +12,9 @@ const InvoiceItem = props => {
 
     return props.item.map(item => {
       return (
-        <View style={styles.lineItemsWrapper} key={item.code + item.amount}>
+        <View style={styles.lineItemsWrapper} key={item.code.name + item.amount}>
           <View>
-            <Text style={styles.itemTextStyle}>{item.code} - </Text>
+            <Text style={styles.itemTextStyle}>{item.code.name} - </Text>
           </View>
           <View>
             <Text style={styles.itemTextStyle}> ${item.amount}</Text>

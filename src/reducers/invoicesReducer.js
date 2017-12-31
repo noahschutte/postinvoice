@@ -8,7 +8,7 @@ const initialState = {
   error: '',
   newInvoice: {
     date: '',
-    invoiceNumber: '',
+    number: '',
     vendor: {},
     items: [
       {
@@ -85,7 +85,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          invoiceNumber: action.invoiceNumber,
+          number: action.number,
         },
       };
     case types.ON_CHANGE_ITEM_AMOUNT: {

@@ -49,10 +49,10 @@ export function onChangeInvoiceDate(date) {
   };
 }
 
-export function onChangeInvoiceNumber(invoiceNumber) {
+export function onChangeInvoiceNumber(number) {
   return {
     type: types.ON_CHANGE_INVOICE_NUMBER,
-    invoiceNumber,
+    number,
   };
 }
 
@@ -235,7 +235,7 @@ export function postNewInvoice(newInvoice, callback) {
     dispatch(postNewInvoiceBegin());
     let {
       date,
-      invoiceNumber,
+      number,
       vendor,
       items,
     } = newInvoice;
@@ -249,8 +249,8 @@ export function postNewInvoice(newInvoice, callback) {
 
     const body = JSON.stringify({
       date,
-      supplierName: vendor,
-      invoiceNumber,
+      vendor,
+      number,
       total,
       items,
     });

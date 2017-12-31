@@ -21,8 +21,8 @@ class AddItemsScreen extends Component <{}> {
   static navigatorButtons = {
     rightButtons: [
       {
-        title: 'NEXT',
-        id: 'NEXT',
+        title: 'REVIEW',
+        id: 'REVIEW',
       },
     ],
   };
@@ -34,12 +34,13 @@ class AddItemsScreen extends Component <{}> {
       },
       amount: this.state.amount,
     };
+    if (item.code.name === '' || item.amount === '') return;
     this.props.addItemToInvoice(item);
   }
 
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'NEXT') {
+      if (event.id == 'REVIEW') {
         this.addItemToInvoice();
         this.props.navigator.push({
           screen: 'postinvoice.InvoiceReviewScreen',
@@ -72,7 +73,6 @@ class AddItemsScreen extends Component <{}> {
     const { codeText } = this.state;
     const codes = this._findCode(codeText);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
     return (
       <View style={{ flex: 1 }}>
         <LineItems items={this.props.items} />
