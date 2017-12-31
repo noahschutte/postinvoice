@@ -3,7 +3,6 @@ import { View, Text, } from 'react-native';
 
 const LineItems = ({ items }) => {
   return items.map(item => {
-    console.log('item: ', item);
     return (
       <View style={styles.container} key={item.id}>
         <View style={styles.codeContainer}>
