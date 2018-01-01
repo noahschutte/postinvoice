@@ -9,7 +9,7 @@ const LineItems = ({ items }) => {
           <Text style={styles.codeTextStyle}>{item.code.name}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amountStyle}>${item.amount}</Text>
+          <Text style={styles.amountStyle}>{item.amount}</Text>
         </View>
       </View>
     );
