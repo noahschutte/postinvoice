@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 
 import Autocomplete from 'react-native-autocomplete-input';
 
@@ -15,10 +16,11 @@ const NewItem = ({
     <TextInput
       onChangeText={onChangeCode}
       value={code}
+      style={styles.codeTextStyle}
     />
   );
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
       <Autocomplete
         data={autocompleteData}
         containerStyle={styles.containerStyle}
@@ -32,11 +34,17 @@ const NewItem = ({
           );
         }}
       />
-      <TextInput
-        value={amount}
-        style={styles.amountInputStyle}
+      <TextInputMask
+        value={amount || '$0.00'}
+        type={'money'}
+        options={{
+          separator: '.',
+          delimiter: ',',
+          unit: '$',
+        }}
         onChangeText={onChangeAmount}
         keyboardType='numeric'
+        style={styles.amountInputStyle}
       />
     </View>
   );
@@ -48,9 +56,14 @@ const styles = {
   },
   amountInputStyle: {
     flex: 1,
+    fontSize: 26,
+    textAlign: 'right',
   },
   inputContainerStyle: {
     borderWidth: 0,
+  },
+  codeTextStyle: {
+    fontSize: 26,
   }
 };
 

@@ -6,7 +6,7 @@ const InvoiceItem = props => {
   const item = () => {
     if (props.itemType != 'Line Items') {
       return (
-        <Text style={styles.itemTextStyle} >{props.item}</Text>
+        <Text style={styles.itemTextStyle}>{props.item}</Text>
       );
     }
 
@@ -17,7 +17,7 @@ const InvoiceItem = props => {
             <Text style={styles.itemTextStyle}>{item.code.name} - </Text>
           </View>
           <View>
-            <Text style={styles.itemTextStyle}> ${item.amount}</Text>
+            <Text style={styles.itemTextStyle}>{item.amount}</Text>
           </View>
         </View>
       );
