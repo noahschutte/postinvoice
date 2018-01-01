@@ -28,21 +28,25 @@ class AddItemsScreen extends Component <{}> {
   };
 
   addItemToInvoice = () => {
-    const item = {
-      code: {
-        name: this.state.codeText,
-      },
-      amount: this.state.amount,
-    };
-    const codes = this.props.items.map(item => item.code.name);
-    if (item.code.name === '' || item.amount === '') return;
-    if (codes.indexOf(item.code.name) !== -1) {
-      alert('code already exists!');
-      return;
+    const code = this.props.codes.filter(code => code.name === this.state.codeText);
+    if (code[0]) {
+      const item = {
+        code: {
+          id: code[0].id,
+          name: this.state.codeText,
+        },
+        amount: this.state.amount,
+      };
+      const codes = this.props.items.map(item => item.code.name);
+      if (item.code.name === '' || item.amount === '') return;
+      if (codes.indexOf(item.code.name) !== -1) {
+        alert('code already exists!');
+        return;
+      }
+      this.onChangeCode('');
+      this.onChangeAmount('');
+      this.props.addItemToInvoice(item);
     }
-    this.onChangeCode('');
-    this.onChangeAmount('');
-    this.props.addItemToInvoice(item);
   }
 
   onNavigatorEvent(event) {

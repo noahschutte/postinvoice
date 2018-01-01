@@ -7,6 +7,7 @@ const initialState = {
   vendors: [],
   error: '',
   newInvoice: {
+    total: 0,
     date: '',
     number: '',
     vendor: {},
@@ -22,6 +23,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
+          total: state.newInvoice.total + parseFloat(action.item.amount.slice(1)),
           items: [
             ...state.newInvoice.items,
             action.item

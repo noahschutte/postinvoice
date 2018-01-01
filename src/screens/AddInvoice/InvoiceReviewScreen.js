@@ -13,7 +13,9 @@ class InvoiceReviewScreen extends Component <{}> {
       animationType: 'fade',
     });
   }
+  
   render() {
+    console.log('this.props', this.props);
     const { postNewInvoice, newInvoice } = this.props;
     const { date, vendor, number, items } = newInvoice;
     return (
