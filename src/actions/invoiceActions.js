@@ -17,6 +17,13 @@ export function addItemToInvoice(item) {
   };
 }
 
+export function addVendorToInvoice(vendor) {
+  return {
+    type: types.ADD_VENDOR_TO_INVOICE,
+    vendor,
+  };
+}
+
 export function clearNewInvoiceData() {
   return {
     type: types.CLEAR_NEW_INVOICE_DATA,
@@ -86,9 +93,10 @@ export function postNewInvoiceBegin() {
   };
 }
 
-export function postNewInvoiceComplete() {
+export function postNewInvoiceComplete(invoice) {
   return {
     type: types.POST_NEW_INVOICE_COMPLETE,
+    invoice,
   };
 }
 
@@ -159,7 +167,7 @@ export function deleteInvoice(invoiceId) {
 export function fetchInvoices() {
 
   return function (dispatch) {
-    const url = `${DB_URL}/invoices`;
+    let url = `${DB_URL}/invoices`;
     dispatch(retrieveInvoicesBegin());
 
     fetch(url, {
@@ -179,6 +187,33 @@ export function fetchInvoices() {
     })
     .then(() => dispatch(retrieveInvoicesComplete()))
     .catch(err => handleError(err));
+    url = `${DB_URL}/codes`;
+    const alphabetize = (array) => {
+      function compare(a,b) {
+        if (a.name < b.name)
+          return -1;
+        if (a.name > b.name)
+          return 1;
+        return 0;
+        }
+      array.sort(compare);
+      return array;
+    };
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      const { codes } = responseJSON;
+      alphabetize(codes);
+      dispatch(updateCodes(codes));
+    })
+    .then(() => fetchingComplete())
+    .catch(error => handleError(error));
   };
 }
 
@@ -211,22 +246,6 @@ export function createNewInvoiceBegin() {
       dispatch(updateVendorList(vendors));
     })
     .catch(error => alert(error));
-    url = `${DB_URL}/codes`;
-    fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then(responseJSON => {
-      const { codes } = responseJSON;
-      alphabetize(codes);
-      dispatch(updateCodes(codes));
-    })
-    .then(() => fetchingComplete())
-    .catch(error => handleError(error));
   };
 }
 
@@ -238,14 +257,15 @@ export function postNewInvoice(newInvoice, callback) {
       number,
       vendor,
       items,
+      total,
     } = newInvoice;
 
     date = new Date(date);
-
-    let total = 0;
-    items.forEach(item => {
-      total += parseFloat(item.amount);
-    });
+    vendor = {
+      id: vendor.id,
+      name: vendor.name,
+      isNew: vendor.isNew || false,
+    };
 
     const body = JSON.stringify({
       date,
@@ -264,7 +284,11 @@ export function postNewInvoice(newInvoice, callback) {
     })
     .then(response => response.ok ? callback() : response.json())
     .then(responseJSON => {
-      dispatch(postNewInvoiceComplete());
+      newInvoice = {
+        ...newInvoice,
+        id: newInvoice.date,
+      };
+      dispatch(postNewInvoiceComplete(newInvoice));
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }

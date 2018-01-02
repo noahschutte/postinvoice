@@ -55,6 +55,11 @@ class HomeScreen extends Component <{}> {
     return item.id;
   }
 
+  getCodeName = (id) => {
+    const res = this.props.codes.filter(code => code.id === id);
+    return res[0].name;
+  }
+
   renderInvoiceItem = ({ item }) => {
     return (
       <InvoiceItem
@@ -66,6 +71,7 @@ class HomeScreen extends Component <{}> {
             title: `Invoice #${item.number}`,
             passProps: {
               invoice: item,
+              getCodeName: this.getCodeName,
             }
           });
         }}
@@ -89,8 +95,8 @@ class HomeScreen extends Component <{}> {
 }
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  const { invoices } = invoicesReducer;
-  return { invoices };
+  const { invoices, codes } = invoicesReducer;
+  return { invoices, codes };
 };
 
 export default connect(mapStateToProps, {

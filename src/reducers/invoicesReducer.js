@@ -7,6 +7,7 @@ const initialState = {
   vendors: [],
   error: '',
   newInvoice: {
+    total: 0,
     date: '',
     number: '',
     vendor: {},
@@ -22,6 +23,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
+          total: state.newInvoice.total + action.item.amount,
           items: [
             ...state.newInvoice.items,
             action.item
@@ -42,6 +44,14 @@ function invoices(state = initialState, action) {
             },
           ]
         }
+      };
+    case types.ADD_VENDOR_TO_INVOICE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          vendor: action.vendor
+        },
       };
     case types.CLEAR_NEW_INVOICE_DATA:
       return {
@@ -136,6 +146,10 @@ function invoices(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        invoices: [
+          action.invoice,
+          ...state.invoices
+        ]
       };
     case types.RETRIEVE_INVOICES_BEGIN:
       return {
