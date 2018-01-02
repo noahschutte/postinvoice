@@ -35,7 +35,7 @@ class AddItemsScreen extends Component <{}> {
           id: code[0].id,
           name: this.state.codeText,
         },
-        amount: this.state.amount,
+        amount: parseFloat(this.state.amount.slice(1)),
       };
       const codes = this.props.items.map(item => item.code.name);
       if (item.code.name === '' || item.amount === '') return;

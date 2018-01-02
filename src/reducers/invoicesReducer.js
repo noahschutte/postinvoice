@@ -23,7 +23,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          total: state.newInvoice.total + parseFloat(action.item.amount.slice(1)),
+          total: state.newInvoice.total + action.item.amount,
           items: [
             ...state.newInvoice.items,
             action.item

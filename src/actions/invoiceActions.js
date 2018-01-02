@@ -273,7 +273,6 @@ export function postNewInvoice(newInvoice, callback) {
       total,
       items,
     });
-    console.log('body: ', body);
     fetch(`${DB_URL}/invoices`, {
       headers: {
         Accept: 'application/json',
@@ -283,9 +282,7 @@ export function postNewInvoice(newInvoice, callback) {
       body,
     })
     .then(response => response.ok ? callback() : response.json())
-    // .then(response => response.json())
     .then(responseJSON => {
-      console.log('responseJSON', responseJSON);
       dispatch(postNewInvoiceComplete());
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));

@@ -12,7 +12,7 @@ const InvoiceItem = props => {
 
     return props.item.map(item => {
       return (
-        <View style={styles.lineItemsWrapper} key={item.id}>
+        <View style={styles.lineItemsWrapper} key={item.id || item.code + item.amount}>
           <View>
             <Text style={styles.itemTextStyle}>
               {item.code ? item.code.name : props.getCodeName(item.code_id)} -
@@ -20,7 +20,7 @@ const InvoiceItem = props => {
           </View>
           <View>
             <Text style={styles.itemTextStyle}>
-              {item.code ? item.amount : ' $' + item.amount}
+              {' $' + item.amount}
              </Text>
           </View>
         </View>

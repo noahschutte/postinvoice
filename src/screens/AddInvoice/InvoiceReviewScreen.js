@@ -15,7 +15,6 @@ class InvoiceReviewScreen extends Component <{}> {
   }
 
   render() {
-    console.log('this.props', this.props);
     const { postNewInvoice, newInvoice } = this.props;
     const { date, vendor, number, items, total } = newInvoice;
     return (
