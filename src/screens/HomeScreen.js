@@ -72,10 +72,10 @@ class HomeScreen extends Component <{}> {
             passProps: {
               invoice: item,
               getCodeName: this.getCodeName,
+              deleteInvoice: this.props.deleteInvoice
             }
           });
         }}
-        deleteInvoice={this.props.deleteInvoice}
       />
     );
   }

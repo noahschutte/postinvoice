@@ -111,26 +111,20 @@ class SideMenu extends Component <{}> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            index
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            show
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            delete
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onPress} style={styles.button} >
-          <Text>
-            create
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.menuHeader}>
+          <Text style={styles.menuTextStyle}>Menu</Text>
+        </View>
+        <View style={styles.menuOptionsContainer}>
+          <TouchableOpacity style={styles.menuOptionWrapper}>
+            <Text style={styles.menuOptionTextStyle}>Invoices</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuOptionWrapper}>
+            <Text style={styles.menuOptionTextStyle}>Inventory Sheets</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuOptionWrapper}>
+            <Text style={styles.menuOptionTextStyle}>Reports</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -142,11 +136,27 @@ const styles = {
     height: Dimensions.get('window').height,
     backgroundColor: '#ddd',
   },
-  button: {
-    backgroundColor: '#be4',
-    margin: 25,
-    padding: 25,
+  menuHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 15,
+    flex: 1,
   },
+  menuTextStyle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  menuOptionsContainer: {
+    margin: 20,
+    flex: 9,
+  },
+  menuOptionWrapper: {
+    marginBottom: 25,
+    alignItems: 'center',
+  },
+  menuOptionTextStyle: {
+    fontSize: 24,
+  }
 };
 
 
