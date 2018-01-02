@@ -5,7 +5,6 @@ import InvoiceItem from './AddInvoice/InvoiceItem';
 
 const ViewInvoiceScreen = ({ invoice, getCodeName }) => {
   const { date, vendor, number, items, total } = invoice;
-  getCodeName(items[0].id);
   return (
     <View style={{ flex: 1 }}>
       <InvoiceItem itemType='Date' item={date} />

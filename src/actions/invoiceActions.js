@@ -93,9 +93,10 @@ export function postNewInvoiceBegin() {
   };
 }
 
-export function postNewInvoiceComplete() {
+export function postNewInvoiceComplete(invoice) {
   return {
     type: types.POST_NEW_INVOICE_COMPLETE,
+    invoice,
   };
 }
 
@@ -283,7 +284,11 @@ export function postNewInvoice(newInvoice, callback) {
     })
     .then(response => response.ok ? callback() : response.json())
     .then(responseJSON => {
-      dispatch(postNewInvoiceComplete());
+      newInvoice = {
+        ...newInvoice,
+        id: newInvoice.date,
+      };
+      dispatch(postNewInvoiceComplete(newInvoice));
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }

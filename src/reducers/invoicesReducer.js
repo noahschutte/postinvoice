@@ -146,6 +146,10 @@ function invoices(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        invoices: [
+          action.invoice,
+          ...state.invoices
+        ]
       };
     case types.RETRIEVE_INVOICES_BEGIN:
       return {
