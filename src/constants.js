@@ -1,5 +1,6 @@
 export const ADD_ITEM_TO_INVOICE = 'add_item_to_invoice';
 export const ADD_NEW_LINE = 'add_new_line';
+export const ADD_VENDOR_TO_INVOICE = 'add_vendor_to_invoice';
 
 export const CLEAR_NEW_INVOICE_DATA = 'clear_new_invoice_data';
 

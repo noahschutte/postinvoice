@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
 
 import {
+  addVendorToInvoice,
   onChangeVendorName,
   temporaryAddVendor
 } from '../../actions/invoiceActions';
@@ -41,9 +42,11 @@ class SelectVendorScreen extends Component <{}> {
 
   confirmVendor = (vendor) => {
     if (vendor.name) {
-      vendor = vendor.name;
+      this.props.addVendorToInvoice(vendor);
+    } else {
+      vendor = this.props.vendors.filter(ven => ven.name === vendor);
+      this.props.addVendorToInvoice(vendor[0]);
     }
-    this.props.onChangeVendorName(vendor);
     this.props.navigator.push({
       screen: 'postinvoice.InvoiceNumberScreen',
       title: 'Add Invoice Number',
@@ -101,6 +104,7 @@ const mapStateToProps = ({ invoicesReducer }) => {
 };
 
 export default connect(mapStateToProps, {
+  addVendorToInvoice,
   onChangeVendorName,
   temporaryAddVendor
 })(SelectVendorScreen);

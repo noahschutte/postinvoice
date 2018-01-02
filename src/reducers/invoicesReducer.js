@@ -45,6 +45,14 @@ function invoices(state = initialState, action) {
           ]
         }
       };
+    case types.ADD_VENDOR_TO_INVOICE:
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          vendor: action.vendor
+        },
+      };
     case types.CLEAR_NEW_INVOICE_DATA:
       return {
         ...state,

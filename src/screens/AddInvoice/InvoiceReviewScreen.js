@@ -13,17 +13,18 @@ class InvoiceReviewScreen extends Component <{}> {
       animationType: 'fade',
     });
   }
-  
+
   render() {
     console.log('this.props', this.props);
     const { postNewInvoice, newInvoice } = this.props;
-    const { date, vendor, number, items } = newInvoice;
+    const { date, vendor, number, items, total } = newInvoice;
     return (
       <View style={{ flex: 1 }}>
         <InvoiceItem itemType='Date' item={date} />
         <InvoiceItem itemType='Vendor' item={vendor.name} />
         <InvoiceItem itemType='Invoice No' item={number} />
         <InvoiceItem itemType='Line Items' item={items} />
+        <InvoiceItem itemType='Invoice Total' item={'$'+total} />
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <TouchableOpacity style={{
               backgroundColor: '#efeffa',

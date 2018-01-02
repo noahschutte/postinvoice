@@ -17,6 +17,13 @@ export function addItemToInvoice(item) {
   };
 }
 
+export function addVendorToInvoice(vendor) {
+  return {
+    type: types.ADD_VENDOR_TO_INVOICE,
+    vendor,
+  };
+}
+
 export function clearNewInvoiceData() {
   return {
     type: types.CLEAR_NEW_INVOICE_DATA,
