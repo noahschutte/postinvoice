@@ -9,7 +9,7 @@ registerScreens(store, Provider);
 
 Navigation.startSingleScreenApp({
   screen: {
-    screen: 'postinvoice.HomeScreen',
+    screen: 'postinvoice.Invoices',
     title: 'Postinvoice',
     navigatorStyle: {
       navBarTitleTextCentered: true,
