@@ -4,6 +4,8 @@ export const ADD_VENDOR_TO_INVOICE = 'add_vendor_to_invoice';
 
 export const CLEAR_NEW_INVOICE_DATA = 'clear_new_invoice_data';
 
+export const DELETE_INVOICE_COMPLETE = 'delete_invoice_complete';
+
 export const FETCHING_COMPLETE = 'fetching_complete';
 
 export const HANDLE_ERROR = 'handle_error';

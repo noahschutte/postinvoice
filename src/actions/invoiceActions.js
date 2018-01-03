@@ -30,6 +30,13 @@ export function clearNewInvoiceData() {
   };
 }
 
+export function deleteInvoiceComplete(invoiceId) {
+  return {
+    type: types.DELETE_INVOICE_COMPLETE,
+    invoiceId,
+  };
+}
+
 export function fetchingComplete() {
   return {
     type: types.FETCHING_COMPLETE,
@@ -144,7 +151,7 @@ export function updateVendorList(vendors) {
 * asynchronous action creators
 */
 
-export function deleteInvoice(invoiceId) {
+export function deleteInvoice(invoiceId, callback) {
   return function (dispatch) {
     dispatch(isFetching());
     const url = `${DB_URL}/invoices/${invoiceId}`;
@@ -157,9 +164,12 @@ export function deleteInvoice(invoiceId) {
     })
     .then(response => response.json())
     .then(responseJSON => {
-      console.log('responseJSON', responseJSON);
-      dispatch(fetchingComplete());
-      if (responseJSON.error) dispatch(handleError(responseJSON.error));
+      if (responseJSON.error) {
+        dispatch(handleError(responseJSON.error));
+      } else {
+        dispatch(deleteInvoiceComplete(invoiceId));
+        callback();
+      }
     })
     .catch(err => handleError(err));
   };
