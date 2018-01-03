@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const InvoiceItem = props => {
+const InvoiceSection = props => {
 
   const item = () => {
     if (props.itemType != 'Line Items') {
@@ -74,4 +74,4 @@ const styles = {
   }
 };
 
-export default InvoiceItem;
+export default InvoiceSection;

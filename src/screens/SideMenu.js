@@ -10,10 +10,21 @@ class SideMenu extends Component <{}> {
       case 'Inventory Sheets':
         route = 'InventorySheets';
         break;
+      case 'Invoices':
+        route = 'InvoicesHome';
+        break;
+      case 'Reports':
+        route = 'ReportsScreen';
+        break;
       default:
         route = destination;
         break;
     }
+
+    const right = route === 'InvoicesHome' ? [{
+      title: 'Add',
+      id: 'add'
+    }] : null;
 
     this.props.navigator.resetTo({
       screen: `postinvoice.${route}`,
@@ -24,7 +35,8 @@ class SideMenu extends Component <{}> {
             title: 'sideMenu',
             id: 'sideMenu',
           }
-        ]
+        ],
+        rightButtons: right,
       }
     });
     this.props.navigator.toggleDrawer({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
-import InvoiceItem from './AddInvoice/InvoiceItem';
+import InvoiceSection from '../../components/InvoiceSection';
 
 const ViewInvoiceScreen = ({
   invoice,
@@ -12,11 +12,11 @@ const ViewInvoiceScreen = ({
   const { date, vendor, number, items, total } = invoice;
   return (
     <View style={{ flex: 1 }}>
-      <InvoiceItem itemType='Date' item={date} />
-      <InvoiceItem itemType='Vendor' item={vendor.name} />
-      <InvoiceItem itemType='Invoice No' item={number} />
-      <InvoiceItem getCodeName={getCodeName} itemType='Line Items' item={items} />
-      <InvoiceItem itemType='Invoice Total' item={'$'+total} />
+      <InvoiceSection itemType='Date' item={date} />
+      <InvoiceSection itemType='Vendor' item={vendor.name} />
+      <InvoiceSection itemType='Invoice No' item={number} />
+      <InvoiceSection getCodeName={getCodeName} itemType='Line Items' item={items} />
+      <InvoiceSection itemType='Invoice Total' item={'$'+total} />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <TouchableOpacity style={{
             backgroundColor: '#efeffa',
