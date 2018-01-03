@@ -60,6 +60,13 @@ class Invoices extends Component <{}> {
     return res[0].name;
   }
 
+  deleteInvoiceCallback = () => {
+    this.props.navigator.popToRoot({
+      animated: true,
+      animationType: 'slide-horizontal',
+    });
+  }
+
   renderInvoiceItem = ({ item }) => {
     return (
       <InvoiceItem
@@ -72,7 +79,8 @@ class Invoices extends Component <{}> {
             passProps: {
               invoice: item,
               getCodeName: this.getCodeName,
-              deleteInvoice: this.props.deleteInvoice
+              deleteInvoice: this.props.deleteInvoice,
+              deleteInvoiceCallback: this.deleteInvoiceCallback
             }
           });
         }}

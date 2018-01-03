@@ -3,7 +3,12 @@ import { View, TouchableOpacity, Text } from 'react-native';
 
 import InvoiceItem from './AddInvoice/InvoiceItem';
 
-const ViewInvoiceScreen = ({ invoice, deleteInvoice, getCodeName }) => {
+const ViewInvoiceScreen = ({
+  invoice,
+  deleteInvoice,
+  deleteInvoiceCallback,
+  getCodeName
+}) => {
   const { date, vendor, number, items, total } = invoice;
   return (
     <View style={{ flex: 1 }}>
@@ -19,7 +24,7 @@ const ViewInvoiceScreen = ({ invoice, deleteInvoice, getCodeName }) => {
             elevation: 1,
             borderRadius: 2,
           }}
-          onPress={() => deleteInvoice(invoice.id)}
+          onPress={() => deleteInvoice(invoice.id, deleteInvoiceCallback)}
           // onPress={() => alert(invoice.id)}
         >
           <Text>Delete</Text>

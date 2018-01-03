@@ -58,6 +58,12 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: initialState.newInvoice,
       };
+    case types.DELETE_INVOICE_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+        invoices: state.invoices.filter(invoice => invoice.id !== action.invoiceId),
+      };
     case types.FETCHING_COMPLETE:
       return {
         ...state,
