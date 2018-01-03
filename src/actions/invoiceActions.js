@@ -157,6 +157,7 @@ export function deleteInvoice(invoiceId) {
     })
     .then(response => response.json())
     .then(responseJSON => {
+      console.log('responseJSON', responseJSON);
       dispatch(fetchingComplete());
       if (responseJSON.error) dispatch(handleError(responseJSON.error));
     })
@@ -282,13 +283,16 @@ export function postNewInvoice(newInvoice, callback) {
       method: 'POST',
       body,
     })
-    .then(response => response.ok ? callback() : response.json())
+    .then(response => response.json())
     .then(responseJSON => {
-      newInvoice = {
-        ...newInvoice,
-        id: newInvoice.date,
-      };
-      dispatch(postNewInvoiceComplete(newInvoice));
+      if (responseJSON.invoiceId) {
+        newInvoice = {
+          ...newInvoice,
+          id: responseJSON.invoiceId,
+        };
+        dispatch(postNewInvoiceComplete(newInvoice));
+        callback();
+      }
       if (responseJSON.error) {
         dispatch(handleError(responseJSON.error));
       }

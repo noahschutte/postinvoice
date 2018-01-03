@@ -10,7 +10,7 @@ import {
 
 import InvoiceItem from '../components/InvoiceItem';
 
-class HomeScreen extends Component <{}> {
+class Invoices extends Component <{}> {
 
   constructor(props) {
     super(props);
@@ -72,10 +72,10 @@ class HomeScreen extends Component <{}> {
             passProps: {
               invoice: item,
               getCodeName: this.getCodeName,
+              deleteInvoice: this.props.deleteInvoice
             }
           });
         }}
-        deleteInvoice={this.props.deleteInvoice}
       />
     );
   }
@@ -103,4 +103,4 @@ export default connect(mapStateToProps, {
   createNewInvoiceBegin,
   deleteInvoice,
   fetchInvoices
-})(HomeScreen);
+})(Invoices);
