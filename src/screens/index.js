@@ -1,20 +1,21 @@
 import { Navigation } from 'react-native-navigation';
 
-import Invoices from './Invoices';
-import SelectDateScreen from './AddInvoice/SelectDateScreen';
-import SelectVendorScreen from './AddInvoice/SelectVendorScreen';
-import InvoiceNumberScreen from './AddInvoice/InvoiceNumberScreen';
-import CategoryBreakdownScreen from './AddInvoice/CategoryBreakdownScreen';
-import AddVendorModal from './AddInvoice/AddVendorModal';
-import AddItemsScreen from './AddInvoice/AddItemsScreen';
-import InvoiceReviewScreen from './AddInvoice/InvoiceReviewScreen';
+import InvoicesHome from './Invoices/InvoicesHome';
+import SelectDateScreen from './Invoices/SelectDateScreen';
+import SelectVendorScreen from './Invoices/SelectVendorScreen';
+import InvoiceNumberScreen from './Invoices/InvoiceNumberScreen';
+import CategoryBreakdownScreen from './Invoices/CategoryBreakdownScreen';
+import AddVendorModal from './Invoices/AddVendorModal';
+import AddItemsScreen from './Invoices/AddItemsScreen';
+import InvoiceReviewScreen from './Invoices/InvoiceReviewScreen';
 import SideMenu from './SideMenu';
-import ViewInvoiceScreen from './ViewInvoiceScreen';
+import ViewInvoiceScreen from './Invoices/ViewInvoiceScreen';
 import InventorySheets from './InventorySheets/InventorySheets';
+import ReportsScreen from './Reports/ReportsScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
-  Navigation.registerComponent('postinvoice.Invoices', () => Invoices, store, Provider);
+  Navigation.registerComponent('postinvoice.InvoicesHome', () => InvoicesHome, store, Provider);
   Navigation.registerComponent('postinvoice.SelectDateScreen', () => SelectDateScreen, store, Provider); //eslint-disable-line
   Navigation.registerComponent('postinvoice.SelectVendorScreen', () => SelectVendorScreen, store, Provider); //eslint-disable-line
   Navigation.registerComponent('postinvoice.InvoiceNumberScreen', () => InvoiceNumberScreen, store, Provider); //eslint-disable-line
@@ -25,4 +26,5 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.SideMenu', () => SideMenu, store, Provider);
   Navigation.registerComponent('postinvoice.ViewInvoiceScreen', () => ViewInvoiceScreen, store, Provider); //eslint-disable-line
   Navigation.registerComponent('postinvoice.InventorySheets', () => InventorySheets, store, Provider); //eslint-disable-line
+  Navigation.registerComponent('postinvoice.ReportsScreen', () => ReportsScreen, store, Provider);
 }

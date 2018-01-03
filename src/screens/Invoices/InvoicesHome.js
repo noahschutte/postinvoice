@@ -6,11 +6,11 @@ import {
   createNewInvoiceBegin,
   deleteInvoice,
   fetchInvoices
-} from '../actions/invoiceActions';
+} from '../../actions/invoiceActions';
 
-import InvoiceItem from '../components/InvoiceItem';
+import InvoiceItem from '../../components/InvoiceItem';
 
-class Invoices extends Component <{}> {
+class InvoicesHome extends Component <{}> {
 
   constructor(props) {
     super(props);
@@ -111,4 +111,4 @@ export default connect(mapStateToProps, {
   createNewInvoiceBegin,
   deleteInvoice,
   fetchInvoices
-})(Invoices);
+})(InvoicesHome);
