@@ -1,6 +1,8 @@
 import * as types from '../constants';
 
 const initialState = {
+  inventorySheets: [],
+  isFetching: false,
   date : '',
   wineAmount: '',
   beerAmount: '',
@@ -10,6 +12,16 @@ const initialState = {
 function inventorySheets(state = initialState, action) {
   // Handle actions
   switch (action.type) {
+    case types.CREATE_INVENTORY_SHEET_BEGIN:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case types.CREATE_INVENTORY_SHEET_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case types.ON_CHANGE_DATE:
       return {
         ...state,

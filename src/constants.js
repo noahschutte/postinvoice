@@ -4,6 +4,9 @@ export const ADD_VENDOR_TO_INVOICE = 'add_vendor_to_invoice';
 
 export const CLEAR_NEW_INVOICE_DATA = 'clear_new_invoice_data';
 
+export const CREATE_INVENTORY_SHEET_BEGIN = 'create_inventory_sheet_begin';
+export const CREATE_INVENTORY_SHEET_COMPLETE = 'create_inventory_sheet_complete';
+
 export const DELETE_INVOICE_COMPLETE = 'delete_invoice_complete';
 
 export const FETCHING_COMPLETE = 'fetching_complete';

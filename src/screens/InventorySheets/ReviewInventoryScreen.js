@@ -7,6 +7,20 @@ import { createInventorySheet } from '../../actions/inventorySheetActions';
 import InventoryReviewSection from '../../components/InventoryReviewSection';
 
 class ReviewInventoryScreen extends Component <{}> {
+
+  onConfirm = () => {
+    const { date, foodAmount, beerAmount, wineAmount } = this.props;
+    this.props.createInventorySheet({
+      date,
+      foodAmount,
+      beerAmount,
+      wineAmount,
+    });
+    this.props.navigator.popToRoot({
+      animated: true,
+    });
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -29,7 +43,7 @@ class ReviewInventoryScreen extends Component <{}> {
               elevation: 1,
               borderRadius: 2,
             }}
-            onPress={this.props.navigator.popToRoot({ animated: true, })}
+            onPress={this.onConfirm}
           >
             <Text>Confirm</Text>
           </TouchableOpacity>
@@ -40,8 +54,8 @@ class ReviewInventoryScreen extends Component <{}> {
 }
 
 const mapStateToProps = ({ inventorySheetsReducer }) => {
-  const { beerAmount, foodAmount, wineAmount } = inventorySheetsReducer;
-  return { beerAmount, foodAmount, wineAmount };
+  const { beerAmount, foodAmount, wineAmount, date } = inventorySheetsReducer;
+  return { beerAmount, foodAmount, wineAmount, date };
 };
 
 export default connect(mapStateToProps, { createInventorySheet })(ReviewInventoryScreen);
