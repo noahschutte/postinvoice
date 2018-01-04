@@ -4,7 +4,15 @@ import { View, Text } from 'react-native';
 const InvoiceSection = props => {
 
   const item = () => {
-    if (props.itemType != 'Line Items') {
+    if (props.itemType !== 'Line Items') {
+      if (props.itemType === 'Date') {
+        const date = props.item;
+        return (
+          <Text style={styles.itemTextStyle}>
+            {date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4)}
+          </Text>
+        );
+      }
       return (
         <Text style={styles.itemTextStyle}>{props.item}</Text>
       );
