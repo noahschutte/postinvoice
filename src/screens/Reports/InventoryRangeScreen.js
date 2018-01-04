@@ -47,10 +47,10 @@ class InventoryRangeScreen extends Component <{}> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text>
-          Inventory Range Screen
-        </Text>
         <View>
+          <Text style={{ textAlign: 'center', fontSize: 26, marginVertical: 20, }}>
+            Date range start:
+          </Text>
           <Picker
             selectedValue={this.props.startingInventorySheet}
             onValueChange={itemValue => this.props.onChangeStartingInventorySheet(itemValue)}
@@ -67,6 +67,9 @@ class InventoryRangeScreen extends Component <{}> {
             </Picker>
         </View>
         <View>
+          <Text style={{ textAlign: 'center', fontSize: 26, marginVertical: 20, }}>
+            Date range end:
+          </Text>
           <Picker
             selectedValue={this.props.endingInventorySheet}
             onValueChange={itemValue => this.props.onChangeEndingInventorySheet(itemValue)}
