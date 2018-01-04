@@ -11,10 +11,10 @@ export function createInventorySheetBegin() {
   };
 }
 
-export function createInventorySheetComplete(inventorySheetId) {
+export function createInventorySheetComplete(inventorySheet) {
   return {
     type: types.CREATE_INVENTORY_SHEET_COMPLETE,
-    inventorySheetId,
+    inventorySheet,
   };
 }
 
@@ -44,27 +44,45 @@ export function onChangeInventoryAmount(amount, inventoryType) {
 * asynchronous action creators
 */
 
-export function createInventorySheet(inventoryData) {
+export function createInventorySheet(inventoryData, callback) {
   return function(dispatch) {
     dispatch(createInventorySheetBegin());
     const { date, beerAmount, foodAmount, wineAmount } = inventoryData;
-    const body = JSON.stringify({
-      date,
+    function formatDate(date) {
+    var d = new Date(date)    ,
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+    }
+    const dateString = formatDate(date);
+    const body = {
+      date: dateString,
       beerTotal: parseFloat(beerAmount.slice(1).replace(',','')),
       foodTotal: parseFloat(foodAmount.slice(1).replace(',','')),
       wineTotal: parseFloat(wineAmount.slice(1).replace(',','')),
-    });
+    };
     fetch(`${DB_URL}/inventory_sheets`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body,
+      body: JSON.stringify(body),
     })
     .then(response => response.json())
     .then(responseJSON => {
-      createInventorySheetComplete(responseJSON.inventorySheetId);
+      if (responseJSON.inventorySheetId) {
+        createInventorySheetComplete({
+          id: responseJSON.inventorySheetId,
+          ...body,
+        });
+        callback();
+      }
     })
     .catch(err => alert(err));
   };

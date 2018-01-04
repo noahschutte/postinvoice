@@ -21,6 +21,10 @@ function inventorySheets(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        inventorySheets: [
+          ...state.inventorySheets,
+          action.inventorySheet,
+        ]
       };
     case types.FETCH_INVENTORY_SHEETS_BEGIN:
       return {

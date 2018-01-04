@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { fetchInventorySheets } from '../../actions/inventorySheetActions';
+import InventorySheetListItem from '../../components/InventorySheetListItem';
 
 class InventorySheets extends Component <{}> {
   constructor(props) {
@@ -42,11 +43,27 @@ class InventorySheets extends Component <{}> {
     }
   }
 
-  render() {
-    console.log('this.props: ', this.props);
+  renderInventorySheetListItem = ({ item }) => {
     return (
-      <View>
-        <Text>Inventory Sheets</Text>
+      <InventorySheetListItem
+        item={item}
+      />
+    );
+  }
+
+  _keyExtractor = item => {
+    return item.id;
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          style={{ flex: 1 }}
+          data={this.props.inventorySheets}
+          keyExtractor={this._keyExtractor}
+          renderItem={this.renderInventorySheetListItem}
+        />
       </View>
     );
   }

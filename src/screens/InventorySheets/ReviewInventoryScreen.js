@@ -10,15 +10,15 @@ class ReviewInventoryScreen extends Component <{}> {
 
   onConfirm = () => {
     const { date, foodAmount, beerAmount, wineAmount } = this.props;
+    const callback = () => this.props.navigator.popToRoot({
+      animated: true,
+    });
     this.props.createInventorySheet({
       date,
       foodAmount,
       beerAmount,
       wineAmount,
-    });
-    this.props.navigator.popToRoot({
-      animated: true,
-    });
+    }, callback);
   }
 
   render() {

@@ -271,7 +271,6 @@ export function postNewInvoice(newInvoice, callback) {
       total,
     } = newInvoice;
 
-    date = new Date(date);
     vendor = {
       id: vendor.id,
       name: vendor.name,

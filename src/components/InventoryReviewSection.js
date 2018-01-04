@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 const InventoryReviewSection = ({ type, amount }) => {
-  console.log('amount: ', amount);
   return (
     <View style={styles.container}>
       <View style={styles.typeWrapper}>
