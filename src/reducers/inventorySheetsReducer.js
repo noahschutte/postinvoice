@@ -41,6 +41,11 @@ function inventorySheets(state = initialState, action) {
         inventorySheets
       };
     }
+    case types.FETCHING_COMPLLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case types.FETCH_INVENTORY_SHEETS_BEGIN:
       return {
         ...state,
@@ -51,6 +56,11 @@ function inventorySheets(state = initialState, action) {
         ...state,
         isFetching: false,
         inventorySheets: action.inventorySheets,
+      };
+    case types.IS_FETCHING:
+      return {
+        ...state,
+        isFetching: true,
       };
     case types.ON_CHANGE_DATE:
       return {

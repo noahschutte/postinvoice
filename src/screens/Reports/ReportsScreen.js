@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
+import { connect } from 'react-redux';
+
+import { createNewReportBegin } from '../../actions/reportActions';
+
 class ReportsScreen extends Component <{}> {
   constructor(props) {
     super(props);
@@ -10,6 +14,7 @@ class ReportsScreen extends Component <{}> {
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'add') {
+        this.props.createNewReportBegin();
         this.props.navigator.push({
           screen: 'postinvoice.InventoryRangeScreen',
           title: 'Inventory Date Range',
@@ -34,6 +39,7 @@ class ReportsScreen extends Component <{}> {
   }
 
   render() {
+    console.log('this.props: ', this.props);
     return (
       <View>
         <Text>
@@ -44,4 +50,10 @@ class ReportsScreen extends Component <{}> {
   }
 }
 
-export default ReportsScreen;
+const mapStateToProps = state => {
+  return { ...state };
+};
+
+export default connect(mapStateToProps, {
+  createNewReportBegin
+})(ReportsScreen);
