@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Picker } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -7,6 +7,25 @@ class InventoryRangeScreen extends Component <{}> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
+    this.state = {
+      dateBegin: 1,
+      dateEnd: 3,
+      testArray: [
+        {
+          id: 0,
+          date: 1
+        },
+        {
+          id: 1,
+          date: 2,
+        },
+        {
+          id: 2,
+          date: 3
+        }
+      ]
+    };
   }
 
   onNavigatorEvent(event) {
@@ -27,18 +46,26 @@ class InventoryRangeScreen extends Component <{}> {
         <Text>
           Inventory Range Screen
         </Text>
-        {/* <Picker
-
+        <Picker
+          selectedValue={this.state.dateBegin}
+          onValueChange={(itemValue, itemIndex) => this.setState({ dateBegin: itemValue })}
         >
-          <Picker.Item />
-        </Picker> */}
+          {
+            this.state.testArray.map(obj => {
+              return (
+                <Picker.Item label={obj.date.toString()} key={obj.id} value={obj.date} />
+              );
+            })
+          }
+        </Picker>
       </View>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return { ...state };
+const mapStateToProps = ({ inventorySheetsReducer }) => {
+  const { inventorySheets } = inventorySheetsReducer;
+  return { inventorySheets };
 };
 
 export default connect(mapStateToProps, {})(InventoryRangeScreen);
