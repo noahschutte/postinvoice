@@ -26,12 +26,18 @@ function inventorySheets(state = initialState, action) {
           action.inventorySheet,
         ]
       };
+    case types.DELETE_INVENTORY_SHEET_BEGIN:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case types.DELETE_INVENTORY_SHEET:{
       const inventorySheets = [
         ...state.inventorySheets.filter(sheet => sheet.id !== action.inventorySheetId)
       ];
       return {
         ...state,
+        isFetching: false,
         inventorySheets
       };
     }

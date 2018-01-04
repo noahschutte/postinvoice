@@ -18,7 +18,12 @@ export function createInventorySheetComplete(inventorySheet) {
   };
 }
 
-export function deleteInventorySheet(inventorySheetId) {
+export function deleteInventorySheetBegin() {
+  return {
+    type: types.DELETE_INVENTORY_SHEET_BEGIN,
+  };
+}
+export function deleteInventorySheetConfirmed(inventorySheetId) {
   return {
     type: types.DELETE_INVENTORY_SHEET,
     inventorySheetId,
@@ -89,6 +94,26 @@ export function createInventorySheet(inventoryData, callback) {
           ...body,
         });
         callback();
+      }
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function deleteInventorySheet(inventorySheetId) {
+  return function(dispatch) {
+    dispatch(deleteInventorySheetBegin());
+    fetch(`${DB_URL}/inventory_sheets/${inventorySheetId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      if (responseJSON.message) {
+        dispatch(deleteInventorySheetConfirmed(inventorySheetId));
       }
     })
     .catch(err => alert(err));
