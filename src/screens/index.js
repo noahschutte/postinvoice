@@ -5,6 +5,7 @@ import AddItemsScreen from './Invoices/AddItemsScreen';
 import AddVendorModal from './Invoices/AddVendorModal';
 import CategoryBreakdownScreen from './Invoices/CategoryBreakdownScreen';
 import InputInventoryScreen from './InventorySheets/InputInventoryScreen';
+import InventoryRangeScreen from './Reports/InventoryRangeScreen';
 import InventorySheets from './InventorySheets/InventorySheets';
 import InvoiceNumberScreen from './Invoices/InvoiceNumberScreen';
 import InvoiceReviewScreen from './Invoices/InvoiceReviewScreen';
@@ -23,6 +24,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.AddVendorModal', () => AddVendorModal, store, Provider);
   Navigation.registerComponent('postinvoice.CategoryBreakdownScreen', () => CategoryBreakdownScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InputInventoryScreen', () => InputInventoryScreen, store, Provider);
+  Navigation.registerComponent('postinvoice.InventoryRangeScreen', () => InventoryRangeScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InventorySheets', () => InventorySheets, store, Provider);
   Navigation.registerComponent('postinvoice.InvoiceNumberScreen', () => InvoiceNumberScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InvoiceReviewScreen', () => InvoiceReviewScreen, store, Provider);

@@ -21,11 +21,6 @@ class SideMenu extends Component <{}> {
         break;
     }
 
-    const right = route !== 'ReportsScreen' ? [{
-      title: 'Add',
-      id: 'add'
-    }] : null;
-
     this.props.navigator.resetTo({
       screen: `postinvoice.${route}`,
       title: destination,
@@ -36,7 +31,12 @@ class SideMenu extends Component <{}> {
             id: 'sideMenu',
           }
         ],
-        rightButtons: right,
+        rightButtons: [
+          {
+            title: 'Add',
+            id: 'add',
+          },
+        ]
       }
     });
     this.props.navigator.toggleDrawer({
