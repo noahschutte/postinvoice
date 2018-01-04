@@ -30,7 +30,6 @@ class SelectDateScreen extends Component <{}> {
   }
 
   confirmDate = (date) => {
-    console.log('this.props @ SelectDateScreen', this.props);
     this.props.onChangeDate(date);
     let screen = this.props.intent;
     let title = this.props.intentTitle;

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import invoicesReducer from './invoicesReducer';
-import InventorySheetsReducer from './InventorySheetsReducer';
+import inventorySheetsReducer from './inventorySheetsReducer';
 
 const rootReducer = combineReducers({
   invoicesReducer,
-  InventorySheetsReducer,
+  inventorySheetsReducer,
 });
 
 export default rootReducer;
