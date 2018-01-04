@@ -21,7 +21,7 @@ class SideMenu extends Component <{}> {
         break;
     }
 
-    const right = route === 'InvoicesHome' ? [{
+    const right = route !== 'ReportsScreen' ? [{
       title: 'Add',
       id: 'add'
     }] : null;

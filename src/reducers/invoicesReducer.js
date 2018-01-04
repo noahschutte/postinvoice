@@ -80,7 +80,7 @@ function invoices(state = initialState, action) {
         ...state,
         isFetching: true,
       };
-    case types.ON_CHANGE_INVOICE_DATE:
+    case types.ON_CHANGE_DATE:
       return {
         ...state,
         newInvoice: {

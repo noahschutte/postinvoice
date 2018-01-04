@@ -56,9 +56,9 @@ export function isFetching() {
   };
 }
 
-export function onChangeInvoiceDate(date) {
+export function onChangeDate(date) {
   return {
-    type: types.ON_CHANGE_INVOICE_DATE,
+    type: types.ON_CHANGE_DATE,
     date,
   };
 }
@@ -271,7 +271,6 @@ export function postNewInvoice(newInvoice, callback) {
       total,
     } = newInvoice;
 
-    date = new Date(date);
     vendor = {
       id: vendor.id,
       name: vendor.name,
