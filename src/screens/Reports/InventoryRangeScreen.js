@@ -3,6 +3,11 @@ import { View, Text, Picker } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import {
+  onChangeEndingInventorySheet,
+  onChangeStartingInventorySheet
+} from '../../actions/reportActions';
+
 class InventoryRangeScreen extends Component <{}> {
   constructor(props) {
     super(props);
@@ -40,32 +45,55 @@ class InventoryRangeScreen extends Component <{}> {
   }
 
   render() {
-    console.log('this.props, ', this.props);
     return (
       <View style={{ flex: 1 }}>
         <Text>
           Inventory Range Screen
         </Text>
-        <Picker
-          selectedValue={this.state.dateBegin}
-          onValueChange={(itemValue, itemIndex) => this.setState({ dateBegin: itemValue })}
-        >
-          {
-            this.state.testArray.map(obj => {
-              return (
-                <Picker.Item label={obj.date.toString()} key={obj.id} value={obj.date} />
-              );
-            })
-          }
-        </Picker>
+        <View>
+          <Picker
+            selectedValue={this.props.startingInventorySheet}
+            onValueChange={itemValue => this.props.onChangeStartingInventorySheet(itemValue)}
+            >
+              {
+                this.props.inventorySheets.map(sheet => {
+                  let date = sheet.date;
+                  date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
+                  return (
+                    <Picker.Item label={date} key={sheet.id} value={sheet.id} />
+                  );
+                })
+              }
+            </Picker>
+        </View>
+        <View>
+          <Picker
+            selectedValue={this.props.endingInventorySheet}
+            onValueChange={itemValue => this.props.onChangeEndingInventorySheet(itemValue)}
+            >
+              {
+                this.props.inventorySheets.map(sheet => {
+                  let date = sheet.date;
+                  date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
+                  return (
+                    <Picker.Item label={date} key={sheet.id} value={sheet.id} />
+                  );
+                })
+              }
+            </Picker>
+        </View>
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ inventorySheetsReducer }) => {
+const mapStateToProps = ({ inventorySheetsReducer, reportsReducer }) => {
   const { inventorySheets } = inventorySheetsReducer;
-  return { inventorySheets };
+  const { startingInventorySheet, endingInventorySheet } = reportsReducer;
+  return { inventorySheets, startingInventorySheet, endingInventorySheet };
 };
 
-export default connect(mapStateToProps, {})(InventoryRangeScreen);
+export default connect(mapStateToProps, {
+  onChangeEndingInventorySheet,
+  onChangeStartingInventorySheet,
+})(InventoryRangeScreen);

@@ -39,7 +39,6 @@ class ReportsScreen extends Component <{}> {
   }
 
   render() {
-    console.log('this.props: ', this.props);
     return (
       <View>
         <Text>

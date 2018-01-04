@@ -6,20 +6,22 @@ import * as InventoryActions from './inventorySheetActions';
 * synchronous action creators
 */
 
-export function onChangeReportEndDate(reportEndDate) {
+export function onChangeEndingInventorySheet(endingInventorySheet) {
   return {
-    type: types.ON_CHANGE_REPORT_END_DATE,
-    reportEndDate,
+    type: types.ON_CHANGE_ENDING_INVENTORY_SHEET,
+    endingInventorySheet,
   };
 }
 
 
-export function onChangeReportStartDate(reportStartDate) {
+export function onChangeStartingInventorySheet(startingInventorySheet) {
+  console.log('here though');
   return {
-    type: types.ON_CHANGE_REPORT_START_DATE,
-    reportStartDate,
+    type: types.ON_CHANGE_STARTING_INVENTORY_SHEET,
+    startingInventorySheet,
   };
 }
+
 /*
 * asynchronous action creators
 */

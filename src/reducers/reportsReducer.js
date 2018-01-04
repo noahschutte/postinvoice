@@ -2,8 +2,8 @@ import * as types from '../constants';
 
 const initialState = {
   isFetching: false,
-  reportStartDate: '',
-  reportEndDate: '',
+  startingInventorySheet: '',
+  endingInventorySheet: '',
   reports: [],
 };
 
@@ -20,15 +20,15 @@ function reports(state = initialState, action) {
         ...state,
         isFetching: true,
       };
-    case types.ON_CHANGE_REPORT_END_DATE:
+    case types.ON_CHANGE_ENDING_INVENTORY_SHEET:
       return {
         ...state,
-        reportEndDate: action.reportEndDate,
+        endingInventorySheet: action.endingInventorySheet,
       };
-    case types.ON_CHANGE_REPORT_START_DATE:
+    case types.ON_CHANGE_STARTING_INVENTORY_SHEET:
       return {
         ...state,
-        reportStartDate: action.reportStartDate,
+        startingInventorySheet: action.startingInventorySheet,
       };
     default:
       return {

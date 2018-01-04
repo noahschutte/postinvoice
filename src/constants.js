@@ -30,8 +30,8 @@ export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
 export const ON_CHANGE_ITEM_AMOUNT = 'on_change_item_amount';
 export const ON_CHANGE_ITEM_CODE = 'on_change_item_code';
 
-export const ON_CHANGE_REPORT_START_DATE = 'on_change_report_start_date';
-export const ON_CHNAGE_REPORT_END_DATE = 'on_change_report_end_date';
+export const ON_CHANGE_STARTING_INVENTORY_SHEET = 'ON_CHANGE_STARTING_INVENTORY_SHEET';
+export const ON_CHANGE_ENDING_INVENTORY_SHEET = 'ON_CHANGE_ENDING_INVENTORY_SHEET';
 
 export const ON_CHANGE_VENDOR_NAME = 'on_change_vendor_name';
 
