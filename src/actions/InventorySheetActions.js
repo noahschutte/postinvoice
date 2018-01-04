@@ -18,6 +18,19 @@ export function createInventorySheetComplete(inventorySheetId) {
   };
 }
 
+export function fetchInventorySheetsBegin() {
+  return {
+    type: types.FETCH_INVENTORY_SHEETS_BEGIN,
+  };
+}
+
+export function fetchInventorySheetsComplete(inventorySheets) {
+  return {
+    type: types.FETCH_INVENTORY_SHEETS_COMPLETE,
+    inventorySheets,
+  };
+}
+
 export function onChangeInventoryAmount(amount, inventoryType) {
   return {
     type: types.ON_CHANGE_INVENTORY_AMOUNT,
@@ -52,6 +65,24 @@ export function createInventorySheet(inventoryData) {
     .then(response => response.json())
     .then(responseJSON => {
       createInventorySheetComplete(responseJSON.inventorySheetId);
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function fetchInventorySheets() {
+  return function(dispatch) {
+    dispatch(fetchInventorySheetsBegin());
+    fetch(`${DB_URL}/inventory_sheets`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      dispatch(fetchInventorySheetsComplete(responseJSON.inventorySheets));
     })
     .catch(err => alert(err));
   };

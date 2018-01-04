@@ -11,6 +11,9 @@ export const DELETE_INVOICE_COMPLETE = 'delete_invoice_complete';
 
 export const FETCHING_COMPLETE = 'fetching_complete';
 
+export const FETCH_INVENTORY_SHEETS_BEGIN = 'fetch_inventory_sheets_begin';
+export const FETCH_INVENTORY_SHEETS_COMPLETE = 'fetch_inventory_sheets_complete';
+
 export const HANDLE_ERROR = 'handle_error';
 
 export const IS_FETCHING = 'is_fetching';

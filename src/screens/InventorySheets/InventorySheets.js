@@ -3,10 +3,16 @@ import { View, Text } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import { fetchInventorySheets } from '../../actions/inventorySheetActions';
+
 class InventorySheets extends Component <{}> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  componentWillMount() {
+    this.props.fetchInventorySheets();
   }
 
   onNavigatorEvent(event) {
@@ -37,6 +43,7 @@ class InventorySheets extends Component <{}> {
   }
 
   render() {
+    console.log('this.props: ', this.props);
     return (
       <View>
         <Text>Inventory Sheets</Text>
@@ -45,4 +52,9 @@ class InventorySheets extends Component <{}> {
   }
 }
 
-export default connect()(InventorySheets);
+const mapStateToProps = ({ inventorySheetsReducer }) => {
+  const { inventorySheets } = inventorySheetsReducer;
+  return { inventorySheets };
+};
+
+export default connect(mapStateToProps, { fetchInventorySheets })(InventorySheets);

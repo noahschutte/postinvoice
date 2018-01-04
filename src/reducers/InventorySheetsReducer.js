@@ -22,6 +22,17 @@ function inventorySheets(state = initialState, action) {
         ...state,
         isFetching: false,
       };
+    case types.FETCH_INVENTORY_SHEETS_BEGIN:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case types.FETCH_INVENTORY_SHEETS_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+        inventorySheets: action.inventorySheets,
+      };
     case types.ON_CHANGE_DATE:
       return {
         ...state,
