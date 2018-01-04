@@ -26,6 +26,11 @@ function inventorySheets(state = initialState, action) {
           action.inventorySheet,
         ]
       };
+    case types.DELETE_INVENTORY_SHEET:
+      alert('reached');
+      return {
+        ...state,
+      }
     case types.FETCH_INVENTORY_SHEETS_BEGIN:
       return {
         ...state,

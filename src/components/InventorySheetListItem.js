@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-const InventorySheetListItem = ({ item }) => {
+const InventorySheetListItem = ({ item, onPress }) => {
   const date = item.date;
   return (
-    <TouchableOpacity style={styles.container} onPress={() => alert('pressed')}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.textStyle}>
         {date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4)}
       </Text>

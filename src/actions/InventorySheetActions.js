@@ -18,6 +18,13 @@ export function createInventorySheetComplete(inventorySheet) {
   };
 }
 
+export function deleteInventorySheet(inventorySheetId) {
+  return {
+    type: types.DELETE_INVENTORY_SHEET,
+    inventorySheetId,
+  };
+}
+
 export function fetchInventorySheetsBegin() {
   return {
     type: types.FETCH_INVENTORY_SHEETS_BEGIN,
