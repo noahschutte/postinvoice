@@ -7,7 +7,6 @@ const ViewInventorySheetScreen = ({
   item,
   deleteInventorySheet
 }) => {
-  console.log('item', item);
   return (
     <View style={{ flex: 1 }}>
       <InventoryReviewSection

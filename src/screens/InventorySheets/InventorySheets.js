@@ -59,6 +59,13 @@ class InventorySheets extends Component <{}> {
     return item.id;
   }
 
+  deleteInventorySheet = (inventorySheetId) => {
+    this.props.deleteInventorySheet(inventorySheetId);
+    this.props.navigator.popToRoot({
+      animated: true,
+    });
+  }
+
   invoiceShow = item => {
     let date = item.date;
     date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
@@ -67,7 +74,7 @@ class InventorySheets extends Component <{}> {
       title: date,
       passProps: {
         item,
-        deleteInventorySheet: this.props.deleteInventorySheet,
+        deleteInventorySheet: () => this.deleteInventorySheet(item.id),
       },
     });
   }

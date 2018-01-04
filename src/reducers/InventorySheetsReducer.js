@@ -26,11 +26,15 @@ function inventorySheets(state = initialState, action) {
           action.inventorySheet,
         ]
       };
-    case types.DELETE_INVENTORY_SHEET:
-      alert('reached');
+    case types.DELETE_INVENTORY_SHEET:{
+      const inventorySheets = [
+        ...state.inventorySheets.filter(sheet => sheet.id !== action.inventorySheetId)
+      ];
       return {
         ...state,
-      }
+        inventorySheets
+      };
+    }
     case types.FETCH_INVENTORY_SHEETS_BEGIN:
       return {
         ...state,
