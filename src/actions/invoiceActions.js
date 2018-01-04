@@ -56,9 +56,9 @@ export function isFetching() {
   };
 }
 
-export function onChangeInvoiceDate(date) {
+export function onChangeDate(date) {
   return {
-    type: types.ON_CHANGE_INVOICE_DATE,
+    type: types.ON_CHANGE_DATE,
     date,
   };
 }

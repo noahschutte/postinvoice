@@ -23,19 +23,16 @@ class InvoicesHome extends Component <{}> {
 
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'sideMenu') {
-        this.props.navigator.toggleDrawer({
-          side: 'left',
-          animated: true,
-          to: 'open',
-        });
-      }
       if (event.id == 'add') {
         this.props.navigator.push({
           screen: 'postinvoice.SelectDateScreen',
           title: 'Select Date',
           navigatorStyle: {
             navBarTitleTextCentered: true,
+          },
+          passProps: {
+            intent: 'postinvoice.SelectVendorScreen',
+            intentTitle: 'Select Vendor',
           },
           navigatorButtons: {
             leftButtons: [

@@ -12,7 +12,7 @@ export const HANDLE_ERROR = 'handle_error';
 
 export const IS_FETCHING = 'is_fetching';
 
-export const ON_CHANGE_INVOICE_DATE = 'on_change_invoice_date';
+export const ON_CHANGE_DATE = 'on_change_date';
 
 export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
 
