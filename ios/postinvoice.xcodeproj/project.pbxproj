@@ -40,7 +40,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6A12A2C61FECD85A00FC1C24 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A12A2BE1FECD81700FC1C24 /* libRNVectorIcons.a */; };
 		6A12A2C71FECD85F00FC1C24 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A12A2C41FECD84B00FC1C24 /* libReactNativeNavigation.a */; };
-		6A12A2C81FECD86700FC1C24 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A12A2C91FECD86700FC1C24 /* libReact.a */; };
+		6A1D5C2A1FFEC3A900D739FC /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		800F3312CE334A5AA78F0363 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23486D47678642289CBCADB1 /* Octicons.ttf */; };
 		809E82B4E43C4491ADFD9848 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1375B53E95E0428DB61987B3 /* MaterialIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -384,7 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A12A2C81FECD86700FC1C24 /* libReact.a in Frameworks */,
+				6A1D5C2A1FFEC3A900D739FC /* libReact.a in Frameworks */,
 				6A12A2C71FECD85F00FC1C24 /* libReactNativeNavigation.a in Frameworks */,
 				6A12A2C61FECD85A00FC1C24 /* libRNVectorIcons.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
