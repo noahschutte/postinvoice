@@ -1,35 +1,24 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { onChangeInventoryAmount } from '../../actions/inventorySheetActions';
-import InventorySheetInput from '../../components/InventorySheetInput';
+import { createInventorySheet } from '../../actions/inventorySheetActions';
+import InventoryReviewSection from '../../components/InventoryReviewSection';
 
-class InputInventoryScreen extends Component <{}> {
-
-  onSubmit = () => {
-    this.props.navigator.push({
-      screen: 'postinvoice.ReviewInventoryScreen',
-      title: 'Review',
-    });
-  }
-
+class ReviewInventoryScreen extends Component <{}> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <InventorySheetInput
-          onChangeAmount={this.props.onChangeInventoryAmount}
+        <InventoryReviewSection
           amount={this.props.wineAmount}
           type='Wine'
         />
-        <InventorySheetInput
-          onChangeAmount={this.props.onChangeInventoryAmount}
+        <InventoryReviewSection
           amount={this.props.beerAmount}
           type='Beer'
         />
-        <InventorySheetInput
-          onChangeAmount={this.props.onChangeInventoryAmount}
+        <InventoryReviewSection
           amount={this.props.foodAmount}
           type='Food'
         />
@@ -40,9 +29,9 @@ class InputInventoryScreen extends Component <{}> {
               elevation: 1,
               borderRadius: 2,
             }}
-            onPress={this.onSubmit}
+            onPress={this.props.navigator.popToRoot({ animated: true, })}
           >
-            <Text>Submit</Text>
+            <Text>Confirm</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -55,4 +44,4 @@ const mapStateToProps = ({ inventorySheetsReducer }) => {
   return { beerAmount, foodAmount, wineAmount };
 };
 
-export default connect(mapStateToProps, { onChangeInventoryAmount })(InputInventoryScreen);
+export default connect(mapStateToProps, { createInventorySheet })(ReviewInventoryScreen);

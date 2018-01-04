@@ -16,7 +16,7 @@ function inventorySheets(state = initialState, action) {
         date: action.date,
       };
     case types.ON_CHANGE_INVENTORY_AMOUNT:
-      switch (action.inventoryType) {
+        switch (action.inventoryType) {
         case 'Wine':
           return {
             ...state,
