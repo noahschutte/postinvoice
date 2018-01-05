@@ -57,20 +57,9 @@ export function isFetching() {
 }
 
 export function onChangeDate(date) {
-  function formatDate(date) {
-  var d = new Date(date)    ,
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
-  }
   return {
     type: types.ON_CHANGE_DATE,
-    date: formatDate(date),
+    date: date,
   };
 }
 
@@ -282,7 +271,18 @@ export function postNewInvoice(newInvoice, callback) {
       total,
     } = newInvoice;
 
-    date = new Date(date);
+    function formatDate(date) {
+    var d = new Date(date)    ,
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+    }
+    date = formatDate(date);
     vendor = {
       id: vendor.id,
       name: vendor.name,
