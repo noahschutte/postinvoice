@@ -15,6 +15,13 @@ const initialState = {
   }
 };
 
+function parseMoney(str) {
+  if (typeof str === 'string') {
+    return parseFloat(str.split(',').join(''));
+  }
+  return str;
+}
+
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
@@ -23,7 +30,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          total: state.newInvoice.total + action.item.amount,
+          total: parseMoney(state.newInvoice.total) + parseMoney(action.item.amount),
           items: [
             ...state.newInvoice.items,
             action.item

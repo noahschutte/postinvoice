@@ -71,7 +71,6 @@ export function onChangeInvoiceNumber(number) {
 }
 
 export function onChangeItemAmount(item, amount) {
-  amount = amount.slice(1);
   return {
     type: types.ON_CHANGE_ITEM_AMOUNT,
     item,
