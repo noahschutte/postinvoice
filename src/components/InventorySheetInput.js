@@ -1,17 +1,9 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { TextInputMask } from 'react-native-masked-text';
 
 const InventorySheetInput = ({ amount, onChangeAmount, type }) => {
-
-  const textField = () => {(
-    <TextInput
-      value={amount || '$0.00'}
-      onChangeText={amount => onChangeAmount(amount, type)}
-      style={styles.inputStyle}
-    />
-  );};
 
   return (
     <View style={styles.container}>
@@ -30,7 +22,6 @@ const InventorySheetInput = ({ amount, onChangeAmount, type }) => {
           onChangeText={amount => onChangeAmount(amount, type)}
           keyboardType='numeric'
           style={styles.inputStyle}
-          customTextInput={textField()}
         />
       </View>
     </View>

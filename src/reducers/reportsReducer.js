@@ -20,6 +20,7 @@ function reports(state = initialState, action) {
         ...state,
         isFetching: false,
       };
+    case types.CREATE_REPORT_BEGIN:
     case types.IS_FETCHING:
       return {
         ...state,
