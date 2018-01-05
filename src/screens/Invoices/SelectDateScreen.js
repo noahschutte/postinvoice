@@ -10,9 +10,6 @@ class SelectDateScreen extends Component <{}> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-    this.state = {
-      date: new Date().toLocaleDateString(),
-    };
   }
 
   onNavigatorEvent(event) {
@@ -45,17 +42,17 @@ class SelectDateScreen extends Component <{}> {
             dateText: styles.dateTextStyle,
             dateInput: styles.dateInputStyle,
           }}
-          placeholder={this.state.date}
+          placeholder={this.props.date}
           mode='date'
           format='MM-DD-YYYY'
-          date={this.state.date}
+          date={this.props.date}
           confirmBtnText='Confirm'
           cancelBtnText='Cancel'
           onDateChange={this.confirmDate}
         />
 
         <SingleButton
-          onPress={() => this.confirmDate(this.state.date)}
+          onPress={() => this.confirmDate(this.props.date)}
           buttonText='Confirm'
         />
       </View>

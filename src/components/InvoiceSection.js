@@ -6,7 +6,19 @@ const InvoiceSection = props => {
   const item = () => {
     if (props.itemType !== 'Line Items') {
       if (props.itemType === 'Date') {
-        const date = props.item;
+        let date = props.item;
+        const formatDate = (date) => {
+        var d = new Date(date)    ,
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+      };
+        date = formatDate(date);
         return (
           <Text style={styles.itemTextStyle}>
             {date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4)}

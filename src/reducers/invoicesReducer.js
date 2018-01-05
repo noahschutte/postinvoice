@@ -8,7 +8,7 @@ const initialState = {
   error: '',
   newInvoice: {
     total: 0,
-    date: '',
+    date: new Date().toLocaleDateString(),
     number: '',
     vendor: {},
     items: [],
