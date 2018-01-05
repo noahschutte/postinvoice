@@ -29,6 +29,14 @@ export function onChangeStartingInventorySheet(startingInventorySheet) {
   };
 }
 
+export function onChangeSales(salesType, amount) {
+  return {
+    type: types.ON_CHANGE_SALES,
+    salesType,
+    amount,
+  };
+}
+
 /*
 * asynchronous action creators
 */

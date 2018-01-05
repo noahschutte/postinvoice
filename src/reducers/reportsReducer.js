@@ -4,6 +4,11 @@ const initialState = {
   isFetching: false,
   startingInventorySheet: '',
   endingInventorySheet: '',
+  invoiceStartDate: '',
+  invoiceEndDate: '',
+  beerSales: '',
+  foodSales: '',
+  wineSales: '',
   reports: [],
 };
 
@@ -31,6 +36,28 @@ function reports(state = initialState, action) {
         invoiceStartDate: action.startDateRange,
         invoiceEndDate: action.endDateRange,
       };
+    case types.ON_CHANGE_SALES:
+      switch (action.salesType) {
+        case 'Beer':
+          return {
+            ...state,
+            beerSales: action.amount,
+          };
+        case 'Food':
+          return {
+            ...state,
+            foodSales: action.amount,
+          };
+        case 'Wine':
+          return {
+            ...state,
+            wineSales: action.amount,
+          };
+        default:
+          return {
+            ...state,
+          };
+      }
     case types.ON_CHANGE_STARTING_INVENTORY_SHEET:
       return {
         ...state,
