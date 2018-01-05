@@ -3,7 +3,18 @@ import { View, Text } from 'react-native';
 
 const InvoiceSection = props => {
 
+
   const item = () => {
+    const formatMoney = (dollars) => {
+      dollars.toString();
+      // separate dollars from cents, format pennies
+      let amounts = dollars.split('.');
+      if (amounts[1].length === 1 && amounts[1]) {
+        amounts[1] += '0';
+      }
+      return amounts.join('.');
+    };
+
     if (props.itemType !== 'Line Items') {
       if (props.itemType === 'Date') {
         let date = props.item;
@@ -26,7 +37,9 @@ const InvoiceSection = props => {
         );
       }
       return (
-        <Text style={styles.itemTextStyle}>{props.item}</Text>
+        <Text style={styles.itemTextStyle}>
+          {props.itemType == 'Invoice Total' ? formatMoney(props.item) : props.item}
+        </Text>
       );
     }
 
@@ -40,7 +53,7 @@ const InvoiceSection = props => {
           </View>
           <View>
             <Text style={styles.itemTextStyle}>
-              {' $' + item.amount}
+              {' $' + formatMoney(item.amount)}
              </Text>
           </View>
         </View>
