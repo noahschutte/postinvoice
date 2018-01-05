@@ -3,6 +3,7 @@ import { View, Text, Picker } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import SingleButton from '../../components/SingleButton';
 import {
   onChangeEndingInventorySheet,
   onChangeStartingInventorySheet
@@ -25,6 +26,13 @@ class InventoryRangeScreen extends Component <{}> {
     }
   }
 
+  onConfirm = () => {
+    this.props.navigator.push({
+      screen: this.props.intent,
+      title: this.props.intentTitle, 
+    });
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -35,17 +43,17 @@ class InventoryRangeScreen extends Component <{}> {
           <Picker
             selectedValue={this.props.startingInventorySheet}
             onValueChange={itemValue => this.props.onChangeStartingInventorySheet(itemValue)}
-            >
-              {
-                this.props.inventorySheets.map(sheet => {
-                  let date = sheet.date;
-                  date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
-                  return (
-                    <Picker.Item label={date} key={sheet.id} value={sheet.id} />
-                  );
-                })
-              }
-            </Picker>
+          >
+            {
+              this.props.inventorySheets.map(sheet => {
+                let date = sheet.date;
+                date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
+                return (
+                  <Picker.Item label={date} key={sheet.id} value={sheet.id} />
+                );
+              })
+            }
+          </Picker>
         </View>
         <View>
           <Text style={{ textAlign: 'center', fontSize: 26, marginVertical: 20, }}>
@@ -54,18 +62,22 @@ class InventoryRangeScreen extends Component <{}> {
           <Picker
             selectedValue={this.props.endingInventorySheet}
             onValueChange={itemValue => this.props.onChangeEndingInventorySheet(itemValue)}
-            >
-              {
-                this.props.inventorySheets.map(sheet => {
-                  let date = sheet.date;
-                  date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
-                  return (
-                    <Picker.Item label={date} key={sheet.id} value={sheet.id} />
-                  );
-                })
-              }
-            </Picker>
+          >
+            {
+              this.props.inventorySheets.map(sheet => {
+                let date = sheet.date;
+                date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
+                return (
+                  <Picker.Item label={date} key={sheet.id} value={sheet.id} />
+                );
+              })
+            }
+          </Picker>
         </View>
+        <SingleButton
+          onPress={this.onConfirm}
+          buttonText='Confirm'
+        />
       </View>
     );
   }
