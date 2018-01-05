@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation';
 
 import AddItemsScreen from './Invoices/AddItemsScreen';
 import AddVendorModal from './Invoices/AddVendorModal';
+import CategorySalesScreen from './Reports/CategorySalesScreen';
 import InputInventoryScreen from './InventorySheets/InputInventoryScreen';
 import InventoryRangeScreen from './Reports/InventoryRangeScreen';
 import InventorySheets from './InventorySheets/InventorySheets';
@@ -22,6 +23,7 @@ import ViewInvoiceScreen from './Invoices/ViewInvoiceScreen';
 export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.AddItemsScreen', () => AddItemsScreen, store, Provider);
   Navigation.registerComponent('postinvoice.AddVendorModal', () => AddVendorModal, store, Provider);
+  Navigation.registerComponent('postinvoice.CategorySalesScreen', () => CategorySalesScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InputInventoryScreen', () => InputInventoryScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InventoryRangeScreen', () => InventoryRangeScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InventorySheets', () => InventorySheets, store, Provider);

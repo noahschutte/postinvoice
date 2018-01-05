@@ -78,12 +78,6 @@ const styles = {
     borderRadius: 15,
     margin: 7,
   },
-  confirmButtonStyle: {
-    backgroundColor: '#efeffa',
-    padding: 15,
-    elevation: 1,
-    borderRadius: 2,
-  },
 };
 
 const mapStateToProps = ({ invoicesReducer }) => {

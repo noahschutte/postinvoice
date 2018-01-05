@@ -25,6 +25,8 @@ export const ON_CHANGE_DATE = 'on_change_date';
 
 export const ON_CHANGE_INVENTORY_AMOUNT = 'on_change_inventory_amount';
 
+export const ON_CHANGE_INVOICE_DATE_RANGE = 'on_change_invoice_date_range';
+
 export const ON_CHANGE_INVOICE_NUMBER = 'on_change_invoice_number';
 
 export const ON_CHANGE_ITEM_AMOUNT = 'on_change_item_amount';

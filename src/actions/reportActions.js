@@ -13,6 +13,14 @@ export function onChangeEndingInventorySheet(endingInventorySheet) {
   };
 }
 
+export function onChangeInvoiceDateRange(startDateRange, endDateRange) {
+  return {
+    type: types.ON_CHANGE_INVOICE_DATE_RANGE,
+    startDateRange,
+    endDateRange,
+  };
+}
+
 
 export function onChangeStartingInventorySheet(startingInventorySheet) {
   return {

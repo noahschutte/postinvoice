@@ -25,6 +25,12 @@ function reports(state = initialState, action) {
         ...state,
         endingInventorySheet: action.endingInventorySheet,
       };
+    case types.ON_CHANGE_INVOICE_DATE_RANGE:
+      return {
+        ...state,
+        invoiceStartDate: action.startDateRange,
+        invoiceEndDate: action.endDateRange,
+      };
     case types.ON_CHANGE_STARTING_INVENTORY_SHEET:
       return {
         ...state,
