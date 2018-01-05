@@ -17,7 +17,7 @@ class InvoicesHome extends Component <{}> {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchInvoices();
   }
 

@@ -41,7 +41,6 @@ class InventorySheets extends Component <{}> {
             ]
           }
         });
-        // this.props.createNewInvoiceBegin();
       }
     }
   }

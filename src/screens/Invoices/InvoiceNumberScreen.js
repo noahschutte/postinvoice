@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
-  TouchableOpacity,
   TextInput,
   Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 
+import SingleButton from '../../components/SingleButton';
 import { onChangeInvoiceNumber } from '../../actions/invoiceActions';
 
 class InvoiceNumberScreen extends Component <{}> {
+  onPress = () => {
+    this.props.navigator.push({
+      screen: 'postinvoice.AddItemsScreen',
+      title: 'Add Items',
+    });
+  };
+
   render() {
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
@@ -24,17 +30,7 @@ class InvoiceNumberScreen extends Component <{}> {
           />
         </View>
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
-          <TouchableOpacity
-            style={styles.confirmButtonStyle}
-            onPress={() => this.props.navigator.push({
-              screen: 'postinvoice.AddItemsScreen',
-              title: 'Add Items',
-            })}
-            >
-              <Text>Confirm</Text>
-            </TouchableOpacity>
-        </View>
+        <SingleButton onPress={this.onPress} buttonText='Confirm' />
 
       </View>
     );
