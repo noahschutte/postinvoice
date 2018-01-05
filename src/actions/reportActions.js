@@ -15,7 +15,6 @@ export function onChangeEndingInventorySheet(endingInventorySheet) {
 
 
 export function onChangeStartingInventorySheet(startingInventorySheet) {
-  console.log('here though');
   return {
     type: types.ON_CHANGE_STARTING_INVENTORY_SHEET,
     startingInventorySheet,

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import LineItems from '../../components/LineItems';
 import NewItem from '../../components/NewItem';
+import SingleButton from '../../components/SingleButton';
 
 import { addItemToInvoice } from '../../actions/invoiceActions';
 
@@ -96,18 +97,7 @@ class AddItemsScreen extends Component <{}> {
           amount={this.state.amount}
           findCode={this._findCode}
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableOpacity style={{
-            backgroundColor: '#efeffa',
-            padding: 15,
-            elevation: 1,
-            borderRadius: 2,
-          }}
-          onPress={this.addItemToInvoice}
-          >
-            <Text>Add</Text>
-          </TouchableOpacity>
-        </View>
+        <SingleButton onPress={this.addItemToInvoice} buttonText='Add' />
       </View>
     );
   }

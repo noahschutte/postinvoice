@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { onChangeInventoryAmount } from '../../actions/inventorySheetActions';
 import InventorySheetInput from '../../components/InventorySheetInput';
+import SingleButton from '../../components/SingleButton';
 
 class InputInventoryScreen extends Component <{}> {
 
@@ -33,18 +34,7 @@ class InputInventoryScreen extends Component <{}> {
           amount={this.props.foodAmount}
           type='Food'
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableOpacity style={{
-              backgroundColor: '#efeffa',
-              padding: 15,
-              elevation: 1,
-              borderRadius: 2,
-            }}
-            onPress={this.onSubmit}
-          >
-            <Text>Submit</Text>
-          </TouchableOpacity>
-        </View>
+        <SingleButton buttonText='Submit' onPress={this.onSubmit} />
       </View>
     );
   }

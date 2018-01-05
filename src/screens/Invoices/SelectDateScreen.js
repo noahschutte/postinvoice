@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Dimensions,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Dimensions } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
+import SingleButton from '../../components/SingleButton';
 import { onChangeDate } from '../../actions/invoiceActions';
 
 class SelectDateScreen extends Component <{}> {
@@ -58,12 +54,10 @@ class SelectDateScreen extends Component <{}> {
           onDateChange={this.confirmDate}
         />
 
-        <TouchableOpacity
-          style={styles.confirmButtonStyle}
+        <SingleButton
           onPress={() => this.confirmDate(this.state.date)}
-        >
-          <Text>Confirm</Text>
-        </TouchableOpacity>
+          buttonText='Confirm'
+        />
       </View>
     );
   }

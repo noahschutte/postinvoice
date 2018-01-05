@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import InventoryReviewSection from '../../components/InventoryReviewSection';
+import SingleButton from '../../components/SingleButton';
 
 const ViewInventorySheetScreen = ({
   item,
@@ -21,18 +22,7 @@ const ViewInventorySheetScreen = ({
         amount={item.food_total}
         type='Food'
       />
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity style={{
-            backgroundColor: '#efeffa',
-            padding: 15,
-            elevation: 1,
-            borderRadius: 2,
-          }}
-          onPress={deleteInventorySheet}
-        >
-          <Text>Delete</Text>
-        </TouchableOpacity>
-      </View>
+      <SingleButton onPress={deleteInventorySheet} buttonText='Delete' />
     </View>
   );
 };

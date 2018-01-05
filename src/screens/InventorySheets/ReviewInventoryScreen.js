@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { createInventorySheet } from '../../actions/inventorySheetActions';
 import InventoryReviewSection from '../../components/InventoryReviewSection';
+import SingleButton from '../../components/SingleButton';
 
 class ReviewInventoryScreen extends Component <{}> {
 
@@ -36,18 +37,10 @@ class ReviewInventoryScreen extends Component <{}> {
           amount={this.props.foodAmount}
           type='Food'
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableOpacity style={{
-              backgroundColor: '#efeffa',
-              padding: 15,
-              elevation: 1,
-              borderRadius: 2,
-            }}
-            onPress={this.onConfirm}
-          >
-            <Text>Confirm</Text>
-          </TouchableOpacity>
-        </View>
+        <SingleButton
+          buttonText='Confirm'
+          onPress={this.onConfirm}
+        />
       </View>
     );
   }
