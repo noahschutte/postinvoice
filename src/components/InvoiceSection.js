@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 
 const InvoiceSection = props => {
 
-
   const item = () => {
     const currency = (dollars) => {
       if (typeof dollars === 'string') {
@@ -38,7 +37,7 @@ const InvoiceSection = props => {
 
       return (
         <Text style={styles.itemTextStyle}>
-          {props.item}
+          {props.itemType === 'Invoice Total' ? '$'+currency(props.item.slice(1)) : props.item}
         </Text>
       );
     }

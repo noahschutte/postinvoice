@@ -22,6 +22,10 @@ function parseMoney(str) {
   return str;
 }
 
+function parseTotal(lastTotal, nextAmount) {
+  return parseFloat(parseMoney(lastTotal) + parseMoney(nextAmount)).toFixed(2);
+}
+
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
@@ -30,7 +34,7 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          total: parseMoney(state.newInvoice.total) + parseMoney(action.item.amount),
+          total: parseTotal(state.newInvoice.total, action.item.amount),
           items: [
             ...state.newInvoice.items,
             action.item
