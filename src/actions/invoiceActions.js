@@ -177,18 +177,18 @@ export function deleteInvoice(invoiceId, callback) {
 
 export function fetchInvoices() {
 
-  function serializeAndPrintEntries(obj) {
-    const r = Object.entries(obj);
-    r.map(entry => {
-      console.log('key: ', entry[0]);
-      console.log('type: ', typeof entry[1]);
-      console.log('value: ', entry[1]);
-      console.log('----------------------------');
-      if (typeof entry[1] === 'object' && entry[1] !== null) {
-        serializeAndPrintEntries(entry[1]);
-      }
-    });
-  }
+  // function serializeAndPrintEntries(obj) {
+  //   const r = Object.entries(obj);
+  //   r.map(entry => {
+  //     console.log('key: ', entry[0]);
+  //     console.log('type: ', typeof entry[1]);
+  //     console.log('value: ', entry[1]);
+  //     console.log('----------------------------');
+  //     if (typeof entry[1] === 'object' && entry[1] !== null) {
+  //       serializeAndPrintEntries(entry[1]);
+  //     }
+  //   });
+  // }
   return function (dispatch) {
     let url = `${DB_URL}/invoices`;
     dispatch(retrieveInvoicesBegin());
@@ -205,7 +205,7 @@ export function fetchInvoices() {
       if (responseJSON.errorMessage) {
         alert(responseJSON.errorMessage);
       } else {
-        serializeAndPrintEntries(responseJSON);
+        // serializeAndPrintEntries(responseJSON);
         dispatch(updateInvoices(responseJSON.invoices));
       }
     })

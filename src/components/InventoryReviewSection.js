@@ -8,7 +8,9 @@ const InventoryReviewSection = ({ type, amount }) => {
         <Text style={styles.textStyle}>{type}</Text>
       </View>
       <View style={styles.amountWrapper}>
-        <Text style={styles.textStyle}>{amount}</Text>
+        <Text style={styles.textStyle}>
+          {amount.substring(0,1) === '$' ? amount : '$' + amount}
+        </Text>
       </View>
     </View>
   );
