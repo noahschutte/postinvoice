@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, Text, SectionList } from 'react-native';
 import { connect } from 'react-redux';
 
 import {
@@ -86,11 +86,21 @@ class InvoicesHome extends Component <{}> {
   }
 
   render() {
+    console.log('this.props.invoices: ', this.props.invoieces);
     return (
       <View style={{ flex: 1 }}>
-        <FlatList
+        <SectionList
+          stickySectionHeadersEnabled
           style={{ flex: 1 }}
-          data={this.props.invoices}
+          sections={[
+            { data: this.props.invoices, title: 'Section One' }
+          ]}
+          renderSectionHeader={({ section }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 24, }}>{section.title}</Text>
+            </View>
+          )}
+          // data={this.props.invoices}
           keyExtractor={this._keyExtractor}
           renderItem={this.renderInvoiceItem}
         />
