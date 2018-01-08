@@ -5,40 +5,35 @@ const InvoiceSection = props => {
 
 
   const item = () => {
-    const formatMoney = (dollars) => {
-      dollars.toString();
-      // separate dollars from cents, format pennies
-      let amounts = dollars.split('.');
-      if (amounts[1].length === 1 && amounts[1]) {
-        amounts[1] += '0';
-      }
-      return amounts.join('.');
+    const currency = (dollars) => {
+      dollars = parseFloat(dollars);
+      return isNaN(dollars) ? false : dollars.toFixed(2);
     };
 
     if (props.itemType !== 'Line Items') {
       if (props.itemType === 'Date') {
         let date = props.item;
         const formatDate = (date) => {
-        var d = new Date(date)    ,
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
+        var d = new Date(date),
+            month = '' + (d.getUTCMonth() + 1),
+            day = '' + d.getUTCDate(),
+            year = d.getUTCFullYear();
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
 
-        return [year, month, day].join('-');
+        return [month, day, year].join('/');
       };
-        date = formatDate(date);
+      date = formatDate(date);
         return (
           <Text style={styles.itemTextStyle}>
-            {date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4)}
+            {date}
           </Text>
         );
       }
       return (
         <Text style={styles.itemTextStyle}>
-          {props.itemType == 'Invoice Total' ? formatMoney(props.item) : props.item}
+          {props.itemType == 'Invoice Total' ? currency(props.item) : props.item}
         </Text>
       );
     }
@@ -53,7 +48,7 @@ const InvoiceSection = props => {
           </View>
           <View>
             <Text style={styles.itemTextStyle}>
-              {' $' + formatMoney(item.amount)}
+              {' $' + currency(item.amount)}
              </Text>
           </View>
         </View>
