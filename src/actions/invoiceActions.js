@@ -284,6 +284,8 @@ export function postNewInvoice(newInvoice, callback) {
       total,
     } = newInvoice;
 
+    // Format date for backend
+
     function formatDate(date) {
     var d = new Date(date)    ,
         month = '' + (d.getMonth() + 1),
@@ -295,12 +297,25 @@ export function postNewInvoice(newInvoice, callback) {
 
     return [year, month, day].join('-');
     }
+
     date = formatDate(date);
+
+    // format vendor for backend
+
     vendor = {
       id: vendor.id,
       name: vendor.name,
       isNew: vendor.isNew || false,
     };
+
+    // format items for backend
+
+    items.forEach(item => {
+      item.amount = parseFloat(item.amount.split(',').join('')).toFixed(2);
+    });
+
+    // format total for backend
+    total = parseFloat(total).toFixed(2);
 
     const body = JSON.stringify({
       date,
@@ -309,6 +324,7 @@ export function postNewInvoice(newInvoice, callback) {
       total,
       items,
     });
+
     fetch(`${DB_URL}/invoices`, {
       headers: {
         Accept: 'application/json',
