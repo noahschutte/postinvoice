@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const InvoiceItem = ({ invoice, deleteInvoice, onPress }) => {
+const InvoiceItem = ({ invoice, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      onLongPress={() => deleteInvoice(invoice.id)}
       style={styles.invoiceItemStyle}
     >
       <View style={{ flex: 1 }}>

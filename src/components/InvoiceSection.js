@@ -3,30 +3,43 @@ import { View, Text } from 'react-native';
 
 const InvoiceSection = props => {
 
+
   const item = () => {
+    const currency = (dollars) => {
+      if (typeof dollars === 'string') {
+        dollars = dollars.split(',').join('');
+      }
+      dollars = parseFloat(dollars);
+      return isNaN(dollars) ? false : dollars.toFixed(2);
+    };
+
     if (props.itemType !== 'Line Items') {
+
       if (props.itemType === 'Date') {
         let date = props.item;
         const formatDate = (date) => {
-        var d = new Date(date)    ,
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
+        var d = new Date(date),
+            month = '' + (d.getUTCMonth() + 1),
+            day = '' + d.getUTCDate(),
+            year = d.getUTCFullYear();
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
 
-        return [year, month, day].join('-');
+        return [month, day, year].join('/');
       };
-        date = formatDate(date);
+      date = formatDate(date);
         return (
           <Text style={styles.itemTextStyle}>
-            {date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4)}
+            {date}
           </Text>
         );
       }
+
       return (
-        <Text style={styles.itemTextStyle}>{props.item}</Text>
+        <Text style={styles.itemTextStyle}>
+          {props.item}
+        </Text>
       );
     }
 
@@ -40,7 +53,7 @@ const InvoiceSection = props => {
           </View>
           <View>
             <Text style={styles.itemTextStyle}>
-              {' $' + item.amount}
+              {' $' + currency(item.amount)}
              </Text>
           </View>
         </View>
