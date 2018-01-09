@@ -29,7 +29,8 @@ const styles = {
     justifyContent: 'center',
   },
   categoryTextStyle: {
-    fontSize: 26,
+    fontSize: 30,
+    fontWeight: 'bold',
   },
   cogsTextStyle: {
     fontSize: 26,
