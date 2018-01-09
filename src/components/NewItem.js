@@ -28,8 +28,11 @@ const NewItem = ({
         renderTextInput={() => codeTextInput}
         renderItem={item => {
           return (
-            <TouchableOpacity onPress={() => onChangeCode(item)}>
-              <Text>{item}</Text>
+            <TouchableOpacity
+              style={{ margin: 5, borderBottomWidth: 0.5, borderColor: 'rgba(0,0,0,0.1)' }}
+              onPress={() => onChangeCode(item)}
+             >
+              <Text style={{ fontSize: 18 }}>{item}</Text>
             </TouchableOpacity>
           );
         }}
