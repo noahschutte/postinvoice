@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import ReportScreenItem from '../../components/ReportScreenItem';
 import TextLink from '../../components/TextLink';
 
-const ViewReportScreen = ({ reportData }) => {
+const ViewReportScreen = ({ reportData, onPress }) => {
   const { startInvoiceDateRange, endInvoiceDateRange } = reportData;
   const formatDate = date => {
     const d = new Date(date),
@@ -15,6 +15,7 @@ const ViewReportScreen = ({ reportData }) => {
   };
   return (
     <View style={{ flex: 1 }}>
+
       <Text style={[styles.textStyle, { marginTop: 20 }]}>
         Breakdown of COGs from
       </Text>
@@ -36,14 +37,24 @@ const ViewReportScreen = ({ reportData }) => {
         type='Food'
         data={reportData.foodCostPercentage}
       />
+
       <View style={styles.footerContainer}>
         <Text style={styles.textStyle}>
           Based off invoices between those dates, as well as inventory calculated from
         </Text>
-        <TextLink textStyle={[styles.textStyle, styles.textLinkStyle]} text='this sheet' />
+        <TextLink
+          textStyle={[styles.textStyle, styles.textLinkStyle]}
+          text='this sheet'
+          onPress={() => onPress(reportData.startInventorySheetId)}
+        />
         <Text style={styles.textStyle}>and</Text>
-        <TextLink textStyle={[styles.textStyle, styles.textLinkStyle]} text='this sheet' />
+        <TextLink
+          textStyle={[styles.textStyle, styles.textLinkStyle]}
+          text='this sheet'
+          onPress={() => onPress(reportData.endInventorySheetId)}
+        />
       </View>
+
     </View>
   );
 };

@@ -55,6 +55,18 @@ export function onChangeSales(amount, salesType) {
   };
 }
 
+export function showInventorySheetBegin() {
+  return {
+    type: types.SHOW_INVENTORY_SHEET_BEGIN,
+  };
+}
+
+export function showInventorySheetComplete() {
+  return {
+    type: types.SHOW_INVENTORY_SHEET_COMPLETE,
+  };
+}
+
 export function showReportBegin() {
   return {
     type: types.SHOW_REPORT_BEGIN,
@@ -142,6 +154,25 @@ export function fetchReports() {
     .then(response => response.json())
     .then(responseJSON => {
       dispatch(fetchReportsComplete(responseJSON.reports));
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function showInventorySheet(sheetId, callback) {
+  return function(dispatch) {
+    dispatch(showInventorySheetBegin());
+    fetch(`${DB_URL}/inventory_sheets/${sheetId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      dispatch(showInventorySheetComplete());
+      callback(responseJSON.inventorySheet);
     })
     .catch(err => alert(err));
   };
