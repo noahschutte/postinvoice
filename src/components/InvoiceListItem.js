@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const InvoiceItem = ({ invoice, onPress }) => {
+const InvoiceListItem = ({ invoice, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={styles.invoiceItemStyle}
+      style={styles.container}
     >
       <View style={styles.vendorNameContainer}>
         <Text style={styles.vendorNameStyle}>{invoice.vendor.name}</Text>
@@ -18,7 +18,7 @@ const InvoiceItem = ({ invoice, onPress }) => {
 };
 
 const styles = {
-  invoiceItemStyle: {
+  container: {
     flexDirection: 'row',
     backgroundColor: '#e9e9e9',
     borderBottomWidth: 0.5,
@@ -44,4 +44,4 @@ const styles = {
 };
 
 
-export default InvoiceItem;
+export default InvoiceListItem;

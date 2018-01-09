@@ -55,7 +55,7 @@ class AddItemsScreen extends Component <{}> {
       if (event.id == 'REVIEW') {
         this.addItemToInvoice();
         this.props.navigator.push({
-          screen: 'postinvoice.InvoiceReviewScreen',
+          screen: 'postinvoice.ReviewInvoiceScreen',
           title: 'Review Invoice',
         });
       }
