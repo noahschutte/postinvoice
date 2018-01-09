@@ -18,6 +18,7 @@ import SelectVendorScreen from './Invoices/SelectVendorScreen';
 import SideMenu from './SideMenu';
 import ViewInventorySheetScreen from './InventorySheets/ViewInventorySheetScreen';
 import ViewInvoiceScreen from './Invoices/ViewInvoiceScreen';
+import ViewReportScreen from './Reports/ViewReportScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -38,4 +39,5 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.SideMenu', () => SideMenu, store, Provider);
   Navigation.registerComponent('postinvoice.ViewInventorySheetScreen', () => ViewInventorySheetScreen, store, Provider);
   Navigation.registerComponent('postinvoice.ViewInvoiceScreen', () => ViewInvoiceScreen, store, Provider);
+  Navigation.registerComponent('postinvoice.ViewReportScreen', () => ViewReportScreen, store, Provider);
 }

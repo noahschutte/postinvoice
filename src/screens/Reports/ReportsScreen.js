@@ -43,12 +43,22 @@ class ReportsScreen extends Component <{}> {
     }
   }
 
+  onItemPress = (report) => {
+    this.props.navigator.push({
+      screen: 'postinvoice.ViewReportScreen',
+      title: 'Report #' + report.id,
+      passProps: {
+        report,
+      },
+    });
+  }
+
   _keyExtractor = (item) => item.id;
 
   renderItem = ({ item }) => {
     return (
       <ReportsListItem
-        onPress={() => alert('navigate to view report #' + item.id)}
+        onPress={() => this.onItemPress(item)}
         startDate={item.start_date_range}
         endDate={item.end_date_range}
       />
