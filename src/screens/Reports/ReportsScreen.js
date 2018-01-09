@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -59,9 +59,6 @@ class ReportsScreen extends Component <{}> {
     const data = this.props.reports;
     return (
       <View>
-        <Text>
-          Reports Screen
-        </Text>
         <FlatList
           data={data}
           keyExtractor={this._keyExtractor}
