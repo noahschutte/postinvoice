@@ -85,16 +85,43 @@ class InvoicesHome extends Component <{}> {
     );
   }
 
+  createSections = invoices => {
+    let sections = [];
+    let date;
+    invoices.forEach(invoice => {
+      const d = new Date(invoice.date).getUTCDate();
+      if (d != date) {
+        date = d;
+        sections = [
+          ...sections,
+          {
+            title: invoice.date,
+            data: [invoice],
+          }
+        ];
+      } else {
+        let r = sections[sections.length -1];
+        r.data = [
+          ...r.data,
+          invoice,
+        ];
+      }
+    });
+    return sections;
+  }
+
   render() {
-    console.log('this.props.invoices: ', this.props.invoieces);
+    const chronologizedArray = () => {
+      return this.props.invoices.sort((a,b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+    };
     return (
       <View style={{ flex: 1 }}>
         <SectionList
           stickySectionHeadersEnabled
           style={{ flex: 1 }}
-          sections={[
-            { data: this.props.invoices, title: 'Section One' }
-          ]}
+          sections={this.createSections(chronologizedArray())}
           renderSectionHeader={({ section }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{ fontSize: 24, }}>{section.title}</Text>
