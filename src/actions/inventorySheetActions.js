@@ -5,13 +5,13 @@ import { DB_URL } from 'react-native-dotenv';
 * synchronous action creators
 */
 
-export function createInventorySheetBegin() {
+export function postInventorySheetBegin() {
   return {
     type: types.CREATE_INVENTORY_SHEET_BEGIN
   };
 }
 
-export function createInventorySheetComplete(inventorySheet) {
+export function postInventorySheetComplete(inventorySheet) {
   return {
     type: types.CREATE_INVENTORY_SHEET_COMPLETE,
     inventorySheet,
@@ -56,9 +56,9 @@ export function onChangeInventoryAmount(amount, inventoryType) {
 * asynchronous action creators
 */
 
-export function createInventorySheet(inventoryData, callback) {
+export function postInventorySheet(inventoryData, callback) {
   return function(dispatch) {
-    dispatch(createInventorySheetBegin());
+    dispatch(postInventorySheetBegin());
     const { date, beerAmount, foodAmount, wineAmount } = inventoryData;
     function formatDate(date) {
     var d = new Date(date)    ,
@@ -89,10 +89,10 @@ export function createInventorySheet(inventoryData, callback) {
     .then(response => response.json())
     .then(responseJSON => {
       if (responseJSON.inventorySheetId) {
-        createInventorySheetComplete({
+        dispatch(postInventorySheetComplete({
           id: responseJSON.inventorySheetId,
           ...body,
-        });
+        }));
         callback();
       }
     })

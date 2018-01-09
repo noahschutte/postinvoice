@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { createInventorySheet } from '../../actions/inventorySheetActions';
+import { postInventorySheet } from '../../actions/inventorySheetActions';
 import InventoryReviewSection from '../../components/InventoryReviewSection';
 import SingleButton from '../../components/SingleButton';
 
@@ -14,7 +14,7 @@ class ReviewInventoryScreen extends Component <{}> {
     const callback = () => this.props.navigator.popToRoot({
       animated: true,
     });
-    this.props.createInventorySheet({
+    this.props.postInventorySheet({
       date,
       foodAmount,
       beerAmount,
@@ -51,4 +51,4 @@ const mapStateToProps = ({ inventorySheetsReducer }) => {
   return { beerAmount, foodAmount, wineAmount, date };
 };
 
-export default connect(mapStateToProps, { createInventorySheet })(ReviewInventoryScreen);
+export default connect(mapStateToProps, { postInventorySheet })(ReviewInventoryScreen);
