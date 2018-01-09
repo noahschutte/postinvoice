@@ -14,6 +14,9 @@ export const DELETE_INVENTORY_SHEET = 'DELETE_INVENTORY_SHEET';
 
 export const DELETE_INVOICE_COMPLETE = 'delete_invoice_complete';
 
+export const FETCH_REPORTS_BEGIN = 'fetch_reports_begin';
+export const FETCH_REPORTS_COMPLETE = 'fetch_reports_complete';
+
 export const FETCHING_COMPLETE = 'fetching_complete';
 
 export const FETCH_INVENTORY_SHEETS_BEGIN = 'fetch_inventory_sheets_begin';

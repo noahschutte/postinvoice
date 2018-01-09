@@ -11,6 +11,19 @@ export function createReportBegin() {
   };
 }
 
+export function fetchReportsBegin() {
+  return {
+    type: types.FETCH_REPORTS_BEGIN,
+  };
+}
+
+export function fetchReportsComplete(reports) {
+  return {
+    type: types.FETCH_REPORTS_COMPLETE,
+    reports,
+  };
+}
+
 export function onChangeEndingInventorySheet(endingInventorySheet) {
   return {
     type: types.ON_CHANGE_ENDING_INVENTORY_SHEET,
@@ -98,6 +111,24 @@ export function createReport(reportData) {
     })
     .then(responseJSON => {
       console.log('responseJSON: ', responseJSON);
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function fetchReports() {
+  return function(dispatch) {
+    dispatch(fetchReportsBegin());
+    fetch(`${DB_URL}/reports`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      dispatch(fetchReportsComplete('responseJSON: ', responseJSON));
     })
     .catch(err => alert(err));
   };

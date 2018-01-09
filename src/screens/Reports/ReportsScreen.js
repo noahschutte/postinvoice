@@ -3,12 +3,16 @@ import { View, Text } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { createNewReportBegin } from '../../actions/reportActions';
+import { createNewReportBegin, fetchReports } from '../../actions/reportActions';
 
 class ReportsScreen extends Component <{}> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  componentWillMount() {
+    this.props.fetchReports();
   }
 
   onNavigatorEvent(event) {
@@ -49,10 +53,12 @@ class ReportsScreen extends Component <{}> {
   }
 }
 
-const mapStateToProps = state => {
-  return { ...state };
+const mapStateToProps = ({ reportsReducer }) => {
+  const { reports } = reportsReducer;
+  return { reports };
 };
 
 export default connect(mapStateToProps, {
-  createNewReportBegin
+  createNewReportBegin,
+  fetchReports,
 })(ReportsScreen);

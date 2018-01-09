@@ -21,10 +21,17 @@ function reports(state = initialState, action) {
         isFetching: false,
       };
     case types.CREATE_REPORT_BEGIN:
+    case types.FETCH_REPORTS_BEGIN:
     case types.IS_FETCHING:
       return {
         ...state,
         isFetching: true,
+      };
+    case types.FETCH_REPORTS_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+        reports: action.reports,
       };
     case types.ON_CHANGE_ENDING_INVENTORY_SHEET:
       return {
