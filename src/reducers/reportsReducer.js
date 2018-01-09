@@ -31,6 +31,11 @@ function reports(state = initialState, action) {
         ...state,
         endingInventorySheet: action.endingInventorySheet,
       };
+    case types.ON_CHANGE_STARTING_INVENTORY_SHEET:
+      return {
+        ...state,
+        startingInventorySheet: action.startingInventorySheet,
+      };
     case types.ON_CHANGE_INVOICE_DATE_RANGE:
       return {
         ...state,
@@ -59,11 +64,6 @@ function reports(state = initialState, action) {
             ...state,
           };
       }
-    case types.ON_CHANGE_STARTING_INVENTORY_SHEET:
-      return {
-        ...state,
-        startingInventorySheet: action.startingInventorySheet,
-      };
     default:
       return {
         ...state,

@@ -78,15 +78,13 @@ export function createReport(reportData) {
 
     return [year, month, day].join('-');
     }
-    const startDateRange = formatDate(reportData.startDateRange);
-    const endDateRange = formatDate(reportData.endDateRange);
-    console.log('startDateRange', startDateRange);
+    const s = formatDate(reportData.startDateRange);
+    const e = formatDate(reportData.endDateRange);
     const body = {
-      startDateRange,
-      endDateRange,
       ...reportData,
+      startDateRange: s,
+      endDateRange: e,
     };
-    console.log('body: ', body);
     fetch(`${DB_URL}/reports`, {
       headers: {
         Accept: 'application/json',
@@ -96,7 +94,6 @@ export function createReport(reportData) {
       body: JSON.stringify(body)
     })
     .then(response => {
-      console.log('response', response);
       return response.json();
     })
     .then(responseJSON => {

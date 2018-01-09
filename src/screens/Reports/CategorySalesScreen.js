@@ -19,7 +19,6 @@ class CategorySalesScreen extends Component <{}> {
       invoiceStartDate,
       invoiceEndDate,
     } = this.props.reportsReducer;
-
     this.props.createReport({
       startInventorySheetId: startingInventorySheet,
       endInventorySheetId: endingInventorySheet,

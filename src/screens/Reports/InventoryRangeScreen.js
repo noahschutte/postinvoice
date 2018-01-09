@@ -15,6 +15,13 @@ class InventoryRangeScreen extends Component <{}> {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.startingInventorySheet && nextProps.inventorySheets.length > 1) {
+      this.props.onChangeStartingInventorySheet(nextProps.inventorySheets[0].id);
+      this.props.onChangeEndingInventorySheet(nextProps.inventorySheets[1].id);
+    }
+  }
+
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'cancel') {
@@ -29,11 +36,31 @@ class InventoryRangeScreen extends Component <{}> {
   onConfirm = () => {
     this.props.navigator.push({
       screen: this.props.intent,
-      title: this.props.intentTitle, 
+      title: this.props.intentTitle,
     });
   }
 
   render() {
+    const startingValue = () => {
+      if (this.props.inventorySheets.length === 0) {
+        return 1;
+      } else if (!this.props.startingInventorySheet) {
+        // this.props.onChangeStartingInventorySheet(this.props.inventorySheets[0].id);
+        return this.props.inventorySheets[0].id;
+      }
+      return this.props.startingInventorySheet;
+    };
+
+    const endingValue = () => {
+      if (this.props.inventorySheets.length === 0) {
+        return 0;
+      } else if (!this.props.endingInventorySheet) {
+        // this.props.onChangeEndingInventorySheet(this.props.inventorySheets[1].id);
+        return this.props.inventorySheets[1].id;
+      }
+      return this.props.endingInventorySheet;
+    };
+
     return (
       <View style={{ flex: 1 }}>
         <View>
@@ -41,7 +68,7 @@ class InventoryRangeScreen extends Component <{}> {
             Date range start:
           </Text>
           <Picker
-            selectedValue={this.props.startingInventorySheet}
+            selectedValue={startingValue()}
             onValueChange={itemValue => this.props.onChangeStartingInventorySheet(itemValue)}
           >
             {
@@ -60,7 +87,7 @@ class InventoryRangeScreen extends Component <{}> {
             Date range end:
           </Text>
           <Picker
-            selectedValue={this.props.endingInventorySheet}
+            selectedValue={endingValue()}
             onValueChange={itemValue => this.props.onChangeEndingInventorySheet(itemValue)}
           >
             {
