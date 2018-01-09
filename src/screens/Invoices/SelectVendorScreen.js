@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import Autocomplete from 'react-native-autocomplete-input';
 
 import {
   addVendorToInvoice,
-  onChangeVendorName,
   temporaryAddVendor
 } from '../../actions/invoiceActions';
 import VendorItem from '../../components/VendorItem';
+
+var count = 0;
 
 class SelectVendorScreen extends Component <{}> {
   state = {
@@ -80,9 +81,32 @@ class SelectVendorScreen extends Component <{}> {
     }
   }
 
+  renderItem = item => {
+    count++;
+    return (
+      <VendorItem
+        onPress={() => this.onPress(item.name)}
+        vendor={item}
+        count={count}
+      />
+    );
+  }
+
   render() {
     const { query } = this.state;
     const data = this._filterData(query);
+
+    const textInput = () => {
+      return (
+        <TextInput
+          data={data}
+          onChangeText={text => this.setState({ query: text })}
+          style={{
+            fontSize: 20,
+          }}
+        />
+      );
+    };
 
     return (
       <View style={{ flex: 1 }}>
@@ -91,7 +115,8 @@ class SelectVendorScreen extends Component <{}> {
           containerStyle={{ flex: 1 }}
           defaultValue={query}
           onChangeText={text => this.setState({ query: text })}
-          renderItem={item => <VendorItem onPress={() => this.onPress(item.name)} vendor={item} /> }
+          renderItem={this.renderItem}
+          renderTextInput={textInput}
         />
       </View>
     );
@@ -105,6 +130,5 @@ const mapStateToProps = ({ invoicesReducer }) => {
 
 export default connect(mapStateToProps, {
   addVendorToInvoice,
-  onChangeVendorName,
   temporaryAddVendor
 })(SelectVendorScreen);

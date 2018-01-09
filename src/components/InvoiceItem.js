@@ -7,11 +7,11 @@ const InvoiceItem = ({ invoice, onPress }) => {
       onPress={onPress}
       style={styles.invoiceItemStyle}
     >
-      <View style={{ flex: 1 }}>
+      <View style={styles.vendorNameContainer}>
         <Text style={styles.vendorNameStyle}>{invoice.vendor.name}</Text>
       </View>
-      <View style={{ flex: 1 }}>
-        <Text>{invoice.number}</Text>
+      <View style={styles.invoiceNumberContainer}>
+        <Text style={styles.invoiceNumberStyle}>#{invoice.number}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,7 +27,20 @@ const styles = {
   },
   vendorNameStyle: {
     fontSize: 26,
+    padding: 6,
   },
+  invoiceNumberStyle: {
+    fontSize: 20,
+  },
+  invoiceNumberContainer: {
+    padding: 6,
+    paddingRight: 14,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  vendorNameContainer: {
+    flex: 1
+  }
 };
 
 
