@@ -128,7 +128,7 @@ export function fetchReports() {
     })
     .then(response => response.json())
     .then(responseJSON => {
-      dispatch(fetchReportsComplete('responseJSON: ', responseJSON));
+      dispatch(fetchReportsComplete(responseJSON.reports));
     })
     .catch(err => alert(err));
   };

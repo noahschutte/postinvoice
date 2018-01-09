@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { createNewReportBegin, fetchReports } from '../../actions/reportActions';
+import ReportsListItem from '../../components/ReportsListItem';
 
 class ReportsScreen extends Component <{}> {
   constructor(props) {
@@ -42,12 +43,30 @@ class ReportsScreen extends Component <{}> {
     }
   }
 
+  _keyExtractor = (item) => item.id;
+
+  renderItem = ({ item }) => {
+    return (
+      <ReportsListItem
+        onPress={() => alert('navigate to view report #' + item.id)}
+        startDate={item.start_date_range}
+        endDate={item.end_date_range}
+      />
+    );
+  }
+
   render() {
+    const data = this.props.reports;
     return (
       <View>
         <Text>
           Reports Screen
         </Text>
+        <FlatList
+          data={data}
+          keyExtractor={this._keyExtractor}
+          renderItem={this.renderItem}
+        />
       </View>
     );
   }
