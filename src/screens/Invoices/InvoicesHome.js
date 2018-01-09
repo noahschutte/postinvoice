@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SectionList } from 'react-native';
+import { View, SectionList } from 'react-native';
 import { connect } from 'react-redux';
 
 import {
@@ -8,6 +8,7 @@ import {
   fetchInvoices
 } from '../../actions/invoiceActions';
 
+import InvoicesHeader from '../../components/InvoicesHeader';
 import InvoiceItem from '../../components/InvoiceItem';
 
 class InvoicesHome extends Component <{}> {
@@ -95,7 +96,7 @@ class InvoicesHome extends Component <{}> {
         sections = [
           ...sections,
           {
-            title: invoice.date,
+            title: this.formatDate(invoice.date),
             data: [invoice],
           }
         ];
@@ -110,6 +111,16 @@ class InvoicesHome extends Component <{}> {
     return sections;
   }
 
+  formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getUTCMonth() + 1),
+      day = '' + d.getUTCDate();
+
+  if (day.length < 2) day = '0' + day;
+
+  return [month, day].join('/');
+  }
+
   render() {
     const chronologizedArray = () => {
       return this.props.invoices.sort((a,b) => {
@@ -122,12 +133,7 @@ class InvoicesHome extends Component <{}> {
           stickySectionHeadersEnabled
           style={{ flex: 1 }}
           sections={this.createSections(chronologizedArray())}
-          renderSectionHeader={({ section }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ fontSize: 24, }}>{section.title}</Text>
-            </View>
-          )}
-          // data={this.props.invoices}
+          renderSectionHeader={({ section }) => <InvoicesHeader title={section.title} />}
           keyExtractor={this._keyExtractor}
           renderItem={this.renderInvoiceItem}
         />
