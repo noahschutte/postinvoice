@@ -44,7 +44,7 @@ const InvoiceSection = props => {
 
     return props.item.map(item => {
       return (
-        <View style={styles.lineItemsWrapper} key={item.id || item.code + item.amount}>
+        <View style={styles.lineItemsWrapper} key={item.id || item.code.name + item.amount}>
           <View>
             <Text style={styles.itemTextStyle}>
               {item.code ? item.code.name : props.getCodeName(item.code_id)} -
