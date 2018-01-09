@@ -55,6 +55,31 @@ export function onChangeSales(amount, salesType) {
   };
 }
 
+export function showInventorySheetBegin() {
+  return {
+    type: types.SHOW_INVENTORY_SHEET_BEGIN,
+  };
+}
+
+export function showInventorySheetComplete() {
+  return {
+    type: types.SHOW_INVENTORY_SHEET_COMPLETE,
+  };
+}
+
+export function showReportBegin() {
+  return {
+    type: types.SHOW_REPORT_BEGIN,
+  };
+}
+
+export function showReportComplete() {
+  return {
+    type: types.SHOW_REPORT_COMPLETE,
+
+  };
+}
+
 /*
 * asynchronous action creators
 */
@@ -129,6 +154,44 @@ export function fetchReports() {
     .then(response => response.json())
     .then(responseJSON => {
       dispatch(fetchReportsComplete(responseJSON.reports));
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function showInventorySheet(sheetId, callback) {
+  return function(dispatch) {
+    dispatch(showInventorySheetBegin());
+    fetch(`${DB_URL}/inventory_sheets/${sheetId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      dispatch(showInventorySheetComplete());
+      callback(responseJSON.inventorySheet);
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function showReport(reportId, callback) {
+  return function(dispatch) {
+    dispatch(showReportBegin());
+    fetch(`${DB_URL}/reports/${reportId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      console.log('responseJSON: ', responseJSON);
+      callback(responseJSON.report);
     })
     .catch(err => alert(err));
   };

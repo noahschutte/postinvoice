@@ -6,6 +6,7 @@ import SingleButton from '../../components/SingleButton';
 
 const ViewInventorySheetScreen = ({
   item,
+  hideDelete,
   deleteInventorySheet
 }) => {
   return (
@@ -22,7 +23,7 @@ const ViewInventorySheetScreen = ({
         amount={item.food_total}
         type='Food'
       />
-      <SingleButton onPress={deleteInventorySheet} buttonText='Delete' />
+      {hideDelete ? null : <SingleButton onPress={deleteInventorySheet} buttonText='Delete' />}
     </View>
   );
 };

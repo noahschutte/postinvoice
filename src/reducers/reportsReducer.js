@@ -23,6 +23,7 @@ function reports(state = initialState, action) {
     case types.CREATE_REPORT_BEGIN:
     case types.FETCH_REPORTS_BEGIN:
     case types.IS_FETCHING:
+    case types.SHOW_REPORT_BEGIN:
       return {
         ...state,
         isFetching: true,
@@ -71,6 +72,11 @@ function reports(state = initialState, action) {
             ...state,
           };
       }
+    case types.SHOW_REPORT_COMPLETE:
+      return {
+        ...state,
+        isFetching: false,
+      };
     default:
       return {
         ...state,
