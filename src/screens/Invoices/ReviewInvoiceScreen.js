@@ -6,7 +6,7 @@ import { clearNewInvoiceData, postNewInvoice } from '../../actions/invoiceAction
 import InvoiceSection from '../../components/InvoiceSection';
 import SingleButton from '../../components/SingleButton';
 
-class InvoiceReviewScreen extends Component <{}> {
+class ReviewInvoiceScreen extends Component <{}> {
   postNewInvoiceCallback = () => {
     this.props.clearNewInvoiceData();
     this.props.navigator.popToRoot({
@@ -42,4 +42,4 @@ const mapStateToProps = ({ invoicesReducer }) => {
 export default connect(mapStateToProps, {
   clearNewInvoiceData,
   postNewInvoice
-})(InvoiceReviewScreen);
+})(ReviewInvoiceScreen);

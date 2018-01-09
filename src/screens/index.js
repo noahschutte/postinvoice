@@ -9,7 +9,7 @@ import InventoryRangeScreen from './Reports/InventoryRangeScreen';
 import InventorySheets from './InventorySheets/InventorySheets';
 import InvoiceDateRangeScreen from './Reports/InvoiceDateRangeScreen';
 import InvoiceNumberScreen from './Invoices/InvoiceNumberScreen';
-import InvoiceReviewScreen from './Invoices/InvoiceReviewScreen';
+import ReviewInvoiceScreen from './Invoices/ReviewInvoiceScreen';
 import InvoicesHome from './Invoices/InvoicesHome';
 import ReportsScreen from './Reports/ReportsScreen';
 import ReviewInventoryScreen from './InventorySheets/ReviewInventoryScreen';
@@ -30,7 +30,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('postinvoice.InventorySheets', () => InventorySheets, store, Provider);
   Navigation.registerComponent('postinvoice.InvoiceDateRangeScreen', () => InvoiceDateRangeScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InvoiceNumberScreen', () => InvoiceNumberScreen, store, Provider);
-  Navigation.registerComponent('postinvoice.InvoiceReviewScreen', () => InvoiceReviewScreen, store, Provider);
+  Navigation.registerComponent('postinvoice.ReviewInvoiceScreen', () => ReviewInvoiceScreen, store, Provider);
   Navigation.registerComponent('postinvoice.InvoicesHome', () => InvoicesHome, store, Provider);
   Navigation.registerComponent('postinvoice.ReportsScreen', () => ReportsScreen, store, Provider);
   Navigation.registerComponent('postinvoice.ReviewInventoryScreen', () => ReviewInventoryScreen, store, Provider)

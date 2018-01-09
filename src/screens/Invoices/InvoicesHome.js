@@ -9,7 +9,7 @@ import {
 } from '../../actions/invoiceActions';
 
 import InvoicesHeader from '../../components/InvoicesHeader';
-import InvoiceItem from '../../components/InvoiceItem';
+import InvoiceListItem from '../../components/InvoiceListItem';
 
 class InvoicesHome extends Component <{}> {
 
@@ -65,9 +65,9 @@ class InvoicesHome extends Component <{}> {
     });
   }
 
-  renderInvoiceItem = ({ item }) => {
+  renderInvoiceListItem = ({ item }) => {
     return (
-      <InvoiceItem
+      <InvoiceListItem
         key={item.id}
         invoice={item}
         onPress={() => {
@@ -135,7 +135,7 @@ class InvoicesHome extends Component <{}> {
           sections={this.createSections(chronologizedArray())}
           renderSectionHeader={({ section }) => <InvoicesHeader title={section.title} />}
           keyExtractor={this._keyExtractor}
-          renderItem={this.renderInvoiceItem}
+          renderItem={this.renderInvoiceListItem}
         />
       </View>
     );

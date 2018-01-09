@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
-const VendorItem = ({ count, vendor, onPress }) => {
+const VendorListItem = ({ count, vendor, onPress }) => {
   return (
     <TouchableOpacity style={[
         styles.container,
@@ -26,4 +26,4 @@ const styles = {
   },
 };
 
-export default VendorItem;
+export default VendorListItem;

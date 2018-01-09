@@ -8,7 +8,7 @@ import {
   addVendorToInvoice,
   temporaryAddVendor
 } from '../../actions/invoiceActions';
-import VendorItem from '../../components/VendorItem';
+import VendorListItem from '../../components/VendorListItem';
 
 var count = 0;
 
@@ -84,7 +84,7 @@ class SelectVendorScreen extends Component <{}> {
   renderItem = item => {
     count++;
     return (
-      <VendorItem
+      <VendorListItem
         onPress={() => this.onPress(item.name)}
         vendor={item}
         count={count}
