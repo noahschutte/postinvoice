@@ -55,6 +55,19 @@ export function onChangeSales(amount, salesType) {
   };
 }
 
+export function showReportBegin() {
+  return {
+    type: types.SHOW_REPORT_BEGIN,
+  };
+}
+
+export function showReportComplete() {
+  return {
+    type: types.SHOW_REPORT_COMPLETE,
+
+  };
+}
+
 /*
 * asynchronous action creators
 */
@@ -129,6 +142,25 @@ export function fetchReports() {
     .then(response => response.json())
     .then(responseJSON => {
       dispatch(fetchReportsComplete(responseJSON.reports));
+    })
+    .catch(err => alert(err));
+  };
+}
+
+export function showReport(reportId, callback) {
+  return function(dispatch) {
+    dispatch(showReportBegin());
+    fetch(`${DB_URL}/reports/${reportId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(responseJSON => {
+      console.log('responseJSON: ', responseJSON);
+      callback(responseJSON.report);
     })
     .catch(err => alert(err));
   };

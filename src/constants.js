@@ -50,6 +50,9 @@ export const POST_NEW_INVOICE_COMPLETE = 'post_new_invoice_complete';
 export const RETRIEVE_INVOICES_BEGIN = 'retrieve_invoices_begin';
 export const RETRIEVE_INVOICES_COMPLETE = 'retrieve_invoices_complete';
 
+export const SHOW_REPORT_BEGIN = 'show_report_begin';
+export const SHOW_REPORT_COMPLETE = 'show_report_complete';
+
 export const TEMPORARY_ADD_VENDOR = 'temporary_add_vendor';
 
 export const UPDATE_CODES = 'update_codes';

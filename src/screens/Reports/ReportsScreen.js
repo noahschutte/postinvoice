@@ -3,7 +3,11 @@ import { View, FlatList } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { createNewReportBegin, fetchReports } from '../../actions/reportActions';
+import {
+  createNewReportBegin,
+  fetchReports,
+  showReport,
+} from '../../actions/reportActions';
 import ReportsListItem from '../../components/ReportsListItem';
 
 class ReportsScreen extends Component <{}> {
@@ -43,14 +47,17 @@ class ReportsScreen extends Component <{}> {
     }
   }
 
-  onItemPress = (report) => {
-    this.props.navigator.push({
-      screen: 'postinvoice.ViewReportScreen',
-      title: 'Report #' + report.id,
-      passProps: {
-        report,
-      },
-    });
+  onItemPress = (reportId) => {
+    const callback = (reportData) => {
+      this.props.navigator.push({
+        screen: 'postinvoice.ViewReportScreen',
+        title: 'Report #' + reportId,
+        passProps: {
+          reportData,
+        },
+      });
+    };
+    this.props.showReport(reportId, callback);
   }
 
   _keyExtractor = (item) => item.id;
@@ -58,7 +65,7 @@ class ReportsScreen extends Component <{}> {
   renderItem = ({ item }) => {
     return (
       <ReportsListItem
-        onPress={() => this.onItemPress(item)}
+        onPress={() => this.onItemPress(item.id)}
         startDate={item.start_date_range}
         endDate={item.end_date_range}
       />
@@ -87,4 +94,5 @@ const mapStateToProps = ({ reportsReducer }) => {
 export default connect(mapStateToProps, {
   createNewReportBegin,
   fetchReports,
+  showReport,
 })(ReportsScreen);
