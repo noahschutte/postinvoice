@@ -3,13 +3,31 @@ import { View } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { onChangeSales, createReport } from '../../actions/reportActions';
+import {
+  onChangeSales,
+  createReport,
+  showInventorySheet
+} from '../../actions/reportActions';
 import InventorySheetInput from '../../components/InventorySheetInput';
 import SingleButton from '../../components/SingleButton';
 
 class CategorySalesScreen extends Component <{}> {
 
   onSubmit = () => {
+    const callback = (reportData) => {
+      this.props.navigator.popToRoot({
+        animated: false,
+      });
+      this.props.navigator.push({
+        screen: 'postinvoice.ViewReportScreen',
+        title: 'Report #' + reportData.id,
+        passProps: {
+          reportData,
+          onPress: this.navigateToInventorySheet,
+        },
+      });
+    };
+
     const {
       beerSales,
       wineSales,
@@ -19,6 +37,7 @@ class CategorySalesScreen extends Component <{}> {
       invoiceStartDate,
       invoiceEndDate,
     } = this.props.reportsReducer;
+
     this.props.createReport({
       startInventorySheetId: startingInventorySheet,
       endInventorySheetId: endingInventorySheet,
@@ -27,7 +46,33 @@ class CategorySalesScreen extends Component <{}> {
       beerSalesTotal: beerSales.slice(1),
       wineSalesTotal: wineSales.slice(1),
       foodSalesTotal: foodSales.slice(1),
-    });
+    }, callback);
+  }
+
+  navigateToInventorySheet = (sheetId) => {
+
+    const callback = (sheetData) => {
+      function formatDate(date) {
+      var d = new Date(date)    ,
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+
+      return [month, day, year].join('/');
+      }
+      this.props.navigator.push({
+        screen: 'postinvoice.ViewInventorySheetScreen',
+        title: formatDate(sheetData.date),
+        passProps: {
+          item: sheetData,
+          hideDelete: true,
+        }
+      });
+    };
+    this.props.showInventorySheet(sheetId, callback);
   }
 
   render() {
@@ -62,4 +107,5 @@ const mapStateToProps = ({ reportsReducer }) => {
 export default connect(mapStateToProps, {
   createReport,
   onChangeSales,
+  showInventorySheet,
 })(CategorySalesScreen);
