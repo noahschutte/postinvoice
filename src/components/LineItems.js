@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LineItems = ({ items }) => {
   return items.map(item => {
@@ -11,6 +13,9 @@ const LineItems = ({ items }) => {
         <View style={styles.amountContainer}>
           <Text style={styles.amountStyle}>${item.amount}</Text>
         </View>
+        <TouchableOpacity style={styles.iconContainer}>
+          <Icon name='pencil-square-o' size={24} color={'#181'} />
+        </TouchableOpacity>
       </View>
     );
   });
@@ -36,6 +41,12 @@ const styles = {
   },
   amountStyle: {
     fontSize: 26,
+  },
+  iconContainer: {
+    flex: 0.15,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    padding: 3,
   }
 };
 
