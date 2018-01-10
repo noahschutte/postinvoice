@@ -45,6 +45,7 @@ const NewItem = ({
           delimiter: ',',
           unit: '$',
         }}
+        selectTextOnFocus
         onChangeText={onChangeAmount}
         keyboardType='numeric'
         style={styles.amountInputStyle}
