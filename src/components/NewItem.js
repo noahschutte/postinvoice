@@ -10,6 +10,7 @@ const NewItem = ({
   code,
   onChangeAmount,
   onChangeCode,
+  onSubmitEditing,
 }) => {
 
   const codeTextInput = (
@@ -17,10 +18,11 @@ const NewItem = ({
       onChangeText={onChangeCode}
       value={code}
       style={styles.codeTextStyle}
+      onSubmitEditing={onSubmitEditing}
     />
   );
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'flex-start', flex: 1 }}>
       <Autocomplete
         data={autocompleteData}
         containerStyle={styles.containerStyle}
@@ -48,6 +50,7 @@ const NewItem = ({
         selectTextOnFocus
         onChangeText={onChangeAmount}
         keyboardType='numeric'
+        onSubmitEditing={onSubmitEditing}
         style={styles.amountInputStyle}
       />
     </View>

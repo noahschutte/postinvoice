@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const LineItems = ({ items }) => {
+const LineItems = ({ items, editItem }) => {
   return items.map(item => {
     return (
       <View style={styles.container} key={item.code.name}>
@@ -13,7 +13,7 @@ const LineItems = ({ items }) => {
         <View style={styles.amountContainer}>
           <Text style={styles.amountStyle}>${item.amount}</Text>
         </View>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => editItem(item)} style={styles.iconContainer}>
           <Icon name='pencil-square-o' size={24} color={'#181'} />
         </TouchableOpacity>
       </View>
@@ -45,8 +45,9 @@ const styles = {
   iconContainer: {
     flex: 0.15,
     alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    padding: 3,
+    justifyContent: 'center',
+    marginTop: 6,
+    marginHorizontal: 3,
   }
 };
 

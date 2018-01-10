@@ -168,6 +168,18 @@ function invoices(state = initialState, action) {
           ...state.invoices
         ]
       };
+    case types.REMOVE_ITEM_FROM_INVOICE: {
+    const items = [
+      ...state.newInvoice.items.filter(item => item !== action.item)
+    ];
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items,
+        }
+      };
+    }
     case types.RETRIEVE_INVOICES_BEGIN:
       return {
         ...state,

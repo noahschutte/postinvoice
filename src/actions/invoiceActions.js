@@ -106,6 +106,13 @@ export function postNewInvoiceComplete(invoice) {
   };
 }
 
+export function removeItemFromInvoice(item) {
+  return {
+    type: types.REMOVE_ITEM_FROM_INVOICE,
+    item,
+  };
+}
+
 export function retrieveInvoicesBegin() {
   return {
     type: types.RETRIEVE_INVOICES_BEGIN,

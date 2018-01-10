@@ -47,6 +47,8 @@ export const ON_CHANGE_VENDOR_NAME = 'on_change_vendor_name';
 export const POST_NEW_INVOICE_BEGIN = 'post_new_invoice_begin';
 export const POST_NEW_INVOICE_COMPLETE = 'post_new_invoice_complete';
 
+export const REMOVE_ITEM_FROM_INVOICE = 'remove_item_from_invoice';
+
 export const RETRIEVE_INVOICES_BEGIN = 'retrieve_invoices_begin';
 export const RETRIEVE_INVOICES_COMPLETE = 'retrieve_invoices_complete';
 

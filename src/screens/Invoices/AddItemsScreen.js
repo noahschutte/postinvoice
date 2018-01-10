@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import LineItems from '../../components/LineItems';
 import NewItem from '../../components/NewItem';
-import SingleButton from '../../components/SingleButton';
+// import SingleButton from '../../components/SingleButton';
 
-import { addItemToInvoice } from '../../actions/invoiceActions';
+import {
+  addItemToInvoice,
+  removeItemFromInvoice,
+} from '../../actions/invoiceActions';
 
 class AddItemsScreen extends Component <{}> {
   constructor(props) {
@@ -50,6 +53,12 @@ class AddItemsScreen extends Component <{}> {
     }
   }
 
+  editItem = (item) => {
+    this.setState({ codeText: item.code.name });
+    this.setState({ amount: '$' + item.amount });
+    this.props.removeItemFromInvoice(item);
+  }
+
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'REVIEW') {
@@ -81,13 +90,15 @@ class AddItemsScreen extends Component <{}> {
   }
 
   render() {
-
     const { codeText } = this.state;
     const codes = this._findCode(codeText);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     return (
       <View style={{ flex: 1 }}>
-        <LineItems items={this.props.items} />
+        <LineItems
+          editItem={this.editItem}
+          items={this.props.items}
+        />
         <NewItem
           autocompleteData={codes.length === 1 && comp(codeText, codes[0].name) ? [] : codes.map(code => code.name)} // eslint-disable-line
           codes={this.props.codes}
@@ -96,8 +107,9 @@ class AddItemsScreen extends Component <{}> {
           code={this.state.codeText}
           amount={this.state.amount}
           findCode={this._findCode}
+          onSubmitEditing={this.addItemToInvoice}
         />
-        <SingleButton onPress={this.addItemToInvoice} buttonText='Add' />
+        {/* <SingleButton onPress={this.addItemToInvoice} buttonText='Add' /> */}
       </View>
     );
   }
@@ -109,4 +121,7 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { items, codes };
 };
 
-export default connect(mapStateToProps, { addItemToInvoice })(AddItemsScreen);
+export default connect(mapStateToProps, {
+  addItemToInvoice,
+  removeItemFromInvoice,
+})(AddItemsScreen);
