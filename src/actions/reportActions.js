@@ -102,7 +102,7 @@ export function createNewReportBegin() {
   };
 }
 
-export function createReport(reportData) {
+export function createReport(reportData, callback) {
   return function(dispatch) {
     dispatch(createReportBegin());
     function formatDate(date) {
@@ -136,6 +136,7 @@ export function createReport(reportData) {
     })
     .then(responseJSON => {
       console.log('responseJSON: ', responseJSON);
+      callback(responseJSON.report);
     })
     .catch(err => alert(err));
   };
