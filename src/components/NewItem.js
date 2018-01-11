@@ -18,7 +18,7 @@ const NewItem = ({
 
   const codeTextInput = (
     <TextInput
-      editable={editable()}
+      editable={editable}
       onChangeText={text => onChangeCode(item, index, text)}
       value={item.code.name}
       style={styles.codeTextStyle}
@@ -47,7 +47,7 @@ const NewItem = ({
 
       <TextInputMask
         value={item.amount || '$0.00'}
-        editable={editable()}
+        editable={editable}
         type={'money'}
         options={{
           separator: '.',

@@ -105,14 +105,15 @@ class AddItemsScreen extends Component <{}> {
       <View style={{ flex: 1 }}>
         {this.props.items.map(item => {
           const i = this.props.items.indexOf(item);
+          const editable = () => i === this.state.currentLineItem;
           return (
             <NewItem
               key={i}
               item={item}
               index={i}
-              editable={() => i === this.state.currentLineItem}
+              editable={editable()}
               editItem={this.editItem}
-              autocompleteData={codes.length === 1 && comp(name, codes[0].name) ? [] : codes.map(code => code.name)} // eslint-disable-line
+              autocompleteData={editable() ? codes.length === 1 && comp(name, codes[0].name) ? [] : codes.map(code => code.name) : []} // eslint-disable-line
               onChangeAmount={this.props.onChangeItemAmount}
               onChangeCode={this.props.onChangeItemCode}
               code={this.state.codeText}
