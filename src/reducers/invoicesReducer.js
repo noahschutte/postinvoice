@@ -39,15 +39,14 @@ function invoices(state = initialState, action) {
     case types.ADD_ITEM_TO_INVOICE: {
       let items = [...state.newInvoice.items];
       items.splice(action.index, 1, action.item);
-      console.log('hit');
       return {
         ...state,
         newInvoice: {
           ...state.newInvoice,
           total: parseTotal(state.newInvoice.total, action.item.amount),
           items: [
-            action.item,
-            ...state.newInvoice.items,
+            ...items,
+            initialState.newInvoice.items[0],
           ],
         },
       };

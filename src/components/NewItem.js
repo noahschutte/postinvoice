@@ -6,11 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Autocomplete from 'react-native-autocomplete-input';
 
 const NewItem = ({
-  amount,
   autocompleteData,
   editable,
   editItem,
-  code,
   index,
   item,
   onChangeAmount,
@@ -36,7 +34,6 @@ const NewItem = ({
         inputContainerStyle={styles.inputContainerStyle}
         renderTextInput={() => codeTextInput}
         renderItem={name => {
-          console.log('item @ 39: ', name);
           return (
             <TouchableOpacity
               style={{ margin: 5, borderBottomWidth: 0.5, borderColor: 'rgba(0,0,0,0.1)' }}
@@ -64,7 +61,7 @@ const NewItem = ({
         style={styles.amountInputStyle}
       />
 
-      <TouchableOpacity onPress={() => editItem(item)} style={styles.iconContainer}>
+      <TouchableOpacity onPress={() => editItem(index)} style={styles.iconContainer}>
         <Icon name='pencil-square-o' size={24} color={'#181'} />
       </TouchableOpacity>
 
