@@ -264,6 +264,7 @@ export function createNewInvoiceBegin() {
     return array;
   };
   return function (dispatch) {
+    dispatch(clearNewInvoiceData());
     dispatch(isFetching());
     let url = `${DB_URL}/vendors`;
     fetch(url, {
@@ -319,7 +320,7 @@ export function postNewInvoice(newInvoice, callback) {
     };
 
     // format items for backend
-
+    console.log('items: ', items);
     items.forEach(item => {
       item.amount = parseFloat(item.amount.split(',').join('')).toFixed(2);
     });
@@ -334,6 +335,9 @@ export function postNewInvoice(newInvoice, callback) {
       total,
       items,
     });
+
+    console.log('body: ');
+    console.log(body);
 
     fetch(`${DB_URL}/invoices`, {
       headers: {

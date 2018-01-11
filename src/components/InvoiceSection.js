@@ -20,6 +20,25 @@ const InvoiceSection = ({ sectionType, sectionData, getCodeName }) => {
       );
     }
 
+    const formatAmount = (amount) => {
+      return amount.substring(0,1) === '$' ? amount.slice(1) : amount;
+    };
+
+    const formatLineItems = (items) => {
+      const [last] = items.slice(-1);
+      if ((last.code && last.code.name === '') || last.amount === '') items.pop();
+      return [
+        ...items.map(item => {
+          return ({
+            ...item,
+            amount: formatAmount(item.amount),
+          });
+        })
+      ];
+    };
+
+    sectionData = formatLineItems(sectionData);
+
     return sectionData.map(d => {
       return (
         <View style={styles.lineItemsWrapper} key={d.id || d.code.name + d.amount}>

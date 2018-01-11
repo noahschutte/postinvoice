@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { clearNewInvoiceData, postNewInvoice } from '../../actions/invoiceActions';
+import { postNewInvoice } from '../../actions/invoiceActions';
 import InvoiceSection from '../../components/InvoiceSection';
 import SingleButton from '../../components/SingleButton';
 
 class ReviewInvoiceScreen extends Component <{}> {
   postNewInvoiceCallback = () => {
-    this.props.clearNewInvoiceData();
     this.props.navigator.popToRoot({
       animated: true,
       animationType: 'fade',
@@ -45,16 +44,20 @@ class ReviewInvoiceScreen extends Component <{}> {
   }
 
   render() {
-    const { postNewInvoice, newInvoice } = this.props;
-    console.log('newInvoice: ', newInvoice);
-    const { date, vendor, number, items, total } = newInvoice;
-    console.log('test: ', this.formatLineItems(items));
+    let { postNewInvoice, newInvoice } = this.props;
+    let { date, vendor, number, items, total } = newInvoice;
+    items = this.formatLineItems(items);
+    newInvoice = {
+      ...newInvoice,
+      items,
+    };
+
     return (
       <View style={{ flex: 1 }}>
         <InvoiceSection sectionType='Date' sectionData={this.formatDate(date)} />
         <InvoiceSection sectionType='Vendor' sectionData={vendor.name} />
         <InvoiceSection sectionType='Invoice No' sectionData={number} />
-        <InvoiceSection sectionType='Line Items' sectionData={this.formatLineItems(items)} />
+        <InvoiceSection sectionType='Line Items' sectionData={items} />
         <InvoiceSection sectionType='Invoice Total' sectionData={'$'+total} />
         <SingleButton
           onPress={() => postNewInvoice(newInvoice, this.postNewInvoiceCallback)}
@@ -71,6 +74,5 @@ const mapStateToProps = ({ invoicesReducer }) => {
 };
 
 export default connect(mapStateToProps, {
-  clearNewInvoiceData,
   postNewInvoice
 })(ReviewInvoiceScreen);
