@@ -54,7 +54,7 @@ class ReviewInvoiceScreen extends Component <{}> {
         <InvoiceSection sectionType='Date' sectionData={this.formatDate(date)} />
         <InvoiceSection sectionType='Vendor' sectionData={vendor.name} />
         <InvoiceSection sectionType='Invoice No' sectionData={number} />
-        <InvoiceSection sectionType='Line Items' sectionData={items} />
+        <InvoiceSection sectionType='Line Items' sectionData={this.formatLineItems(items)} />
         <InvoiceSection sectionType='Invoice Total' sectionData={'$'+total} />
         <SingleButton
           onPress={() => postNewInvoice(newInvoice, this.postNewInvoiceCallback)}
