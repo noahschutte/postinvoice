@@ -22,7 +22,7 @@ class SelectDateScreen extends Component <{}> {
     }
   }
 
-  getWeek(d) {
+  getWeek = (d) => {
     var date = new Date(d);
     date.setHours(0, 0, 0, 0);
     // Thursday in current week decides the year.
@@ -34,15 +34,20 @@ class SelectDateScreen extends Component <{}> {
                           - 3 + (week1.getDay() + 6) % 7) / 7);
   }
 
-  getPeriod(week) {
+  getPeriod = (date) => {
+    let week = this.getWeek(date);
     const period = Math.ceil(week/4);
     week %= 4;
     week = (week === 0 ? 4 : week);
     return [period, week];
   }
 
+  onChangeDate = (date) => {
+    this.props.onChangeDate(date, this.getPeriod(date));
+  }
+
   confirmDate = (date) => {
-    this.props.onChangeDate(date);
+    this.props.onChangeDate(date, this.getPeriod(date));
     let screen = this.props.intent;
     let title = this.props.intentTitle;
     this.props.navigator.push({
@@ -52,7 +57,6 @@ class SelectDateScreen extends Component <{}> {
   }
 
   render() {
-    this.getPeriod(this.getWeek(this.props.date));
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <DatePicker
@@ -68,7 +72,7 @@ class SelectDateScreen extends Component <{}> {
           date={this.props.date}
           confirmBtnText='Confirm'
           cancelBtnText='Cancel'
-          onDateChange={this.confirmDate}
+          onDateChange={this.onChangeDate}
         />
 
         <SingleButton
@@ -98,8 +102,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ invoicesReducer }) => {
-  const date = invoicesReducer.newInvoice.date;
-  return { date };
+  const { date, period, week } = invoicesReducer.newInvoice;
+  return { date, period, week };
 };
 
 export default connect(mapStateToProps, { onChangeDate })(SelectDateScreen);

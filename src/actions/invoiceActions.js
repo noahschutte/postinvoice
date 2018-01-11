@@ -56,10 +56,12 @@ export function isFetching() {
   };
 }
 
-export function onChangeDate(date) {
+export function onChangeDate(date, [period, week]) {
   return {
     type: types.ON_CHANGE_DATE,
-    date: date,
+    date,
+    period,
+    week,
   };
 }
 

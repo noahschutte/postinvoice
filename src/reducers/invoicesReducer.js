@@ -96,7 +96,9 @@ function invoices(state = initialState, action) {
         ...state,
         newInvoice: {
           ...state.newInvoice,
-          date: action.date
+          date: action.date,
+          period: action.period,
+          week: action.week,
         },
       };
     case types.ON_CHANGE_INVOICE_NUMBER:
