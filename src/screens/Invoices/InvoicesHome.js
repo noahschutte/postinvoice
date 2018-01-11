@@ -27,7 +27,7 @@ class InvoicesHome extends Component <{}> {
       if (event.id == 'add') {
         this.props.navigator.push({
           screen: 'postinvoice.SelectDateScreen',
-          title: 'Select Date',
+          title: 'Invoice Date',
           navigatorStyle: {
             navBarTitleTextCentered: true,
           },
