@@ -57,6 +57,7 @@ export function isFetching() {
 }
 
 export function onChangeDate(date, [period, week]) {
+  console.log('date, period, week', date, period, week);
   return {
     type: types.ON_CHANGE_DATE,
     date,

@@ -4,6 +4,7 @@ import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
 import SingleButton from '../../components/SingleButton';
+import InvoicePicker from '../../components/InvoicePicker';
 import { onChangeDate } from '../../actions/invoiceActions';
 
 class SelectDateScreen extends Component <{}> {
@@ -57,6 +58,7 @@ class SelectDateScreen extends Component <{}> {
   }
 
   render() {
+    const { date, onChangeDate, period, week } = this.props;
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <DatePicker
@@ -66,17 +68,30 @@ class SelectDateScreen extends Component <{}> {
             dateText: styles.dateTextStyle,
             dateInput: styles.dateInputStyle,
           }}
-          placeholder={this.props.date}
+          placeholder={date}
           mode='date'
           format='MM-DD-YYYY'
-          date={this.props.date}
+          date={date}
           confirmBtnText='Confirm'
           cancelBtnText='Cancel'
           onDateChange={this.onChangeDate}
         />
 
+        <InvoicePicker
+          label='Period'
+          selectedValue={period}
+          onValueChange={value => onChangeDate(date, [value, week])}
+          options={[1,2,3,4,5,6,7,8,9,10,11,12,13]}
+        />
+        <InvoicePicker
+          label='Week'
+          selectedValue={week}
+          onValueChange={value => onChangeDate(date, [period, value])}
+          options={[1,2,3,4,5]}
+        />
+
         <SingleButton
-          onPress={() => this.confirmDate(this.props.date)}
+          onPress={() => this.confirmDate(date)}
           buttonText='Confirm'
         />
       </View>
@@ -87,9 +102,9 @@ class SelectDateScreen extends Component <{}> {
 const styles = {
   datepickerStyle: {
     width: Dimensions.get('window').width,
-    height: 400,
+    flex: 1.5,
     paddingBottom: 50,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   dateTextStyle: {
     fontSize: 40,
