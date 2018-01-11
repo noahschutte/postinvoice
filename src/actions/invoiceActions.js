@@ -10,10 +10,11 @@ export function addNewLine() {
   };
 }
 
-export function addItemToInvoice(item) {
+export function addItemToInvoice(item, index) {
   return {
     type: types.ADD_ITEM_TO_INVOICE,
     item,
+    index,
   };
 }
 
@@ -70,19 +71,21 @@ export function onChangeInvoiceNumber(number) {
   };
 }
 
-export function onChangeItemAmount(item, amount) {
+export function onChangeItemAmount(item, index, amount) {
   return {
     type: types.ON_CHANGE_ITEM_AMOUNT,
     item,
+    index,
     amount,
   };
 }
 
-export function onChangeItemCode(item, code) {
+export function onChangeItemCode(item, index, codeName) {
   return {
     type: types.ON_CHANGE_ITEM_CODE,
     item,
-    code,
+    index,
+    codeName,
   };
 }
 
@@ -103,6 +106,13 @@ export function postNewInvoiceComplete(invoice) {
   return {
     type: types.POST_NEW_INVOICE_COMPLETE,
     invoice,
+  };
+}
+
+export function removeItemFromInvoice(item) {
+  return {
+    type: types.REMOVE_ITEM_FROM_INVOICE,
+    item,
   };
 }
 
@@ -254,6 +264,7 @@ export function createNewInvoiceBegin() {
     return array;
   };
   return function (dispatch) {
+    dispatch(clearNewInvoiceData());
     dispatch(isFetching());
     let url = `${DB_URL}/vendors`;
     fetch(url, {
@@ -309,7 +320,7 @@ export function postNewInvoice(newInvoice, callback) {
     };
 
     // format items for backend
-
+    console.log('items: ', items);
     items.forEach(item => {
       item.amount = parseFloat(item.amount.split(',').join('')).toFixed(2);
     });
@@ -324,6 +335,9 @@ export function postNewInvoice(newInvoice, callback) {
       total,
       items,
     });
+
+    console.log('body: ');
+    console.log(body);
 
     fetch(`${DB_URL}/invoices`, {
       headers: {

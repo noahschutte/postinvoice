@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const InvoiceSection = props => {
+const InvoiceSection = ({ sectionType, sectionData, getCodeName }) => {
 
-  const item = () => {
+  const renderSectionData = () => {
     const currency = (dollars) => {
       if (typeof dollars === 'string') {
         dollars = dollars.split(',').join('');
@@ -12,47 +12,44 @@ const InvoiceSection = props => {
       return isNaN(dollars) ? false : dollars.toFixed(2);
     };
 
-    if (props.itemType !== 'Line Items') {
-
-      if (props.itemType === 'Date') {
-        let date = props.item;
-        const formatDate = (date) => {
-        var d = new Date(date),
-            month = '' + (d.getUTCMonth() + 1),
-            day = '' + d.getUTCDate(),
-            year = d.getUTCFullYear();
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [month, day, year].join('/');
-      };
-      date = formatDate(date);
-        return (
-          <Text style={styles.itemTextStyle}>
-            {date}
-          </Text>
-        );
-      }
-
+    if (sectionType !== 'Line Items') {
       return (
         <Text style={styles.itemTextStyle}>
-          {props.itemType === 'Invoice Total' ? '$'+currency(props.item.slice(1)) : props.item}
+          {sectionType === 'Invoice Total' ? '$'+currency(sectionData.slice(1)) : sectionData}
         </Text>
       );
     }
 
-    return props.item.map(item => {
+    const formatAmount = (amount) => {
+      return amount.substring(0,1) === '$' ? amount.slice(1) : amount;
+    };
+
+    const formatLineItems = (items) => {
+      const [last] = items.slice(-1);
+      if ((last.code && last.code.name === '') || last.amount === '') items.pop();
+      return [
+        ...items.map(item => {
+          return ({
+            ...item,
+            amount: formatAmount(item.amount),
+          });
+        })
+      ];
+    };
+
+    sectionData = formatLineItems(sectionData);
+
+    return sectionData.map(d => {
       return (
-        <View style={styles.lineItemsWrapper} key={item.id || item.code.name + item.amount}>
+        <View style={styles.lineItemsWrapper} key={d.id || d.code.name + d.amount}>
           <View>
             <Text style={styles.itemTextStyle}>
-              {item.code ? item.code.name : props.getCodeName(item.code_id)} -
+              {d.code ? d.code.name : getCodeName(d.code_id)} -
             </Text>
           </View>
           <View>
             <Text style={styles.itemTextStyle}>
-              {' $' + currency(item.amount)}
+              {' $' + currency(d.amount)}
              </Text>
           </View>
         </View>
@@ -62,13 +59,13 @@ const InvoiceSection = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.itemTypeWrapper}>
-        <Text style={styles.itemTypeText}>
-          {props.itemType}:
+      <View style={styles.sectionTypeWrapper}>
+        <Text style={styles.sectionTypeText}>
+          {sectionType}:
         </Text>
       </View>
       <View style={styles.itemWrapper}>
-        {item()}
+        {renderSectionData()}
       </View>
     </View>
   );
@@ -79,13 +76,13 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
   },
-  itemTypeWrapper: {
+  sectionTypeWrapper: {
     flex: 2,
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     marginTop: 25,
   },
-  itemTypeText: {
+  sectionTypeText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginRight: 10,

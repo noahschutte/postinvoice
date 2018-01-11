@@ -11,12 +11,20 @@ const initialState = {
     date: new Date().toLocaleDateString(),
     number: '',
     vendor: {},
-    items: [],
+    items: [
+      {
+        amount: '',
+        code: {
+          name: '',
+        }
+      }
+    ],
   }
 };
 
 function parseMoney(str) {
   if (typeof str === 'string') {
+    str.substring(0,1) === '$' ? str = str.slice(1) : str;
     return parseFloat(str.split(',').join(''));
   }
   return str;
@@ -29,18 +37,21 @@ function parseTotal(lastTotal, nextAmount) {
 function invoices(state = initialState, action) {
   // Handle actions
   switch (action.type) {
-    case types.ADD_ITEM_TO_INVOICE:
+    case types.ADD_ITEM_TO_INVOICE: {
+      let items = [...state.newInvoice.items];
+      items.splice(action.index, 1, action.item);
       return {
         ...state,
         newInvoice: {
           ...state.newInvoice,
           total: parseTotal(state.newInvoice.total, action.item.amount),
           items: [
-            ...state.newInvoice.items,
-            action.item
+            ...items,
+            initialState.newInvoice.items[0],
           ],
         },
       };
+    }
     case types.ADD_NEW_LINE:
       return {
         ...state,
@@ -108,15 +119,12 @@ function invoices(state = initialState, action) {
         },
       };
     case types.ON_CHANGE_ITEM_AMOUNT: {
-      let items = state.newInvoice.items.filter(item => {
-        return item.code != action.item.code;
-      });
-      const index = state.newInvoice.items.indexOf(action.item);
+      let items = [...state.newInvoice.items];
       const item = {
-        code: action.item.code,
         amount: action.amount,
+        code: action.item.code,
       };
-      items.splice(index, 0, item);
+      items.splice(action.index, 1, item);
       return {
         ...state,
         newInvoice: {
@@ -126,15 +134,15 @@ function invoices(state = initialState, action) {
       };
     }
     case types.ON_CHANGE_ITEM_CODE: {
-      let items = state.newInvoice.items.filter(item => {
-        return item.amount != action.item.amount;
-      });
-      const index = state.newInvoice.items.indexOf(action.item);
+      let items = [...state.newInvoice.items];
       const item = {
         amount: action.item.amount,
-        code: action.code,
+        code: {
+          ...action.item.code,
+          name: action.codeName,
+        },
       };
-      items.splice(index, 0, item);
+      items.splice(action.index, 1, item);
       return {
         ...state,
         newInvoice: {
@@ -168,6 +176,18 @@ function invoices(state = initialState, action) {
           ...state.invoices
         ]
       };
+    case types.REMOVE_ITEM_FROM_INVOICE: {
+    const items = [
+      ...state.newInvoice.items.filter(item => item !== action.item)
+    ];
+      return {
+        ...state,
+        newInvoice: {
+          ...state.newInvoice,
+          items,
+        }
+      };
+    }
     case types.RETRIEVE_INVOICES_BEGIN:
       return {
         ...state,

@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import LineItems from '../../components/LineItems';
 import NewItem from '../../components/NewItem';
 import SingleButton from '../../components/SingleButton';
 
-import { addItemToInvoice } from '../../actions/invoiceActions';
+import {
+  addItemToInvoice,
+  removeItemFromInvoice,
+  onChangeItemCode,
+  onChangeItemAmount,
+} from '../../actions/invoiceActions';
 
 class AddItemsScreen extends Component <{}> {
   constructor(props) {
@@ -14,8 +18,13 @@ class AddItemsScreen extends Component <{}> {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     this.state = {
-      codeText: '',
-      amount: '',
+      emptyItem: {
+        amount: '',
+        code: {
+          name: ''
+        }
+      },
+      currentLineItem: 0,
     };
   }
 
@@ -29,25 +38,38 @@ class AddItemsScreen extends Component <{}> {
   };
 
   addItemToInvoice = () => {
-    const code = this.props.codes.filter(code => code.name === this.state.codeText);
+    const index = this.state.currentLineItem;
+    let item = this.props.items[index];
+    const code = this.props.codes.filter(code => code.name === item.code.name);
+
+    if (this.state.currentLineItem !== this.props.items.length -1) return;
+
     if (code[0]) {
-      const item = {
+      item = {
+        ...item,
         code: {
-          id: code[0].id,
-          name: this.state.codeText,
+          ...code[0],
         },
-        amount: this.state.amount.slice(1)
       };
-      const codes = this.props.items.map(item => item.code.name);
+      const codes = [...this.props.items.map(item => item.code.id)];
       if (item.code.name === '' || item.amount === '') return;
-      if (codes.indexOf(item.code.name) !== -1) {
+      const i = codes.indexOf(item.code.id);
+      if (i !== index && i !== -1) {
         alert('code already exists!');
         return;
       }
-      this.onChangeCode('');
-      this.onChangeAmount('');
-      this.props.addItemToInvoice(item);
+      this.props.addItemToInvoice(item, this.state.currentLineItem);
+      this.toggleCurrentItem(index + 1);
     }
+
+  }
+
+  toggleCurrentItem = (newItemIndex) => {
+    this.setState({ currentLineItem: newItemIndex });
+  }
+
+  editItem = (index) => {
+    this.setState({ currentLineItem: index });
   }
 
   onNavigatorEvent(event) {
@@ -62,41 +84,45 @@ class AddItemsScreen extends Component <{}> {
     }
   }
 
-  onChangeAmount = (amount) => {
-    this.setState({ amount });
-  };
-
-  onChangeCode = (codeText) => {
-    this.setState({ codeText });
-  };
-
-  _findCode = (codeText) => {
-    if (codeText === '') {
+  _findCode = (name) => {
+    if (name === '') {
       return [];
     }
 
     const { codes } = this.props;
-    const regex = new RegExp(`${codeText.trim()}`, 'i');
+    const regex = new RegExp(`${name.trim()}`, 'i');
     return codes.filter(code => code.name.search(regex) >= 0);
   }
 
   render() {
-
-    const { codeText } = this.state;
-    const codes = this._findCode(codeText);
+    const { currentLineItem } = this.state;
+    const item = this.props.items[currentLineItem] || this.state.emptyItem;
+    const { name } = item.code;
+    const codes = this._findCode(name);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+
     return (
       <View style={{ flex: 1 }}>
-        <LineItems items={this.props.items} />
-        <NewItem
-          autocompleteData={codes.length === 1 && comp(codeText, codes[0].name) ? [] : codes.map(code => code.name)} // eslint-disable-line
-          codes={this.props.codes}
-          onChangeAmount={this.onChangeAmount}
-          onChangeCode={this.onChangeCode}
-          code={this.state.codeText}
-          amount={this.state.amount}
-          findCode={this._findCode}
-        />
+        {this.props.items.map(item => {
+          const i = this.props.items.indexOf(item);
+          const editable = () => i === this.state.currentLineItem;
+          return (
+            <NewItem
+              key={i}
+              item={item}
+              index={i}
+              editable={editable()}
+              editItem={this.editItem}
+              autocompleteData={editable() ? codes.length === 1 && comp(name, codes[0].name) ? [] : codes.map(code => code.name) : []} // eslint-disable-line
+              onChangeAmount={this.props.onChangeItemAmount}
+              onChangeCode={this.props.onChangeItemCode}
+              code={this.state.codeText}
+              amount={this.state.amount}
+              findCode={this._findCode}
+              onSubmitEditing={this.addItemToInvoice}
+            />
+          );
+        })}
         <SingleButton onPress={this.addItemToInvoice} buttonText='Add' />
       </View>
     );
@@ -109,4 +135,9 @@ const mapStateToProps = ({ invoicesReducer }) => {
   return { items, codes };
 };
 
-export default connect(mapStateToProps, { addItemToInvoice })(AddItemsScreen);
+export default connect(mapStateToProps, {
+  addItemToInvoice,
+  removeItemFromInvoice,
+  onChangeItemCode,
+  onChangeItemAmount,
+})(AddItemsScreen);

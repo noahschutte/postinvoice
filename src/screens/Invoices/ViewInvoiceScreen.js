@@ -10,14 +10,16 @@ const ViewInvoiceScreen = ({
   deleteInvoiceCallback,
   getCodeName
 }) => {
+
   const { date, vendor, number, items, total } = invoice;
+
   return (
     <View style={{ flex: 1 }}>
-      <InvoiceSection itemType='Date' item={date} />
-      <InvoiceSection itemType='Vendor' item={vendor.name} />
-      <InvoiceSection itemType='Invoice No' item={number} />
-      <InvoiceSection getCodeName={getCodeName} itemType='Line Items' item={items} />
-      <InvoiceSection itemType='Invoice Total' item={'$'+total} />
+      <InvoiceSection sectionType='Date' sectionData={date} />
+      <InvoiceSection sectionType='Vendor' sectionData={vendor.name} />
+      <InvoiceSection sectionType='Invoice No' sectionData={number} />
+      <InvoiceSection getCodeName={getCodeName} sectionType='Line Items' sectionData={items} />
+      <InvoiceSection sectionType='Invoice Total' sectionData={'$'+total} />
       <SingleButton
         onPress={() => deleteInvoice(invoice.id, deleteInvoiceCallback)}
         buttonText='Delete'
