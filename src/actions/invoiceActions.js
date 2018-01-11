@@ -58,7 +58,6 @@ export function isFetching() {
 }
 
 export function onChangeDate(date, [period, week]) {
-  console.log('date, period, week', date, period, week);
   return {
     type: types.ON_CHANGE_DATE,
     date,
@@ -323,7 +322,6 @@ export function postNewInvoice(newInvoice, callback) {
     };
 
     // format items for backend
-    console.log('items: ', items);
     items.forEach(item => {
       item.amount = parseFloat(item.amount.split(',').join('')).toFixed(2);
     });
@@ -338,9 +336,6 @@ export function postNewInvoice(newInvoice, callback) {
       total,
       items,
     });
-
-    console.log('body: ');
-    console.log(body);
 
     fetch(`${DB_URL}/invoices`, {
       headers: {
