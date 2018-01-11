@@ -49,7 +49,7 @@ class InventorySheets extends Component <{}> {
     return (
       <InventorySheetListItem
         item={item}
-        onPress={() => this.invoiceShow(item)}
+        onPress={() => this.invSheetShow(item)}
       />
     );
   }
@@ -65,7 +65,7 @@ class InventorySheets extends Component <{}> {
     });
   }
 
-  invoiceShow = item => {
+  invSheetShow = item => {
     let date = item.date;
     date = date.substring(5,7) + '/' + date.substring(8) + '/' + date.substring(0,4);
     this.props.navigator.push({

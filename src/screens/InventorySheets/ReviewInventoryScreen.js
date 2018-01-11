@@ -11,8 +11,25 @@ class ReviewInventoryScreen extends Component <{}> {
 
   onConfirm = () => {
     const { date, foodAmount, beerAmount, wineAmount } = this.props;
-    const callback = () => this.props.navigator.popToRoot({
+    const callback = () => this.props.navigator.resetTo({
+      screen: 'postinvoice.InventorySheets',
+      title: 'Inventory Sheets',
       animated: true,
+      animationType: 'fade',
+      navigatorButtons: {
+        leftButtons: [
+          {
+            title: 'sideMenu',
+            id: 'sideMenu',
+          }
+        ],
+        rightButtons: [
+          {
+            title: 'Add',
+            id: 'add',
+          },
+        ]
+      }
     });
     this.props.postInventorySheet({
       date,

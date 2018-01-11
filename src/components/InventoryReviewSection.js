@@ -2,13 +2,11 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 const InventoryReviewSection = ({ type, amount }) => {
-  if (amount.substring(0,1) === '$') {
+  if (typeof amount === 'string' && amount.substring(0,1) === '$') {
     amount = amount.slice(1);
+    amount = amount.split(',').join('');
+    amount = parseFloat(amount).toFixed(2);
   }
-
-  amount = amount.split(',').join('');
-  amount = parseFloat(amount).toFixed(2);
-
   return (
     <View style={styles.container}>
       <View style={styles.typeWrapper}>
