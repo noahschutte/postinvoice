@@ -24,6 +24,7 @@ const initialState = {
 
 function parseMoney(str) {
   if (typeof str === 'string') {
+    str.substring(0,1) === '$' ? str = str.slice(1) : str;
     return parseFloat(str.split(',').join(''));
   }
   return str;
