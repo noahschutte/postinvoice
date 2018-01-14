@@ -72,6 +72,10 @@ class SelectVendorScreen extends Component <{}> {
       return vendors;
     }
 
+    if (/\W/.test(query)) {
+      return [{ name: 'Add new vendor?' }];
+    }
+
     const regex = new RegExp(`${query.trim()}`, 'i');
     vendors = vendors.filter(vendor => vendor.name.search(regex) >= 0);
     if (vendors.length > 0) {
